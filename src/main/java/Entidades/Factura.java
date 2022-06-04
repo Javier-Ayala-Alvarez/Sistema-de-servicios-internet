@@ -19,6 +19,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -26,10 +27,12 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "factura")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Factura.findAll", query = "SELECT f FROM Factura f"),
     @NamedQuery(name = "Factura.findByIdfactura", query = "SELECT f FROM Factura f WHERE f.idfactura = :idfactura"),
-    @NamedQuery(name = "Factura.findByFechafactura", query = "SELECT f FROM Factura f WHERE f.fechafactura = :fechafactura")})
+    @NamedQuery(name = "Factura.findByFechafactura", query = "SELECT f FROM Factura f WHERE f.fechafactura = :fechafactura"),
+    @NamedQuery(name = "Factura.findByEstado", query = "SELECT f FROM Factura f WHERE f.estado = :estado")})
 public class Factura implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,6 +44,8 @@ public class Factura implements Serializable {
     @Column(name = "fechafactura")
     @Temporal(TemporalType.DATE)
     private Date fechafactura;
+    @Column(name = "estado")
+    private Integer estado;
     @JoinColumn(name = "idcontrato", referencedColumnName = "idcontrato")
     @ManyToOne(optional = false)
     private Contrato idcontrato;
@@ -69,6 +74,14 @@ public class Factura implements Serializable {
 
     public void setFechafactura(Date fechafactura) {
         this.fechafactura = fechafactura;
+    }
+
+    public Integer getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Integer estado) {
+        this.estado = estado;
     }
 
     public Contrato getIdcontrato() {

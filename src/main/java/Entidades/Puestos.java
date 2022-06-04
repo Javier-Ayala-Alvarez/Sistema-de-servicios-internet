@@ -5,6 +5,7 @@
 package Entidades;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -18,6 +19,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -25,12 +28,13 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "puestos")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Puestos.findAll", query = "SELECT p FROM Puestos p"),
     @NamedQuery(name = "Puestos.findByIdpuesto", query = "SELECT p FROM Puestos p WHERE p.idpuesto = :idpuesto"),
     @NamedQuery(name = "Puestos.findByNombrepuesto", query = "SELECT p FROM Puestos p WHERE p.nombrepuesto = :nombrepuesto"),
-    @NamedQuery(name = "Puestos.findBySueldo", query = "SELECT p FROM Puestos p WHERE p.sueldo = :sueldo"),
-    @NamedQuery(name = "Puestos.findByEstado", query = "SELECT p FROM Puestos p WHERE p.estado = :estado")})
+    @NamedQuery(name = "Puestos.findByEstado", query = "SELECT p FROM Puestos p WHERE p.estado = :estado"),
+    @NamedQuery(name = "Puestos.findBySalario", query = "SELECT p FROM Puestos p WHERE p.salario = :salario")})
 public class Puestos implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,11 +46,11 @@ public class Puestos implements Serializable {
     @Size(max = 40)
     @Column(name = "nombrepuesto")
     private String nombrepuesto;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "sueldo")
-    private Double sueldo;
     @Column(name = "estado")
     private Boolean estado;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "salario")
+    private BigDecimal salario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "puesto")
     private List<Empleado> empleadoList;
 
@@ -73,14 +77,6 @@ public class Puestos implements Serializable {
         this.nombrepuesto = nombrepuesto;
     }
 
-    public Double getSueldo() {
-        return sueldo;
-    }
-
-    public void setSueldo(Double sueldo) {
-        this.sueldo = sueldo;
-    }
-
     public Boolean getEstado() {
         return estado;
     }
@@ -89,6 +85,15 @@ public class Puestos implements Serializable {
         this.estado = estado;
     }
 
+    public BigDecimal getSalario() {
+        return salario;
+    }
+
+    public void setSalario(BigDecimal salario) {
+        this.salario = salario;
+    }
+
+    @XmlTransient
     public List<Empleado> getEmpleadoList() {
         return empleadoList;
     }

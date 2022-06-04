@@ -24,6 +24,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -31,11 +33,11 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "contrato")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Contrato.findAll", query = "SELECT c FROM Contrato c"),
     @NamedQuery(name = "Contrato.findByIdcontrato", query = "SELECT c FROM Contrato c WHERE c.idcontrato = :idcontrato"),
     @NamedQuery(name = "Contrato.findByFechainicio", query = "SELECT c FROM Contrato c WHERE c.fechainicio = :fechainicio"),
-    @NamedQuery(name = "Contrato.findByFechafinal", query = "SELECT c FROM Contrato c WHERE c.fechafinal = :fechafinal"),
     @NamedQuery(name = "Contrato.findByVigente", query = "SELECT c FROM Contrato c WHERE c.vigente = :vigente"),
     @NamedQuery(name = "Contrato.findByMotivobaja", query = "SELECT c FROM Contrato c WHERE c.motivobaja = :motivobaja"),
     @NamedQuery(name = "Contrato.findByFechabaja", query = "SELECT c FROM Contrato c WHERE c.fechabaja = :fechabaja")})
@@ -52,11 +54,6 @@ public class Contrato implements Serializable {
     @Column(name = "fechainicio")
     @Temporal(TemporalType.DATE)
     private Date fechainicio;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fechafinal")
-    @Temporal(TemporalType.DATE)
-    private Date fechafinal;
     @Basic(optional = false)
     @NotNull
     @Column(name = "vigente")
@@ -86,10 +83,9 @@ public class Contrato implements Serializable {
         this.idcontrato = idcontrato;
     }
 
-    public Contrato(Integer idcontrato, Date fechainicio, Date fechafinal, boolean vigente) {
+    public Contrato(Integer idcontrato, Date fechainicio, boolean vigente) {
         this.idcontrato = idcontrato;
         this.fechainicio = fechainicio;
-        this.fechafinal = fechafinal;
         this.vigente = vigente;
     }
 
@@ -107,14 +103,6 @@ public class Contrato implements Serializable {
 
     public void setFechainicio(Date fechainicio) {
         this.fechainicio = fechainicio;
-    }
-
-    public Date getFechafinal() {
-        return fechafinal;
-    }
-
-    public void setFechafinal(Date fechafinal) {
-        this.fechafinal = fechafinal;
     }
 
     public boolean getVigente() {
@@ -141,6 +129,7 @@ public class Contrato implements Serializable {
         this.fechabaja = fechabaja;
     }
 
+    @XmlTransient
     public List<Factura> getFacturaList() {
         return facturaList;
     }

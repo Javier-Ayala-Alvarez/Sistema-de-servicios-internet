@@ -17,6 +17,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -24,6 +25,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "usuarios")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Usuarios.findAll", query = "SELECT u FROM Usuarios u"),
     @NamedQuery(name = "Usuarios.findByIdusuario", query = "SELECT u FROM Usuarios u WHERE u.idusuario = :idusuario"),
@@ -46,9 +48,6 @@ public class Usuarios implements Serializable {
     @JoinColumn(name = "idempleado", referencedColumnName = "id_duiempleado")
     @ManyToOne
     private Empleado idempleado;
-    @JoinColumn(name = "idtipousuario", referencedColumnName = "idtipousuario")
-    @ManyToOne
-    private TipoUsuario idtipousuario;
 
     public Usuarios() {
     }
@@ -87,14 +86,6 @@ public class Usuarios implements Serializable {
 
     public void setIdempleado(Empleado idempleado) {
         this.idempleado = idempleado;
-    }
-
-    public TipoUsuario getIdtipousuario() {
-        return idtipousuario;
-    }
-
-    public void setIdtipousuario(TipoUsuario idtipousuario) {
-        this.idtipousuario = idtipousuario;
     }
 
     @Override

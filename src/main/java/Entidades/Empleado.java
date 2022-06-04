@@ -5,6 +5,7 @@
 package Entidades;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -17,8 +18,12 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -26,6 +31,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "empleado")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Empleado.findAll", query = "SELECT e FROM Empleado e"),
     @NamedQuery(name = "Empleado.findByIdDuiempleado", query = "SELECT e FROM Empleado e WHERE e.idDuiempleado = :idDuiempleado"),
@@ -33,7 +39,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Empleado.findByApellidoempleado", query = "SELECT e FROM Empleado e WHERE e.apellidoempleado = :apellidoempleado"),
     @NamedQuery(name = "Empleado.findByTelefonoempleado", query = "SELECT e FROM Empleado e WHERE e.telefonoempleado = :telefonoempleado"),
     @NamedQuery(name = "Empleado.findByDireccionempleado", query = "SELECT e FROM Empleado e WHERE e.direccionempleado = :direccionempleado"),
-    @NamedQuery(name = "Empleado.findByEstado", query = "SELECT e FROM Empleado e WHERE e.estado = :estado")})
+    @NamedQuery(name = "Empleado.findByEstado", query = "SELECT e FROM Empleado e WHERE e.estado = :estado"),
+    @NamedQuery(name = "Empleado.findByFechaContrato", query = "SELECT e FROM Empleado e WHERE e.fechaContrato = :fechaContrato")})
 public class Empleado implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -65,6 +72,9 @@ public class Empleado implements Serializable {
     private String direccionempleado;
     @Column(name = "estado")
     private Boolean estado;
+    @Column(name = "fecha_contrato")
+    @Temporal(TemporalType.DATE)
+    private Date fechaContrato;
     @OneToMany(mappedBy = "idempleado")
     private List<Factura> facturaList;
     @JoinColumn(name = "id_nitempresa", referencedColumnName = "id_nitempresa")
@@ -141,6 +151,15 @@ public class Empleado implements Serializable {
         this.estado = estado;
     }
 
+    public Date getFechaContrato() {
+        return fechaContrato;
+    }
+
+    public void setFechaContrato(Date fechaContrato) {
+        this.fechaContrato = fechaContrato;
+    }
+
+    @XmlTransient
     public List<Factura> getFacturaList() {
         return facturaList;
     }
@@ -165,6 +184,7 @@ public class Empleado implements Serializable {
         this.puesto = puesto;
     }
 
+    @XmlTransient
     public List<Contrato> getContratoList() {
         return contratoList;
     }
@@ -173,6 +193,7 @@ public class Empleado implements Serializable {
         this.contratoList = contratoList;
     }
 
+    @XmlTransient
     public List<Usuarios> getUsuariosList() {
         return usuariosList;
     }

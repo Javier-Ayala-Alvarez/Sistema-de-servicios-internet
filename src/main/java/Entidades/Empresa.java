@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -24,12 +26,14 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "empresa")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Empresa.findAll", query = "SELECT e FROM Empresa e"),
     @NamedQuery(name = "Empresa.findByIdNitempresa", query = "SELECT e FROM Empresa e WHERE e.idNitempresa = :idNitempresa"),
     @NamedQuery(name = "Empresa.findByNombreempresa", query = "SELECT e FROM Empresa e WHERE e.nombreempresa = :nombreempresa"),
     @NamedQuery(name = "Empresa.findByTelefonoempresa", query = "SELECT e FROM Empresa e WHERE e.telefonoempresa = :telefonoempresa"),
-    @NamedQuery(name = "Empresa.findByDireccionempresa", query = "SELECT e FROM Empresa e WHERE e.direccionempresa = :direccionempresa")})
+    @NamedQuery(name = "Empresa.findByDireccionempresa", query = "SELECT e FROM Empresa e WHERE e.direccionempresa = :direccionempresa"),
+    @NamedQuery(name = "Empresa.findByCorreo", query = "SELECT e FROM Empresa e WHERE e.correo = :correo")})
 public class Empresa implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -48,6 +52,9 @@ public class Empresa implements Serializable {
     @Size(max = 50)
     @Column(name = "direccionempresa")
     private String direccionempresa;
+    @Size(max = 2147483647)
+    @Column(name = "correo")
+    private String correo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idNitempresa")
     private List<Empleado> empleadoList;
 
@@ -90,6 +97,15 @@ public class Empresa implements Serializable {
         this.direccionempresa = direccionempresa;
     }
 
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    @XmlTransient
     public List<Empleado> getEmpleadoList() {
         return empleadoList;
     }
