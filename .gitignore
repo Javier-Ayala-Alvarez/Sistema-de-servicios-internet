@@ -3,6 +3,8 @@
 
 ###Glasfish resources######
 glassfish-resources.xml
+glassfish-web.xml
+
 ### Persistence ###
 persistence.xml
 
