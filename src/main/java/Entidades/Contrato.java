@@ -11,8 +11,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -45,8 +43,8 @@ public class Contrato implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "idcontrato")
     private Integer idcontrato;
     @Basic(optional = false)
@@ -56,8 +54,9 @@ public class Contrato implements Serializable {
     private Date fechainicio;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 5)
     @Column(name = "vigente")
-    private boolean vigente;
+    private String vigente;
     @Size(max = 100)
     @Column(name = "motivobaja")
     private String motivobaja;
@@ -83,7 +82,7 @@ public class Contrato implements Serializable {
         this.idcontrato = idcontrato;
     }
 
-    public Contrato(Integer idcontrato, Date fechainicio, boolean vigente) {
+    public Contrato(Integer idcontrato, Date fechainicio, String vigente) {
         this.idcontrato = idcontrato;
         this.fechainicio = fechainicio;
         this.vigente = vigente;
@@ -105,11 +104,11 @@ public class Contrato implements Serializable {
         this.fechainicio = fechainicio;
     }
 
-    public boolean getVigente() {
+    public String getVigente() {
         return vigente;
     }
 
-    public void setVigente(boolean vigente) {
+    public void setVigente(String vigente) {
         this.vigente = vigente;
     }
 

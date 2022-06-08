@@ -1,6 +1,9 @@
 ### Ansible files ###
 *.retry
-
+###Glasfish resources######
+glassfish-resources.xml
+### Persistence ###
+persistence.xml
 
 ### Clojure files ###
 Leiningen.gitignore

@@ -11,6 +11,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -32,8 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Empresa.findByIdNitempresa", query = "SELECT e FROM Empresa e WHERE e.idNitempresa = :idNitempresa"),
     @NamedQuery(name = "Empresa.findByNombreempresa", query = "SELECT e FROM Empresa e WHERE e.nombreempresa = :nombreempresa"),
     @NamedQuery(name = "Empresa.findByTelefonoempresa", query = "SELECT e FROM Empresa e WHERE e.telefonoempresa = :telefonoempresa"),
-    @NamedQuery(name = "Empresa.findByDireccionempresa", query = "SELECT e FROM Empresa e WHERE e.direccionempresa = :direccionempresa"),
-    @NamedQuery(name = "Empresa.findByCorreo", query = "SELECT e FROM Empresa e WHERE e.correo = :correo")})
+    @NamedQuery(name = "Empresa.findByDireccionempresa", query = "SELECT e FROM Empresa e WHERE e.direccionempresa = :direccionempresa")})
 public class Empresa implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,6 +52,7 @@ public class Empresa implements Serializable {
     @Size(max = 50)
     @Column(name = "direccionempresa")
     private String direccionempresa;
+    @Lob
     @Size(max = 2147483647)
     @Column(name = "correo")
     private String correo;
