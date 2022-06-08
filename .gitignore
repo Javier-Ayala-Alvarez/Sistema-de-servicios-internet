@@ -1,9 +1,13 @@
 ### Ansible files ###
 *.retry
 
+
 ###Glasfish resources######
 glassfish-resources.xml
 glassfish-web.xml
+
+glassfish-web.xml
+
 
 ### Persistence ###
 persistence.xml
