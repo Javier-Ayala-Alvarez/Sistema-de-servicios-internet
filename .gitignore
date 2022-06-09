@@ -15,7 +15,6 @@ persistence.xml
 ### Clojure files ###
 Leiningen.gitignore
 
-
 ### Cvs files ###
 /CVS/*
 **/CVS/*
