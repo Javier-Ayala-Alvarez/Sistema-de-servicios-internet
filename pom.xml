@@ -29,6 +29,11 @@
             <artifactId>primefaces</artifactId>
             <version>11.0.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.superbiz/async-postconstruct -->
+        <!-- https://mvnrepository.com/artifact/org.jberet.test-apps/postConstruct -->
+        
+
+
         
         <dependency>
             <groupId>org.eclipse.persistence</groupId>

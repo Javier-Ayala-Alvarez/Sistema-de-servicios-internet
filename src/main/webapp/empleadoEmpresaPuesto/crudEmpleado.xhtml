@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./../Resources/css/default.css"/>
+        <h:outputStylesheet name="./../Resources/css/tableLayout.css"/>
+        <title>Facelets Template</title>
+    </h:head>
+
+    <h:body style="padding-top: 50px; padding-bottom: 20px;">
+        <ui:insert name = "header" >
+            <ui:include src = "./../Resources/header.xhtml" />
+        </ui:insert> 
+        <b:jumbotron>
+            <b:container >
+                <h:form id="form">
+                    <div class="card crud-demo">
+                        <p:toolbar>
+                            <p:toolbarGroup>
+                                <p:commandButton value="New" icon="pi pi-plus"
+
+                                                 styleClass="ui-button-success" style="margin-right: .5rem; font-size:1.6em">
+                                    <p:resetInput target=":form:manage-product-content"/>
+                                </p:commandButton>
+
+                            </p:toolbarGroup>
+                            <p:toolbarGroup align="right" >
+
+                                <p:commandButton value="Export"  icon="pi pi-upload" styleClass="ui-button-help" style="margin-right: .5rem; font-size:1.6em" ajax="false" >
+                                    <p:dataExporter type="pdf" target="dt-empleados" fileName="empleado"/>
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+
+
+
+                        <p:dataTable id="dt-empleados" widgetVar="dtEmpleado" var="empleado" value="#{controladorEmpleado.empleadoList}"
+                                     reflow="true" styleClass="empleados-table"
+                                     selection="#{controladorEmpleado.empleado}" rowKey="#{empleado.idDuiempleado}" paginator="true"
+                                     rows="10" rowSelectMode="add" paginatorPosition="bottom" style="font-size:1.1em">
+                            <f:facet name="header">
+                                <div class="empleados-table-header">
+                                    <span style="font-weight: bold">EMPLEADOS</span>
+
+                                    <span class="filter-container ui-input-icon-left">
+                                        <i class="pi pi-search" style="font-size:1.1em"></i>
+                                        <p:inputText id="globalFilter" onkeyup="PF('dtEmpleado').filter()" placeholder="Search" style="font-size:1.1em"/>
+                                    </span>
+
+                                </div>
+                            </f:facet>
+
+
+
+                            <p:column headerText="DUI" sortBy="#{empleado.idDuiempleado}"   filterBy="#{empleado.idDuiempleado}">
+                                <h:outputText value="#{empleado.idDuiempleado}"/>
+                            </p:column>
+                            <p:column headerText="Nombre" sortBy="#{empleado.nombreempleado}" filterBy="#{empleado.nombreempleado}">
+                                <h:outputText value="#{empleado.nombreempleado}"/>
+                            </p:column>
+
+                            <p:column headerText="Apellido" sortBy="#{empleado.apellidoempleado}" filterBy="#{empleado.apellidoempleado}">
+                                <h:outputText value="#{empleado.apellidoempleado}"/>        
+                            </p:column>
+                            <p:column headerText="Telefono" sortBy="#{empleado.telefonoempleado}" filterBy="#{empleado.telefonoempleado}">
+                                <h:outputText value="#{empleado.telefonoempleado}"/>
+                            </p:column>
+                            <p:column headerText="Dirección" sortBy="#{empleado.direccionempleado}" filterBy="#{empleado.direccionempleado}">
+                                <h:outputText value="#{empleado.direccionempleado}"/>
+
+                            </p:column>
+                            <p:column headerText="Puesto" sortBy="#{empleado.puesto.nombrepuesto}" filterBy="#{empleado.puesto.nombrepuesto}">
+                                <h:outputText value="#{empleado.puesto.nombrepuesto}"/>
+
+                            </p:column>
+                            <p:column headerText="Empresa" sortBy="#{empleado.idNitempresa.nombreempresa}" filterBy="#{empleado.idNitempresa.nombreempresa}">
+                                <h:outputText value="#{empleado.idNitempresa.nombreempresa}"/>
+
+                            </p:column>
+
+                            <p:column headerText="Estado" sortBy="#{empleado.estado}"
+                                      filterBy="#{empleado.estado}">
+                                <h:outputText styleClass="empleado-badge Estado-true"
+                                              value="#{empleado.estado}"/>
+                            </p:column>
+                            <p:column headerText="Fecha" sortBy="#{empleado.fechaContrato}" filterBy="#{empleado.fechaContrato}">
+                                <h:outputText value="#{empleado.fechaContrato}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" type=""/>
+                                </h:outputText>
+
+                            </p:column>
+
+                            <p:column exportable="false" headerText="Opciones">
+                                <p:commandButton icon="pi pi-pencil" 
+                                                 oncomplete="PF('manageEmpleadoDialog').show()"
+                                                 styleClass="edit-button rounded-button ui-button-success"  style="margin-right: .5rem; font-size:1.6em" process="@this" >
+                                    <f:setPropertyActionListener value="#{empleado}" target="#{controladorEmpleado.empleado}"/>
+
+                                </p:commandButton>
+                                <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-refresh"  style="margin-right: .5rem; font-size:1.6em" process="@this"
+                                                 oncomplete="PF('cambioEstadoEmpleadoDialog').show()">
+                                    <f:setPropertyActionListener value="#{empleado}" target="#{controladorEmpleado.empleado}"/>
+                                </p:commandButton>
+                            </p:column>
+
+
+
+                        </p:dataTable>
+
+                        <p:confirmDialog widgetVar="cambioEstadoEmpleadoDialog" showEffect="fade" width="300"
+                                         message="Desea cambiar el estado?" header="Confimar" severity="warn"  style="margin-right: .5rem; font-size:1.2em">
+                            <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{controladorEmpleado.baja(empleado.idDuiempleado, empleado.estado)}"
+                                             process="@this" oncomplete="PF('cambioEstadoEmpleadoDialog').hide()"  style="margin-right: .5rem; font-size:1.2em"/>
+                            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                             onclick="PF('cambioEstadoEmpleadoDialog').hide()" style="margin-right: .5rem; font-size:1.2em"/>
+                        </p:confirmDialog>
+
+                        <p:confirmDialog global="true" showEffect="fade" width="300">
+                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
+                                             icon="pi pi-times"/>
+                        </p:confirmDialog>
+                    </div>
+                </h:form>
+
+            </b:container>
+        </b:jumbotron>
+
+        <b:container>
+            <ui:insert name = "footer" >
+                <ui:include src = "./../Resources/footer.xhtml" />
+            </ui:insert> 
+
+        </b:container>
+
+
+    </h:body>
+
+</html>
