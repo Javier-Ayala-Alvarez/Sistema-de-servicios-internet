@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body style="padding-top: 50px; padding-bottom: 20px;">
+        <ui:insert name = "header" >
+            <ui:include src = "../Resources/header.xhtml" />
+        </ui:insert> 
+
+        <div class="ui-g" style="padding-top: 2em">
+            <div class="ui-g-1"></div>
+            <div class="ui-g-5">
+                <h:form>
+                    <p:growl id="growl"/>
+
+                    <p:panel id="pnl" header="Consulta de factura" style="font-size: 2em">
+                        <p:messages id="messages"/>
+                        <h:panelGrid columns="3" id="grid" cellpadding="7">
+                            <p:outputLabel for="username" value="Ingrese el id de contrato" style="font-size:0.50em;"/>
+                            <p:inputText id="username" value="" required="true" style="font-size:0.50em;" placeholder="Id de contrato">
+                                <f:validateLength minimum="4"/>
+                            </p:inputText>
+                            <p:message for="username"/>
+                        </h:panelGrid>
+
+                        <p:commandButton value="Verificar" icon="pencil" action="#" update="growl grid"
+                                         oncomplete="handleForm(xhr, status, args)" styleClass="p-mt-3" style="font-size:0.50em;"/>
+                    </p:panel>
+
+                    <p:spotlight target="pnl" widgetVar="spot"/>
+                </h:form>
+
+            </div>
+            <div class="ui-g-5">
+                <h:form>
+                    <div class="card" align="center">
+                        <h2>Resultado</h2>
+                        <p:dataTable var="product" value="#" style="font-size:15px">
+                            <p:column headerText="Id Factura">
+                                <h:outputText value="#"/>
+                            </p:column>
+
+                            <p:column headerText="Id Empleado">
+                                <h:outputText value="#"/>
+                            </p:column>
+
+                            <p:column headerText="Fecha">
+                                <h:outputText value="#"/>
+                            </p:column>
+
+                            <p:column headerText="Id Contrato">
+                                <h:outputText value="#" />
+                            </p:column>
+                             <p:column headerText="Estado">
+                                <h:outputText value="#" />
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </h:form>
+            </div>
+            <div class="ui-g-1"></div>
+        </div>
+
+
+
+
+
+
+        <div class="card ">
+
+        </div>
+
+
+
+        <b:container>
+            <ui:insert name = "footer" >
+                <ui:include src = "../Resources/footer.xhtml" />
+            </ui:insert> 
+
+        </b:container>
+    </h:body>
+    <script type="text/javascript">
+        function handleForm(xhr, status, args) {
+            if (args.validationFailed)
+                PF('spot').show();
+            else
+                PF('spot').hide();
+        }
+    </script>
+</html>
+

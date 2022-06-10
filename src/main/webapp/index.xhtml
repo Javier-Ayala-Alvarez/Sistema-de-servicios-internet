@@ -15,21 +15,7 @@
         <b:jumbotron>
             <b:container>
                 <h1>Bienvenido</h1>
-                <h:panelGrid columns="1" style="width: 100%">
-                    <p:chart type="pie" model="#{controladorVenta.initPieModel()}"
-                             style="width:500px;height: 300px"
-                             widgetVar="chart"/>
-                    <p:commandButton type="button" value="Export" icon="ui-ico-extlink" onclick="exportChart()"/>
-                    <p:dialog widgetVar="dig" showEffect="fade" modal="true" header="Chart as an Image">
-                        <p:outputPanel id="output" layout="block" style="width:500px;height: 300px"/>
-                    </p:dialog>
-                    <script type="text/javascript">
-                        function exportChart() {
-                            $('#output').empty().append(PF('chart').exportAsImage());
-                            PF('dig').show();
-                        }
-                    </script>
-                </h:panelGrid>
+              
 
             </b:container>
         </b:jumbotron>
