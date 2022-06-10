@@ -95,16 +95,11 @@ public class ControladorEmpleado {
     }
     
   
-    public String guardarEmpleado(){
-        Empleado tmpEmpleado = empleadoFacade.find(empleado.getIdDuiempleado());
-        if(tmpEmpleado !=null){
-            JSFUtil.addGlobalErrorMessage("Codigo empleado duplicado");
-        }else{
-            empleadoFacade.create(getEmpleado());
-            empleado = new Empleado();
-            JSFUtil.addGlobalMessage("Empleado agregado con éxito");
-        }
-        return"";
+    public void guardarEmpleado(){
+     this.empleado.setIdNitempresa(empresa);
+     this.empleado.setPuesto(puesto);
+       this.empleadoFacade.create(this.empleado);
+       
     }
     
  
@@ -112,27 +107,7 @@ public class ControladorEmpleado {
    public void guardarActualizar(){
       
    }
-   
-   public void baja(String id, boolean estado){
-       String nuevoEstado; 
-       if(estado==true){
-           nuevoEstado = "true";
-       }else{
-            nuevoEstado = "false";
-       }
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoHDP");
-        EntityManager em = emf.createEntityManager();
-        this.sql = "UPDATE empleado set estado='"+nuevoEstado+"' WHERE id_duiempleado = '"+id+"'";
-
-        this.query = em.createNativeQuery(sql);
-        JSFUtil.addGlobalMessage("Empleado modificado con éxito");
-        //emf.close();
-        //em.close();
-      
-   }
-   
-   
-    public List<Empleado> getEmpleadoList(){
+   public List<Empleado> getEmpleadoList(){
         return empleadoFacade.findAll();
     }
 
