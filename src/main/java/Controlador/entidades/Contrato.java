@@ -1,8 +1,9 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
-package Entidades;
+package Controlador.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -27,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author mejia
+ * @author DELL
  */
 @Entity
 @Table(name = "contrato")
@@ -65,15 +66,15 @@ public class Contrato implements Serializable {
     private Date fechabaja;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcontrato")
     private List<Factura> facturaList;
-    @JoinColumn(name = "idcliente", referencedColumnName = "id_duicliente")
-    @ManyToOne(optional = false)
-    private Cliente idcliente;
     @JoinColumn(name = "idempleado", referencedColumnName = "id_duiempleado")
     @ManyToOne(optional = false)
     private Empleado idempleado;
     @JoinColumn(name = "idservicio", referencedColumnName = "idservicio")
     @ManyToOne(optional = false)
     private Servicio idservicio;
+    @JoinColumn(name = "idcliente", referencedColumnName = "id_duicliente")
+    @ManyToOne(optional = false)
+    private Cliente idcliente;
 
     public Contrato() {
     }
@@ -137,14 +138,6 @@ public class Contrato implements Serializable {
         this.facturaList = facturaList;
     }
 
-    public Cliente getIdcliente() {
-        return idcliente;
-    }
-
-    public void setIdcliente(Cliente idcliente) {
-        this.idcliente = idcliente;
-    }
-
     public Empleado getIdempleado() {
         return idempleado;
     }
@@ -159,6 +152,14 @@ public class Contrato implements Serializable {
 
     public void setIdservicio(Servicio idservicio) {
         this.idservicio = idservicio;
+    }
+
+    public Cliente getIdcliente() {
+        return idcliente;
+    }
+
+    public void setIdcliente(Cliente idcliente) {
+        this.idcliente = idcliente;
     }
 
     @Override
@@ -183,7 +184,7 @@ public class Contrato implements Serializable {
 
     @Override
     public String toString() {
-        return "Entidades.Contrato[ idcontrato=" + idcontrato + " ]";
+        return "Controlador.entidades.Contrato[ idcontrato=" + idcontrato + " ]";
     }
     
 }

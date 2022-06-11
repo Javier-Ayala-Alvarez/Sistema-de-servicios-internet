@@ -1,8 +1,9 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
-package Entidades;
+package Controlador.entidades;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -20,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author mejia
+ * @author DELL
  */
 @Entity
 @Table(name = "usuarios")
@@ -109,7 +110,7 @@ public class Usuarios implements Serializable {
 
     @Override
     public String toString() {
-        return "Entidades.Usuarios[ idusuario=" + idusuario + " ]";
+        return "Controlador.entidades.Usuarios[ idusuario=" + idusuario + " ]";
     }
     
 }

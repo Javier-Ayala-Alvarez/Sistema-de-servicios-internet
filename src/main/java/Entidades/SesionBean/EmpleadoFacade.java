@@ -1,21 +1,19 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package Entidades.SesionBean;
 
-import Entidades.Empleado;
-import Util.JSFUtil;
+import Controlador.entidades.Empleado;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 /**
  *
- * @author mejia
+ * @author DELL
  */
 @Stateless
 public class EmpleadoFacade extends AbstractFacade<Empleado> {
@@ -31,8 +29,7 @@ public class EmpleadoFacade extends AbstractFacade<Empleado> {
     public EmpleadoFacade() {
         super(Empleado.class);
     }
-
-    public void baja(String id, boolean estado) {
+         public void baja(String id, boolean estado) {
         int nuevoEstado;
         if (estado == true) {
             nuevoEstado = 0;
@@ -49,5 +46,4 @@ public class EmpleadoFacade extends AbstractFacade<Empleado> {
         //emf.close();
         //em.close();
     }
-    
 }

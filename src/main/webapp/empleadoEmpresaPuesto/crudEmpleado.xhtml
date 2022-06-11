@@ -22,6 +22,7 @@
             <b:container >
                 <h:form id="form">
                     <div class="card crud-demo">
+                        
                         <p:toolbar>
                             <p:toolbarGroup>
                                 <p:commandButton value="Nuevo Empleado" icon="pi pi-plus"
@@ -50,15 +51,16 @@
 
                             <p:toolbarGroup align="right" >
 
-                                <p:commandButton value="Export"  icon="pi pi-upload" styleClass="ui-button-help" style="margin-right: .5rem; font-size:1.6em" ajax="false" >
-                                    <p:dataExporter type="pdf" target="dt-empleados" fileName="empleados"/>
+                                <p:commandButton value="Export"  icon="pi pi-upload" styleClass="ui-button-help" 
+                                                 style="margin-right: .5rem; font-size:1.6em" ajax="false" >
+                                    <p:dataExporter type="pdf" target="empleados" fileName="empleados"/>
                                 </p:commandButton>
                             </p:toolbarGroup>
                         </p:toolbar>
 
 
 
-                        <p:dataTable id="dt-empleados" widgetVar="dtEmpleado" var="empleado" value="#{controladorEmpleado.empleadoList}"
+                        <p:dataTable id="empleados" widgetVar="dtEmpleado" var="empleado" value="#{controladorEmpleado.empleadoList}"
                                      reflow="true" styleClass="empleados-table"
                                      selection="#{controladorEmpleado.empleado}" rowKey="#{empleado.idDuiempleado}" paginator="true"
                                      rows="5"  paginatorPosition="bottom" style="font-size:1.1em">
@@ -72,7 +74,15 @@
                                     </span>
 
                                 </div>
+                                <div> 
+                                    <p:commandButton id="toggler" 
+                                                     type="button" value="Columnas" 
+                                                     icon="pi pi-align-justify"/> 
+                                    <p:columnToggler datasource="empleados" 
+                                                     trigger="toggler"/> 
+                                </div> 
                             </f:facet>
+                            
 
 
 
@@ -127,6 +137,11 @@
                                 </p:commandButton>
                             </p:column>
                         </p:dataTable>
+                        
+                        
+                        
+                        
+                        
                         <p:confirmDialog widgetVar="cambioEstadoEmpleadoDialog" showEffect="fade" width="300"
                                          message="Desea cambiar el estado?" header="Confimar" severity="warn"  style="margin-right: .5rem; font-size:1.2em">
                             <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{empleadoFacade.baja(empleado.idDuiempleado, empleado.estado)}"
@@ -228,24 +243,43 @@
 
         <p:dialog header="Consulta empleado" showEffect="fade" modal="true"
                   widgetVar="manageEmpleadoConsultatDialog" responsive="true" width="90%">
-
             <p:panelGrid columns="1" style="width: 90%; margin: auto; text-align: left">
-                Consultas
+                <h:outputLabel value="Empleados con usuarios y activos" style="font-size:1.5em"/>
+
+
+                <p:dataTable id="dt-empleadosUsuario" widgetVar="dtEmpleadoUsuario" var="empleado" value="#{controladorEmpleado.listaEmpleadoConUsuariosActivos()}"
+                             reflow="true" styleClass="empleados-table"
+                             selection="#{controladorEmpleado.listaEmpleadoConUsuariosActivos}" rowKey="#{empleado.idDuiempleado}" paginator="true"
+                             rows="5"  paginatorPosition="bottom" style="font-size:1.1em">
+
+                    <p:column headerText="DUI" style="font-size:1.1em">
+
+                        <h:outputText value="#{empleado[0]}" style="font-size:1.1em"/>
+                    </p:column>
+                    <p:column headerText="NOMBRE COMPLETO" style="font-size:1.1em">
+                        <h:outputText value="#{empleado[1]}" style="font-size:1.1em"/>
+                    </p:column>
+                    <p:column headerText="USUARIO" style="font-size:1.1em">
+                        <h:outputText value="#{empleado[2]}" style="font-size:1.1em"/>
+                    </p:column>
+
+
+                </p:dataTable>
             </p:panelGrid>
         </p:dialog>
         <p:dialog header="Gráfico empleado" showEffect="fade" modal="true"
                   widgetVar="manageEmpleadoGraficotDialog" responsive="true" width="90%">
 
             <p:panelGrid columns="2" style="width: 90%; margin: auto; text-align: left">
-                
+
                 <p:chart type="pie" model="#{controladorEmpleado.initPieModel()}"
-                             style="width:550px;height: 350px"
-                             />
-                    <p:chart type="bar" model="#{controladorEmpleado.initBarCharModel()}"
-                             style="width:550px;height: 350px"
-                            />
+                         style="width:550px;height: 350px"
+                         />
+                <p:chart type="bar" model="#{controladorEmpleado.initBarCharModel()}"
+                         style="width:550px;height: 350px"
+                         />
             </p:panelGrid>
-             
+
         </p:dialog>
     </h:body>
 

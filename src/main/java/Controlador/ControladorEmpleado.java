@@ -5,9 +5,9 @@
  */
 package Controlador;
 
-import Entidades.Empleado;
-import Entidades.Empresa;
-import Entidades.Puestos;
+import Controlador.entidades.Empleado;
+import Controlador.entidades.Empresa;
+import Controlador.entidades.Puestos;
 import Entidades.SesionBean.EmpleadoFacade;
 import Entidades.SesionBean.EmpresaFacade;
 import Entidades.SesionBean.PuestosFacade;
@@ -72,7 +72,7 @@ public class ControladorEmpleado {
       public List<Object[]> listaEmpleadoConUsuariosActivos() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoHDP");
         EntityManager em = emf.createEntityManager();
-         String jpql = "";
+         String jpql = "SELECT e.idDuiempleado, CONCAT( e.nombreempleado, ' ', e.apellidoempleado), u.usuario FROM Empleado e JOIN Usuarios u WHERE e.estado = 'true'";
         this.query = em.createQuery(jpql);
         this.listaEmpleadoConUsuariosActivos = this.query.getResultList();
         //emf.close();
