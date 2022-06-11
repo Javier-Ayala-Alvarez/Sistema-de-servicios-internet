@@ -11,7 +11,7 @@ import Entidades.Puestos;
 import Entidades.SesionBean.EmpleadoFacade;
 import Entidades.SesionBean.EmpresaFacade;
 import Entidades.SesionBean.PuestosFacade;
-import Util.JSFUtil;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -21,26 +21,150 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.BarChartModel;
+import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.PieChartModel;
 
 @ManagedBean
 @RequestScoped
 public class ControladorEmpleado {
-     private String sql = "";
+
+    private String sql = "";
     private Query query;
     private Empleado empleado;
     private Puestos puesto;
     private Empresa empresa;
-    
-    private List<Puestos> listPuesto; 
+
+    private List<Puestos> listPuesto;
     private List<Empresa> listEmpresa;
 
-   @Inject 
-   EmpleadoFacade empleadoFacade;
-   @Inject
-   PuestosFacade puestoFacade;
-   @Inject
-   EmpresaFacade empresaFacade;
+    private List<Object[]> listarEmpleadoConContratos = new ArrayList<>();
+    private List<Object[]> listaEmpleadoConUsuariosActivos = new ArrayList<>();
+    private List<Object[]> listarEmpleadosPuestos = new ArrayList<>();
+    private BarChartModel modelBar;
+    private PieChartModel modelPie;
 
+    @Inject
+    EmpleadoFacade empleadoFacade;
+    @Inject
+    PuestosFacade puestoFacade;
+    @Inject
+    EmpresaFacade empresaFacade;
+
+    @PostConstruct
+    public void init() {
+
+        this.empleado = new Empleado();
+        this.empresa = new Empresa();
+        this.puesto = new Puestos();
+        listarEmpresas();
+        listarPuestos();
+        listarEmpleadoConContratos();
+        listarEmpleadosPuesto();
+        listaEmpleadoConUsuariosActivos();
+    }
+
+    public ControladorEmpleado() {
+    }
+    //Consulta jpql}
+      public List<Object[]> listaEmpleadoConUsuariosActivos() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoHDP");
+        EntityManager em = emf.createEntityManager();
+         String jpql = "";
+        this.query = em.createQuery(jpql);
+        this.listaEmpleadoConUsuariosActivos = this.query.getResultList();
+        //emf.close();
+        //em.close();
+        return this.listaEmpleadoConUsuariosActivos;
+    }
+
+    //FIn jpql
+    //Graficos
+    public List<Object[]> listarEmpleadoConContratos() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoHDP");
+        EntityManager em = emf.createEntityManager();
+        this.sql = "SELECT\n"
+                + "	CONCAT(e.nombreempleado,' ',e.apellidoempleado),(\n"
+                + "	SELECT\n"
+                + "		count( c.idempleado ) AS total \n"
+                + "	FROM\n"
+                + "		 contrato c WHERE c.idempleado = e.id_duiempleado \n"
+                + "	) as total\n"
+                + "  FROM\n"
+                + "	empleado e GROUP BY total desc \n"
+                + "	";
+        this.query = em.createNativeQuery(sql);
+        this.listarEmpleadoConContratos = this.query.getResultList();
+        //emf.close();
+        //em.close();
+        return this.listarEmpleadoConContratos;
+    }
+
+    public List<Object[]> listarEmpleadosPuesto() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoHDP");
+        EntityManager em = emf.createEntityManager();
+        this.sql = "SELECT p.nombrepuesto, sum(e.puesto) as total FROM empleado e INNER JOIN puestos p on e.puesto = p.idpuesto\n"
+                + " GROUP BY p.nombrepuesto";
+
+        this.query = em.createNativeQuery(sql);
+        this.listarEmpleadosPuestos = this.query.getResultList();
+        //emf.close();
+        //em.close();
+        return this.listarEmpleadosPuestos;
+
+    }
+
+    public BarChartModel initBarCharModel() {
+        this.modelBar = new BarChartModel();
+        List<Object[]> listarContratoServicioGraf = this.listarEmpleadoConContratos;
+
+        if (listarContratoServicioGraf != null) {
+
+            for (Object[] contratos : listarContratoServicioGraf) {
+                ChartSeries serie = new ChartSeries();
+                String contrato = contratos[0].toString();
+                serie.setLabel(contrato);
+                double total = Double.parseDouble(contratos[1].toString());
+                serie.set(contrato, total);
+                this.modelBar.addSeries(serie);
+            }
+            this.modelBar.setTitle("Record de empleados con más contratos realizados");
+            this.modelBar.setLegendPosition("ne");
+            this.modelBar.setAnimate(true);
+            Axis xAxis = this.modelBar.getAxis(AxisType.X);
+            xAxis.setLabel("Empleados");
+
+            Axis yAxis = this.modelBar.getAxis(AxisType.Y);
+            yAxis.setLabel("Total de contrato");
+        }
+        return this.modelBar;
+    }
+
+    public PieChartModel initPieModel() {
+        this.modelPie = new PieChartModel();
+        List<Object[]> listarEmpleadosPuestoaGraf = this.listarEmpleadosPuestos;
+
+        if (listarEmpleadosPuestoaGraf != null) {
+
+            for (Object[] puestos : listarEmpleadosPuestoaGraf) {
+
+                String puesto = puestos[0].toString();
+                double total = Double.parseDouble(puestos[1].toString());
+                this.modelPie.set(puesto, total);
+                this.modelPie.setTitle("Puestos con más empleados");
+                this.modelPie.setLegendPosition("e");
+                this.modelPie.setFill(false);
+                this.modelPie.setShowDataLabels(true);
+                this.modelPie.setDiameter(200);
+            }
+
+        }
+        return this.modelPie;
+    }
+
+    //fin de graficos
     public List<Puestos> getListPuesto() {
         return listPuesto;
     }
@@ -56,8 +180,6 @@ public class ControladorEmpleado {
     public void setListEmpresa(List<Empresa> listEmpresa) {
         this.listEmpresa = listEmpresa;
     }
-
-  
 
     public Puestos getPuesto() {
         return puesto;
@@ -75,39 +197,29 @@ public class ControladorEmpleado {
         this.empresa = empresa;
     }
 
-  
-    @PostConstruct
-    public void init(){
-        this.empleado = new Empleado();
-        this.empresa = new Empresa();
-        this.puesto = new Puestos();
-        listarEmpresas();
-        listarPuestos();
-    }
-    public List<Empresa> listarEmpresas(){
+    public List<Empresa> listarEmpresas() {
         this.listEmpresa = this.empresaFacade.findAll();
         return this.listEmpresa;
-        
+
     }
-    public List<Puestos> listarPuestos(){
+
+    public List<Puestos> listarPuestos() {
         this.listPuesto = this.puestoFacade.findAll();
         return this.listPuesto;
     }
-    
-  
-    public void guardarEmpleado(){
-     this.empleado.setIdNitempresa(empresa);
-     this.empleado.setPuesto(puesto);
-       this.empleadoFacade.create(this.empleado);
-       
+
+    public void guardarEmpleado() {
+        this.empleado.setIdNitempresa(empresa);
+        this.empleado.setPuesto(puesto);
+        this.empleadoFacade.create(this.empleado);
+
     }
-    
- 
-   
-   public void guardarActualizar(){
-      
-   }
-   public List<Empleado> getEmpleadoList(){
+
+    public void guardarActualizar() {
+
+    }
+
+    public List<Empleado> getEmpleadoList() {
         return empleadoFacade.findAll();
     }
 
@@ -118,5 +230,5 @@ public class ControladorEmpleado {
     public void setEmpleado(Empleado empleado) {
         this.empleado = empleado;
     }
-    
+
 }

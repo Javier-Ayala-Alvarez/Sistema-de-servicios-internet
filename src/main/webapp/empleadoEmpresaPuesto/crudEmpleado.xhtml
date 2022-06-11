@@ -38,7 +38,8 @@
                                     <p:resetInput target=":form:manage-Empleado-content"/>
                                 </p:commandButton>
 
-                            </p:toolbarGroup>     <p:toolbarGroup>
+                            </p:toolbarGroup>   
+                            <p:toolbarGroup>
                                 <p:commandButton value="Consulta"
                                                  oncomplete="PF('manageEmpleadoConsultatDialog').show()"
                                                  styleClass="ui-button-success" style="margin-right: .5rem; font-size:1.6em">
@@ -232,15 +233,20 @@
                 Consultas
             </p:panelGrid>
         </p:dialog>
-        <p:dialog header="Grafico empleado" showEffect="fade" modal="true"
+        <p:dialog header="Gráfico empleado" showEffect="fade" modal="true"
                   widgetVar="manageEmpleadoGraficotDialog" responsive="true" width="90%">
 
-            <p:panelGrid columns="1" style="width: 90%; margin: auto; text-align: left">
-                Grafico
+            <p:panelGrid columns="2" style="width: 90%; margin: auto; text-align: left">
+                
+                <p:chart type="pie" model="#{controladorEmpleado.initPieModel()}"
+                             style="width:550px;height: 350px"
+                             />
+                    <p:chart type="bar" model="#{controladorEmpleado.initBarCharModel()}"
+                             style="width:550px;height: 350px"
+                            />
             </p:panelGrid>
+             
         </p:dialog>
-
-
     </h:body>
 
 </html>
