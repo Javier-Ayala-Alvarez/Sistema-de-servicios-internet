@@ -5,9 +5,10 @@
  */
 package Controlador;
 
-import Controlador.entidades.Empleado;
-import Controlador.entidades.Empresa;
-import Controlador.entidades.Puestos;
+
+import Entidades.Empleado;
+import Entidades.Empresa;
+import Entidades.Puestos;
 import Entidades.SesionBean.EmpleadoFacade;
 import Entidades.SesionBean.EmpresaFacade;
 import Entidades.SesionBean.PuestosFacade;
