@@ -21,8 +21,8 @@
         <b:jumbotron>
             <b:container >
                 <h:form id="form">
+
                     <div class="card crud-demo">
-                        
                         <p:toolbar>
                             <p:toolbarGroup>
                                 <p:commandButton value="Nuevo Empleado" icon="pi pi-plus"
@@ -59,11 +59,11 @@
                         </p:toolbar>
 
 
-
+                        <p:growl id="msgs" showDetail="true"/>
                         <p:dataTable id="empleados" widgetVar="dtEmpleado" var="empleado" value="#{controladorEmpleado.empleadoList}"
-                                     reflow="true" styleClass="empleados-table"
+                                     reflow="true" styleClass="empleados-table"  editable="true"
                                      selection="#{controladorEmpleado.empleado}" rowKey="#{empleado.idDuiempleado}" paginator="true"
-                                     rows="5"  paginatorPosition="bottom" style="font-size:1.1em">
+                                     rows="5"  paginatorPosition="bottom" style="font-size:1.1em"  >
                             <f:facet name="header">
                                 <div class="empleados-table-header">
                                     <span style="font-weight: bold">EMPLEADOS</span>
@@ -72,7 +72,8 @@
                                         <i class="pi pi-search" style="font-size:1.1em"></i>
                                         <p:inputText id="globalFilter" onkeyup="PF('dtEmpleado').filter()" placeholder="Search" style="font-size:1.1em"/>
                                     </span>
-
+                                    <p:ajax event="rowEdit" listener="#{controladorEmpleado.onRowEdit}" update=":form:msgs"/>
+                                    <p:ajax event="rowEditCancel" listener="#{controladorEmpleado.onRowCancel}" update=":form:msgs"/>
                                 </div>
                                 <div> 
                                     <p:commandButton id="toggler" 
@@ -82,79 +83,96 @@
                                                      trigger="toggler"/> 
                                 </div> 
                             </f:facet>
-                            
-
-
-
                             <p:column headerText="DUI" sortBy="#{empleado.idDuiempleado}"   filterBy="#{empleado.idDuiempleado}">
-                                <h:outputText value="#{empleado.idDuiempleado}"/>
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{empleado.idDuiempleado}"/></f:facet>
+                                    <f:facet name="input"><p:inputText id="modelInput" value="#{empleado.idDuiempleado}"
+                                                                       style="width:100%"/></f:facet>
+                                </p:cellEditor>
                             </p:column>
                             <p:column headerText="Nombre" sortBy="#{empleado.nombreempleado}" filterBy="#{empleado.nombreempleado}">
-                                <h:outputText value="#{empleado.nombreempleado}"/>
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{empleado.nombreempleado}"/></f:facet>
+                                    <f:facet name="input"><p:inputText  value="#{empleado.nombreempleado}"
+                                                                        style="width:100%"/></f:facet>
+                                </p:cellEditor>
                             </p:column>
 
                             <p:column headerText="Apellido" sortBy="#{empleado.apellidoempleado}" filterBy="#{empleado.apellidoempleado}">
-                                <h:outputText value="#{empleado.apellidoempleado}"/>        
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{empleado.apellidoempleado}"/></f:facet>
+                                    <f:facet name="input"><p:inputText  value="#{empleado.apellidoempleado}"
+                                                                        style="width:100%"/></f:facet>
+                                </p:cellEditor>     
                             </p:column>
                             <p:column headerText="Telefono" sortBy="#{empleado.telefonoempleado}" filterBy="#{empleado.telefonoempleado}">
-                                <h:outputText value="#{empleado.telefonoempleado}"/>
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{empleado.telefonoempleado}"/></f:facet>
+                                    <f:facet name="input"><p:inputText  value="#{empleado.telefonoempleado}"
+                                                                        style="width:100%"/></f:facet>
+                                </p:cellEditor>
                             </p:column>
                             <p:column headerText="Dirección" sortBy="#{empleado.direccionempleado}" filterBy="#{empleado.direccionempleado}">
-                                <h:outputText value="#{empleado.direccionempleado}"/>
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{empleado.direccionempleado}"/></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{empleado.direccionempleado}"
+                                                                       style="width:100%"/></f:facet>
+                                </p:cellEditor>
 
                             </p:column>
                             <p:column headerText="Puesto" sortBy="#{empleado.puesto.nombrepuesto}" filterBy="#{empleado.puesto.nombrepuesto}">
-                                <h:outputText value="#{empleado.puesto.nombrepuesto}"/>
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{empleado.puesto.nombrepuesto}"/></f:facet>
+                                    <f:facet name="input">
+                                        <h:selectOneMenu value="#{empleado.puesto.idpuesto}" style="width:100%">
+                                            <f:selectItems value="#{controladorEmpleado.listPuesto}" var="status"
+                                                           itemLabel="#{status.nombrepuesto}" itemValue="#{status.idpuesto}"/>
+                                        </h:selectOneMenu>
+                                    </f:facet>
+                                </p:cellEditor>
 
                             </p:column>
                             <p:column headerText="Empresa" sortBy="#{empleado.idNitempresa.nombreempresa}" filterBy="#{empleado.idNitempresa.nombreempresa}">
-                                <h:outputText value="#{empleado.idNitempresa.nombreempresa}"/>
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{empleado.idNitempresa.nombreempresa}"/></f:facet>
+                                    <f:facet name="input">
+                                        <h:selectOneMenu value="#{empleado.idNitempresa.idNitempresa}" style="width:100%">
+                                            <f:selectItems value="#{controladorEmpleado.listEmpresa}" var="empresa"
+                                                           itemLabel="#{empresa.nombreempresa}" itemValue="#{empresa.idNitempresa}"/>
+                                        </h:selectOneMenu>
+                                    </f:facet>
+                                </p:cellEditor>
 
                             </p:column>
 
                             <p:column headerText="Estado" sortBy="#{empleado.estado}"
                                       filterBy="#{empleado.estado}">
-                                <h:outputText styleClass="empleado-badge Estado-true"
-                                              value="#{empleado.estado}"/>
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{empleado.estado}"/></f:facet>
+                                    <f:facet name="input">
+                                        <p:selectBooleanButton onLabel="True" offLabel="False" style="width:6rem" value="#{empleado.estado}"/>
+                                    </f:facet>
+                                </p:cellEditor>
                             </p:column>
                             <p:column headerText="Fecha" sortBy="#{empleado.fechaContrato}" filterBy="#{empleado.fechaContrato}">
-                                <h:outputText value="#{empleado.fechaContrato}" >
-                                    <f:convertDateTime pattern="dd/MM/yyyy" type=""/>
-                                </h:outputText>
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{empleado.fechaContrato}" >
+                                            <f:convertDateTime pattern="dd/MM/yyyy" type=""/>
+                                        </h:outputText></f:facet>
+                                    <f:facet name="input">
 
+                                        <p:calendar id="fecha" pattern="dd-MM-yyyy"
+                                                    value="#{empleado.fechaContrato}"/>
+                                    </f:facet>
+                                </p:cellEditor>
                             </p:column>
 
-                            <p:column exportable="false" headerText="Opciones">
-                                <p:commandButton icon="pi pi-pencil" 
-                                                 oncomplete="PF('manageEmpleadoDialog').show()"
-                                                 styleClass="edit-button rounded-button ui-button-success"  style="margin-right: .5rem; font-size:1.6em" process="@this" >
-                                    <f:setPropertyActionListener value="#{empleado}" target="#{controladorEmpleado.empleado}"/>
-
-                                </p:commandButton>
-                                <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-refresh"  style="margin-right: .5rem; font-size:1.6em" process="@this"
-                                                 oncomplete="PF('cambioEstadoEmpleadoDialog').show()">
-                                    <f:setPropertyActionListener value="#{empleado}" target="#{controladorEmpleado.empleado}"/>
-                                </p:commandButton>
+                            <p:column headerText="Editar" style="width:6rem">
+                                <p:rowEditor />
                             </p:column>
                         </p:dataTable>
-                        
-                        
-                        
-                        
-                        
-                        <p:confirmDialog widgetVar="cambioEstadoEmpleadoDialog" showEffect="fade" width="300"
-                                         message="Desea cambiar el estado?" header="Confimar" severity="warn"  style="margin-right: .5rem; font-size:1.2em">
-                            <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{empleadoFacade.baja(empleado.idDuiempleado, empleado.estado)}"
-                                             process="@this" oncomplete="PF('cambioEstadoEmpleadoDialog').hide()"  style="margin-right: .5rem; font-size:1.2em"/>
-                            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
-                                             onclick="PF('cambioEstadoEmpleadoDialog').hide()" style="margin-right: .5rem; font-size:1.2em"/>
-                        </p:confirmDialog>
 
-                        <p:confirmDialog global="true" showEffect="fade" width="300">
-                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
-                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
-                                             icon="pi pi-times"/>
-                        </p:confirmDialog>
                     </div>
                 </h:form>
             </b:container>

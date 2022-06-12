@@ -14,13 +14,16 @@ import Entidades.SesionBean.PuestosFacade;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
@@ -66,13 +69,36 @@ public class ControladorEmpleado {
         listaEmpleadoConUsuariosActivos();
     }
 
+    public void onRowEdit(RowEditEvent<Empleado> event) {
+        this.empleado.setIdDuiempleado(event.getObject().getIdDuiempleado());
+        this.empleado.setNombreempleado(event.getObject().getNombreempleado());
+        this.empleado.setApellidoempleado(event.getObject().getApellidoempleado());
+        this.empleado.setTelefonoempleado(event.getObject().getTelefonoempleado());
+        this.empleado.setDireccionempleado(event.getObject().getDireccionempleado());
+        this.empleado.setEstado(event.getObject().getEstado());
+        this.empleado.setFechaContrato(event.getObject().getFechaContrato());
+
+        this.empleado.setIdNitempresa(event.getObject().getIdNitempresa());
+        this.empleado.setPuesto(event.getObject().getPuesto());
+        FacesMessage msg = new FacesMessage("Product Edited", String.valueOf(event.getObject().getIdDuiempleado()));
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        this.empleadoFacade.edit(this.empleado);
+        
+    }
+
+    public void onRowCancel(RowEditEvent<Empleado> event) {
+        FacesMessage msg = new FacesMessage("Edit Cancelled", String.valueOf(event.getObject().getIdDuiempleado()));
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
     public ControladorEmpleado() {
     }
+
     //Consulta jpql}
-      public List<Object[]> listaEmpleadoConUsuariosActivos() {
+    public List<Object[]> listaEmpleadoConUsuariosActivos() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoHDP");
         EntityManager em = emf.createEntityManager();
-         String jpql = "SELECT e.idDuiempleado, CONCAT( e.nombreempleado, ' ', e.apellidoempleado), u.usuario FROM Empleado e JOIN Usuarios u WHERE e.estado = 'true'";
+        String jpql = "SELECT e.idDuiempleado, CONCAT( e.nombreempleado, ' ', e.apellidoempleado), u.usuario FROM Empleado e JOIN Usuarios u WHERE e.estado = 'true'";
         this.query = em.createQuery(jpql);
         this.listaEmpleadoConUsuariosActivos = this.query.getResultList();
         //emf.close();
