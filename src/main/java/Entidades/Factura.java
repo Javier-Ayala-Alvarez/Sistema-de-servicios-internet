@@ -9,6 +9,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -31,20 +33,28 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Factura.findAll", query = "SELECT f FROM Factura f"),
     @NamedQuery(name = "Factura.findByIdfactura", query = "SELECT f FROM Factura f WHERE f.idfactura = :idfactura"),
     @NamedQuery(name = "Factura.findByFechafactura", query = "SELECT f FROM Factura f WHERE f.fechafactura = :fechafactura"),
-    @NamedQuery(name = "Factura.findByEstado", query = "SELECT f FROM Factura f WHERE f.estado = :estado")})
+    @NamedQuery(name = "Factura.findByEstado", query = "SELECT f FROM Factura f WHERE f.estado = :estado"),
+    @NamedQuery(name = "Factura.findByFechapagofactura", query = "SELECT f FROM Factura f WHERE f.fechapagofactura = :fechapagofactura")})
 public class Factura implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idfactura")
     private Integer idfactura;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "fechafactura")
     @Temporal(TemporalType.DATE)
     private Date fechafactura;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "estado")
-    private Integer estado;
+    private int estado;
+    @Column(name = "fechapagofactura")
+    @Temporal(TemporalType.DATE)
+    private Date fechapagofactura;
     @JoinColumn(name = "idcontrato", referencedColumnName = "idcontrato")
     @ManyToOne(optional = false)
     private Contrato idcontrato;
@@ -57,6 +67,12 @@ public class Factura implements Serializable {
 
     public Factura(Integer idfactura) {
         this.idfactura = idfactura;
+    }
+
+    public Factura(Integer idfactura, Date fechafactura, int estado) {
+        this.idfactura = idfactura;
+        this.fechafactura = fechafactura;
+        this.estado = estado;
     }
 
     public Integer getIdfactura() {
@@ -75,12 +91,20 @@ public class Factura implements Serializable {
         this.fechafactura = fechafactura;
     }
 
-    public Integer getEstado() {
+    public int getEstado() {
         return estado;
     }
 
-    public void setEstado(Integer estado) {
+    public void setEstado(int estado) {
         this.estado = estado;
+    }
+
+    public Date getFechapagofactura() {
+        return fechapagofactura;
+    }
+
+    public void setFechapagofactura(Date fechapagofactura) {
+        this.fechapagofactura = fechapagofactura;
     }
 
     public Contrato getIdcontrato() {

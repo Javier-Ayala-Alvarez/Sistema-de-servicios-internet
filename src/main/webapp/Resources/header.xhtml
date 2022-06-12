@@ -10,13 +10,18 @@
     </h:head>
     <h:body>
         <ui:composition> 
-            <b:navBar brand="Brand" brandHref="#" inverse="true" fixed="top">
+            <b:navBar brand="Inicio" brandHref="./faces/index.xhtml" inverse="true" fixed="top">
                 <b:navbarLinks>
-                    <b:navLink value="Link" href="#"></b:navLink>
+                    <b:navLink value="Link" href=""></b:navLink>
                     <b:navLink value="Link" href="#"></b:navLink>
                     <b:dropMenu value="Administrador">
                         <b:navLink value="Action" href="#"></b:navLink>
-                        <b:navLink value="Empleados" href="./empleadoEmpresaPuesto/crudEmpleado.xhtml"></b:navLink>
+                        <b:navLink value="Empleados" href="./faces/empleadoEmpresaPuesto/crudEmpleado.xhtml"></b:navLink>
+                        <b:navLink value="Puesto" href="./faces/empleadoEmpresaPuesto/ViewPuesto.xhtml"></b:navLink>
+                        <b:navLink value="Empresa" href="./faces/empleadoEmpresaPuesto/ViewEmpresa.xhtml"></b:navLink>
+                       
+
+
                         <b:navLink value="Something else here" href="#"></b:navLink>
                         <b:navLink></b:navLink>
                         <b:navLink header="Nav header"></b:navLink>

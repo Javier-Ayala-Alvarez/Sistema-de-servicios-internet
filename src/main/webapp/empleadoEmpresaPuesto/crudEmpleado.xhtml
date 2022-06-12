@@ -11,7 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="./../Resources/css/default.css"/>
         <h:outputStylesheet name="./../Resources/css/tableLayout.css"/>
-        <title>Facelets Template</title>
+        <title>Empleado</title>
     </h:head>
 
     <h:body style="padding-top: 50px; padding-bottom: 20px;">
@@ -21,30 +21,49 @@
         <b:jumbotron>
             <b:container >
                 <h:form id="form">
+
                     <div class="card crud-demo">
                         <p:toolbar>
                             <p:toolbarGroup>
-                                <p:commandButton value="New" icon="pi pi-plus"
-
+                                <p:commandButton value="Nuevo Empleado" icon="pi pi-plus"
+                                                 oncomplete="PF('manageEmpleadotDialog').show()"
                                                  styleClass="ui-button-success" style="margin-right: .5rem; font-size:1.6em">
-                                    <p:resetInput target=":form:manage-product-content"/>
+                                    <p:resetInput target=":form:manage-Empleado-content"/>
                                 </p:commandButton>
 
                             </p:toolbarGroup>
+                            <p:toolbarGroup>
+                                <p:commandButton value="Gráficas" 
+                                                 oncomplete="PF('manageEmpleadoGraficotDialog').show()"
+                                                 styleClass="ui-button-success" style="margin-right: .5rem; font-size:1.6em">
+                                    <p:resetInput target=":form:manage-Empleado-content"/>
+                                </p:commandButton>
+
+                            </p:toolbarGroup>   
+                            <p:toolbarGroup>
+                                <p:commandButton value="Consulta"
+                                                 oncomplete="PF('manageEmpleadoConsultatDialog').show()"
+                                                 styleClass="ui-button-success" style="margin-right: .5rem; font-size:1.6em">
+                                    <p:resetInput target=":form:manage-Empleado-content"/>
+                                </p:commandButton>
+
+                            </p:toolbarGroup>
+
                             <p:toolbarGroup align="right" >
 
-                                <p:commandButton value="Export"  icon="pi pi-upload" styleClass="ui-button-help" style="margin-right: .5rem; font-size:1.6em" ajax="false" >
-                                    <p:dataExporter type="pdf" target="dt-empleados" fileName="empleado"/>
+                                <p:commandButton value="Export"  icon="pi pi-upload" styleClass="ui-button-help" 
+                                                 style="margin-right: .5rem; font-size:1.6em" ajax="false" >
+                                    <p:dataExporter type="pdf" target="empleados" fileName="empleados"/>
                                 </p:commandButton>
                             </p:toolbarGroup>
                         </p:toolbar>
 
 
-
-                        <p:dataTable id="dt-empleados" widgetVar="dtEmpleado" var="empleado" value="#{controladorEmpleado.empleadoList}"
-                                     reflow="true" styleClass="empleados-table"
+                        <p:growl id="msgs" showDetail="true"/>
+                        <p:dataTable id="empleados" widgetVar="dtEmpleado" var="empleado" value="#{controladorEmpleado.empleadoList}"
+                                     reflow="true" styleClass="empleados-table"  editable="true"
                                      selection="#{controladorEmpleado.empleado}" rowKey="#{empleado.idDuiempleado}" paginator="true"
-                                     rows="10" rowSelectMode="add" paginatorPosition="bottom" style="font-size:1.1em">
+                                     rows="5"  paginatorPosition="bottom" style="font-size:1.1em"  >
                             <f:facet name="header">
                                 <div class="empleados-table-header">
                                     <span style="font-weight: bold">EMPLEADOS</span>
@@ -53,83 +72,109 @@
                                         <i class="pi pi-search" style="font-size:1.1em"></i>
                                         <p:inputText id="globalFilter" onkeyup="PF('dtEmpleado').filter()" placeholder="Search" style="font-size:1.1em"/>
                                     </span>
-
+                                    <p:ajax event="rowEdit" listener="#{controladorEmpleado.onRowEdit}" update=":form:msgs"/>
+                                    <p:ajax event="rowEditCancel" listener="#{controladorEmpleado.onRowCancel}" update=":form:msgs"/>
                                 </div>
+                                <div> 
+                                    <p:commandButton id="toggler" 
+                                                     type="button" value="Columnas" 
+                                                     icon="pi pi-align-justify"/> 
+                                    <p:columnToggler datasource="empleados" 
+                                                     trigger="toggler"/> 
+                                </div> 
                             </f:facet>
-
-
-
                             <p:column headerText="DUI" sortBy="#{empleado.idDuiempleado}"   filterBy="#{empleado.idDuiempleado}">
-                                <h:outputText value="#{empleado.idDuiempleado}"/>
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{empleado.idDuiempleado}"/></f:facet>
+                                    <f:facet name="input"><p:inputText id="modelInput" value="#{empleado.idDuiempleado}"
+                                                                       style="width:100%"/></f:facet>
+                                </p:cellEditor>
                             </p:column>
                             <p:column headerText="Nombre" sortBy="#{empleado.nombreempleado}" filterBy="#{empleado.nombreempleado}">
-                                <h:outputText value="#{empleado.nombreempleado}"/>
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{empleado.nombreempleado}"/></f:facet>
+                                    <f:facet name="input"><p:inputText  value="#{empleado.nombreempleado}"
+                                                                        style="width:100%"/></f:facet>
+                                </p:cellEditor>
                             </p:column>
 
                             <p:column headerText="Apellido" sortBy="#{empleado.apellidoempleado}" filterBy="#{empleado.apellidoempleado}">
-                                <h:outputText value="#{empleado.apellidoempleado}"/>        
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{empleado.apellidoempleado}"/></f:facet>
+                                    <f:facet name="input"><p:inputText  value="#{empleado.apellidoempleado}"
+                                                                        style="width:100%"/></f:facet>
+                                </p:cellEditor>     
                             </p:column>
                             <p:column headerText="Telefono" sortBy="#{empleado.telefonoempleado}" filterBy="#{empleado.telefonoempleado}">
-                                <h:outputText value="#{empleado.telefonoempleado}"/>
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{empleado.telefonoempleado}"/></f:facet>
+                                    <f:facet name="input"><p:inputText  value="#{empleado.telefonoempleado}"
+                                                                        style="width:100%"/></f:facet>
+                                </p:cellEditor>
                             </p:column>
                             <p:column headerText="Dirección" sortBy="#{empleado.direccionempleado}" filterBy="#{empleado.direccionempleado}">
-                                <h:outputText value="#{empleado.direccionempleado}"/>
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{empleado.direccionempleado}"/></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{empleado.direccionempleado}"
+                                                                       style="width:100%"/></f:facet>
+                                </p:cellEditor>
 
                             </p:column>
                             <p:column headerText="Puesto" sortBy="#{empleado.puesto.nombrepuesto}" filterBy="#{empleado.puesto.nombrepuesto}">
-                                <h:outputText value="#{empleado.puesto.nombrepuesto}"/>
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{empleado.puesto.nombrepuesto}"/></f:facet>
+                                    <f:facet name="input">
+                                        <h:selectOneMenu value="#{empleado.puesto.idpuesto}" style="width:100%">
+                                            <f:selectItems value="#{controladorEmpleado.listPuesto}" var="status"
+                                                           itemLabel="#{status.nombrepuesto}" itemValue="#{status.idpuesto}"/>
+                                        </h:selectOneMenu>
+                                    </f:facet>
+                                </p:cellEditor>
 
                             </p:column>
                             <p:column headerText="Empresa" sortBy="#{empleado.idNitempresa.nombreempresa}" filterBy="#{empleado.idNitempresa.nombreempresa}">
-                                <h:outputText value="#{empleado.idNitempresa.nombreempresa}"/>
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{empleado.idNitempresa.nombreempresa}"/></f:facet>
+                                    <f:facet name="input">
+                                        <h:selectOneMenu value="#{empleado.idNitempresa.idNitempresa}" style="width:100%">
+                                            <f:selectItems value="#{controladorEmpleado.listEmpresa}" var="empresa"
+                                                           itemLabel="#{empresa.nombreempresa}" itemValue="#{empresa.idNitempresa}"/>
+                                        </h:selectOneMenu>
+                                    </f:facet>
+                                </p:cellEditor>
 
                             </p:column>
 
                             <p:column headerText="Estado" sortBy="#{empleado.estado}"
                                       filterBy="#{empleado.estado}">
-                                <h:outputText styleClass="empleado-badge Estado-true"
-                                              value="#{empleado.estado}"/>
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{empleado.estado}"/></f:facet>
+                                    <f:facet name="input">
+                                        <p:selectBooleanButton onLabel="True" offLabel="False" style="width:6rem" value="#{empleado.estado}"/>
+                                    </f:facet>
+                                </p:cellEditor>
                             </p:column>
                             <p:column headerText="Fecha" sortBy="#{empleado.fechaContrato}" filterBy="#{empleado.fechaContrato}">
-                                <h:outputText value="#{empleado.fechaContrato}" >
-                                    <f:convertDateTime pattern="dd/MM/yyyy" type=""/>
-                                </h:outputText>
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{empleado.fechaContrato}" >
+                                            <f:convertDateTime pattern="dd/MM/yyyy" type=""/>
+                                        </h:outputText></f:facet>
+                                    <f:facet name="input">
 
+                                        <p:calendar id="fecha" pattern="dd-MM-yyyy"
+                                                    value="#{empleado.fechaContrato}"/>
+                                    </f:facet>
+                                </p:cellEditor>
                             </p:column>
 
-                            <p:column exportable="false" headerText="Opciones">
-                                <p:commandButton icon="pi pi-pencil" 
-                                                 oncomplete="PF('manageEmpleadoDialog').show()"
-                                                 styleClass="edit-button rounded-button ui-button-success"  style="margin-right: .5rem; font-size:1.6em" process="@this" >
-                                    <f:setPropertyActionListener value="#{empleado}" target="#{controladorEmpleado.empleado}"/>
-
-                                </p:commandButton>
-                                <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-refresh"  style="margin-right: .5rem; font-size:1.6em" process="@this"
-                                                 oncomplete="PF('cambioEstadoEmpleadoDialog').show()">
-                                    <f:setPropertyActionListener value="#{empleado}" target="#{controladorEmpleado.empleado}"/>
-                                </p:commandButton>
+                            <p:column headerText="Editar" style="width:6rem">
+                                <p:rowEditor />
                             </p:column>
-
-
-
                         </p:dataTable>
 
-                        <p:confirmDialog widgetVar="cambioEstadoEmpleadoDialog" showEffect="fade" width="300"
-                                         message="Desea cambiar el estado?" header="Confimar" severity="warn"  style="margin-right: .5rem; font-size:1.2em">
-                            <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{controladorEmpleado.baja(empleado.idDuiempleado, empleado.estado)}"
-                                             process="@this" oncomplete="PF('cambioEstadoEmpleadoDialog').hide()"  style="margin-right: .5rem; font-size:1.2em"/>
-                            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
-                                             onclick="PF('cambioEstadoEmpleadoDialog').hide()" style="margin-right: .5rem; font-size:1.2em"/>
-                        </p:confirmDialog>
-
-                        <p:confirmDialog global="true" showEffect="fade" width="300">
-                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
-                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
-                                             icon="pi pi-times"/>
-                        </p:confirmDialog>
                     </div>
                 </h:form>
-
             </b:container>
         </b:jumbotron>
 
@@ -140,7 +185,120 @@
 
         </b:container>
 
+        <p:dialog header="Ingresar empleado" showEffect="fade" modal="true"
+                  widgetVar="manageEmpleadotDialog" responsive="true" width="40%">
 
+            <p:panelGrid columns="1" style="width: 90%; margin: auto; text-align: left">
+                <p:outputPanel id="manage-Empleado-content" class="ui-fluid">
+                    <p:outputPanel rendered="#{not empty controladorEmpleado.empleado}">
+
+
+                        <div class="p-field">
+                            <p:outputLabel for="dui" style="font-size:1.4em">Dui</p:outputLabel>
+                            <p:inputText id="dui" value="#{controladorEmpleado.empleado.idDuiempleado}" required="true"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="nombre" style="font-size:1.4em">Nombre</p:outputLabel>
+                            <p:inputText id="nombre" value="#{controladorEmpleado.empleado.nombreempleado}" required="true"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="apellido" style="font-size:1.4em">Apellido</p:outputLabel>
+                            <p:inputText  id="apellido" value="#{controladorEmpleado.empleado.apellidoempleado}" required="true" style="size:1.4em"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="telefono" style="font-size:1.4em">Telefono</p:outputLabel>
+                            <p:inputText  id="telefono" value="#{controladorEmpleado.empleado.telefonoempleado}" required="true" style="size:1.4em" requiredMessage="Codigo requerido" 
+                                          validatorMessage="Telefono incorrecto. Sugerido: 2222-2345">
+                                <f:validateRegex pattern="^[2|7|6]{1}[0-9]{3}-[0-9]{4}" />
+                            </p:inputText> 
+
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="direccion" style="font-size:1.4em">Dirección</p:outputLabel>
+                            <p:inputText  id="direccion" value="#{controladorEmpleado.empleado.telefonoempleado}" required="true" style="size:1.4em"/>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="puesto" style="font-size:1.4em">Puesto</p:outputLabel>
+                            <p:selectOneMenu  id="puesto" value="#{controladorEmpleado.empleado.idDuiempleado}" required="true" style="size:1.4em">
+                                <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
+                                <f:selectItems value="#{controladorEmpleado.listPuesto}" var ="p"
+                                               itemLabel="#{p.nombrepuesto}"
+                                               itemValue="#{p.idpuesto}"/>
+
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="p-field">
+                            <p:outputLabel for="empresa" style="font-size:1.4em">Empresa</p:outputLabel>
+                            <p:selectOneMenu  id="empresa" value="#{controladorEmpleado.empleado.idDuiempleado}" required="true" style="size:1.4em">
+                                <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
+                                <f:selectItems value="#{controladorEmpleado.listEmpresa}" var ="c"
+                                               itemLabel="#{c.nombreempresa}"
+                                               itemValue="#{c.idNitempresa}"/>
+
+                            </p:selectOneMenu>
+                        </div>
+
+
+                        <div class="p-field">
+                            <div class="p-field p-col">
+                                <p:outputLabel for="fecha" style="font-size:1.4em">Fecha</p:outputLabel>
+                                <p:calendar id="fecha" pattern="dd-MM-yyyy"
+                                            value="#{controladorEmpleado.empleado.fechaContrato}"/>                               
+                            </div>
+                        </div>
+
+                    </p:outputPanel>
+                </p:outputPanel>
+
+                <f:facet name="footer">
+                    <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{controladorEmpleado.guardarEmpleado()}"
+                                     update="manage-Empleado-content" process="manage-Empleado-content @this" style="font-size:1.4em"/>
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageEmpleadotDialog').hide()"
+                                     class="ui-button-secondary" style="font-size:1.4em"/>
+                </f:facet>
+            </p:panelGrid>
+        </p:dialog>
+
+        <p:dialog header="Consulta empleado" showEffect="fade" modal="true"
+                  widgetVar="manageEmpleadoConsultatDialog" responsive="true" width="90%">
+            <p:panelGrid columns="1" style="width: 90%; margin: auto; text-align: left">
+                <h:outputLabel value="Empleados con usuarios y activos" style="font-size:1.5em"/>
+
+
+                <p:dataTable id="dt-empleadosUsuario" widgetVar="dtEmpleadoUsuario" var="empleado" value="#{controladorEmpleado.listaEmpleadoConUsuariosActivos()}"
+                             reflow="true" styleClass="empleados-table"
+                             selection="#{controladorEmpleado.listaEmpleadoConUsuariosActivos}" rowKey="#{empleado.idDuiempleado}" paginator="true"
+                             rows="5"  paginatorPosition="bottom" style="font-size:1.1em">
+
+                    <p:column headerText="DUI" style="font-size:1.1em">
+
+                        <h:outputText value="#{empleado[0]}" style="font-size:1.1em"/>
+                    </p:column>
+                    <p:column headerText="NOMBRE COMPLETO" style="font-size:1.1em">
+                        <h:outputText value="#{empleado[1]}" style="font-size:1.1em"/>
+                    </p:column>
+                    <p:column headerText="USUARIO" style="font-size:1.1em">
+                        <h:outputText value="#{empleado[2]}" style="font-size:1.1em"/>
+                    </p:column>
+
+
+                </p:dataTable>
+            </p:panelGrid>
+        </p:dialog>
+        <p:dialog header="Gráfico empleado" showEffect="fade" modal="true"
+                  widgetVar="manageEmpleadoGraficotDialog" responsive="true" width="90%">
+
+            <p:panelGrid columns="2" style="width: 90%; margin: auto; text-align: left">
+
+                <p:chart type="pie" model="#{controladorEmpleado.initPieModel()}"
+                         style="width:550px;height: 350px"
+                         />
+                <p:chart type="bar" model="#{controladorEmpleado.initBarCharModel()}"
+                         style="width:550px;height: 350px"
+                         />
+            </p:panelGrid>
+
+        </p:dialog>
     </h:body>
 
 </html>

@@ -38,7 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Contrato.findByFechainicio", query = "SELECT c FROM Contrato c WHERE c.fechainicio = :fechainicio"),
     @NamedQuery(name = "Contrato.findByVigente", query = "SELECT c FROM Contrato c WHERE c.vigente = :vigente"),
     @NamedQuery(name = "Contrato.findByMotivobaja", query = "SELECT c FROM Contrato c WHERE c.motivobaja = :motivobaja"),
-    @NamedQuery(name = "Contrato.findByFechabaja", query = "SELECT c FROM Contrato c WHERE c.fechabaja = :fechabaja")})
+    @NamedQuery(name = "Contrato.findByFechabaja", query = "SELECT c FROM Contrato c WHERE c.fechabaja = :fechabaja"),
+    @NamedQuery(name = "Contrato.findByDireccioncontrato", query = "SELECT c FROM Contrato c WHERE c.direccioncontrato = :direccioncontrato")})
 public class Contrato implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -63,6 +64,9 @@ public class Contrato implements Serializable {
     @Column(name = "fechabaja")
     @Temporal(TemporalType.DATE)
     private Date fechabaja;
+    @Size(max = 255)
+    @Column(name = "Direccion_contrato")
+    private String direccioncontrato;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcontrato")
     private List<Factura> facturaList;
     @JoinColumn(name = "idcliente", referencedColumnName = "id_duicliente")
@@ -126,6 +130,14 @@ public class Contrato implements Serializable {
 
     public void setFechabaja(Date fechabaja) {
         this.fechabaja = fechabaja;
+    }
+
+    public String getDireccioncontrato() {
+        return direccioncontrato;
+    }
+
+    public void setDireccioncontrato(String direccioncontrato) {
+        this.direccioncontrato = direccioncontrato;
     }
 
     @XmlTransient
