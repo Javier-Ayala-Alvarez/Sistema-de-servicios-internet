@@ -5,9 +5,11 @@
 package Entidades.SesionBean;
 
 import Entidades.Factura;
+import java.util.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,5 +29,13 @@ public class FacturaFacade extends AbstractFacade<Factura> {
     public FacturaFacade() {
         super(Factura.class);
     }
+    
+    
+//    public Factura getFacturaByIdContrato(Date date){
+//        
+//        Query query = em.createNativeQuery("");
+//        query.
+//        
+//    }
     
 }

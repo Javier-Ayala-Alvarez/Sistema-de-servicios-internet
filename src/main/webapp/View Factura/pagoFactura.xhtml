@@ -23,14 +23,15 @@
                     <p:panel id="pnl" header="Consulta de factura" style="font-size: 2em">
                         <p:messages id="messages"/>
                         <h:panelGrid columns="3" id="grid" cellpadding="7">
-                            <p:outputLabel for="username" value="Ingrese el id de contrato" style="font-size:0.50em;"/>
-                            <p:inputText id="username" value="" required="true" style="font-size:0.50em;" placeholder="Id de contrato">
+
+                            <p:outputLabel for="idContrato" value="Ingrese el id de contrato" style="font-size:0.50em;"/>
+                            <p:inputText id="idContrato" value="#{controladorVenta.idContrato}" required="true" style="font-size:0.50em;" placeholder="Id de contrato">
                                 <f:validateLength minimum="4"/>
                             </p:inputText>
-                            <p:message for="username"/>
+                            <p:message for="idContrato"/>
                         </h:panelGrid>
 
-                        <p:commandButton value="Verificar" icon="pencil" action="#" update="growl grid"
+                        <p:commandButton value="Verificar" icon="pencil" action="#{controladorVenta.searchByIdContrato()}" update="growl grid"
                                          oncomplete="handleForm(xhr, status, args)" styleClass="p-mt-3" style="font-size:0.50em;"/>
                     </p:panel>
 
@@ -58,7 +59,7 @@
                             <p:column headerText="Id Contrato">
                                 <h:outputText value="#" />
                             </p:column>
-                             <p:column headerText="Estado">
+                            <p:column headerText="Estado">
                                 <h:outputText value="#" />
                             </p:column>
                         </p:dataTable>
