@@ -6,12 +6,10 @@ package Controlador;
 
 import Entidades.Factura;
 import Entidades.SesionBean.FacturaFacade;
-import Entidades.SesionBean.PuestosFacade;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
 
 /**
@@ -19,14 +17,17 @@ import javax.inject.Inject;
  * @author mejia
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class ControladorVenta implements  Serializable{
     
     //Variables.
-    Factura factura ;
     int idContrato;
+    
+    //injeccion de dependencias 
     @Inject
     FacturaFacade facturaFacade;
+    @Inject
+    Factura factura ;
     
     @PostConstruct
     public  void init (){
