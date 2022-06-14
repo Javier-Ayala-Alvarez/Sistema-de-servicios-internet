@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -15,7 +16,32 @@
         <b:jumbotron>
             <b:container>
                 <h1>Bienvenido</h1>
-              
+
+                <h:form>
+                    <div class="card">
+                        <p:dataTable var="factura" value="#{controladorVenta.facturaFacade.getFactura(controladorVenta.idContrato)}">
+                            <f:facet name="header">
+                                Detalles
+                            </f:facet>
+                            <p:column headerText="Id de Contrato">
+                                <h:outputText value="#{factura[0].toString()}" />
+                            </p:column>
+
+                            <p:column headerText="Name">
+                                <h:outputText value="#{factura[1].toString()}" />
+                            </p:column>
+
+                            <p:column headerText="Category">
+                                <h:outputText value="#{factura[2].toString()}" />
+                            </p:column>
+
+                            <p:column headerText="Quantity">
+                                <h:outputText value="#{factura[3].toString()}" />
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </h:form>
+
 
             </b:container>
         </b:jumbotron>
