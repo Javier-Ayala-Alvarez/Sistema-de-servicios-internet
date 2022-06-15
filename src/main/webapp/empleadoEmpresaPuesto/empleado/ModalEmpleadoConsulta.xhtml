@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Facelets Template</title>
+    </h:head>
+
+    <h:body>
+        
+        <!--Modal de consulta de empleado-->
+        <p:dialog header="Consulta empleado" showEffect="fade" modal="true"
+                  widgetVar="manageEmpleadoConsultatDialog" responsive="true" width="90%">
+            <p:panelGrid columns="1" style="width: 90%; margin: auto; text-align: left">
+                <h:outputLabel value="Empleados con usuarios y activos" style="font-size:1.5em"/>
+
+
+                <p:dataTable id="dt-empleadosUsuario" widgetVar="dtEmpleadoUsuario" var="empleado" value="#{controladorEmpleado.listaEmpleadoConUsuariosActivos()}"
+                             reflow="true" styleClass="empleados-table"
+                             selection="#{controladorEmpleado.listaEmpleadoConUsuariosActivos}" rowKey="#{empleado.idDuiempleado}" paginator="true"
+                             rows="5"  paginatorPosition="bottom" style="font-size:1.1em">
+
+                    <p:column headerText="DUI" style="font-size:1.1em">
+
+                        <h:outputText value="#{empleado[0]}" style="font-size:1.1em"/>
+                    </p:column>
+                    <p:column headerText="NOMBRE COMPLETO" style="font-size:1.1em">
+                        <h:outputText value="#{empleado[1]}" style="font-size:1.1em"/>
+                    </p:column>
+                    <p:column headerText="USUARIO" style="font-size:1.1em">
+                        <h:outputText value="#{empleado[2]}" style="font-size:1.1em"/>
+                    </p:column>
+
+
+                </p:dataTable>
+            </p:panelGrid>
+        </p:dialog>
+        <!--Fin Modal de consulta de empleado-->
+
+    </h:body>
+
+</html>

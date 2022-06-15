@@ -5,7 +5,6 @@
  */
 package Controlador;
 
-
 import Entidades.Empleado;
 import Entidades.Empresa;
 import Entidades.Puestos;
@@ -38,6 +37,7 @@ public class ControladorEmpleado {
     private String sql = "";
     private Query query;
     private Empleado empleado;
+    private List<Empleado> empleadoExiste;
     private Puestos puesto;
     private Empresa empresa;
 
@@ -81,33 +81,71 @@ public class ControladorEmpleado {
 
         this.empleado.setIdNitempresa(event.getObject().getIdNitempresa());
         this.empleado.setPuesto(event.getObject().getPuesto());
-        FacesMessage msg = new FacesMessage("Product Edited", String.valueOf(event.getObject().getIdDuiempleado()));
+        FacesMessage msg = new FacesMessage("Empleado modificado", String.valueOf(event.getObject().getIdDuiempleado()));
         FacesContext.getCurrentInstance().addMessage(null, msg);
         this.empleadoFacade.edit(this.empleado);
-        
+
+    }
+
+    public boolean validacionExistencia(String dui) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoHDP");
+        EntityManager em = emf.createEntityManager();
+        String sql = "	SELECT * FROM empleado WHERE id_duiempleado = '" + dui + "'";
+        this.query = em.createNativeQuery(sql);
+
+        this.empleadoExiste = this.query.getResultList();
+
+        if (this.empleadoExiste.size() == 0) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public void guardarEmpleado() {
+        if (validacionExistencia(this.empleado.getIdDuiempleado()) == true) {
+            this.empleado.setIdNitempresa(empresa);
+            this.empleado.setPuesto(puesto);
+            this.empleado.setEstado(true);
+
+            this.empleadoFacade.create(this.empleado);
+            FacesMessage msg = new FacesMessage("Empleado Guardado con éxito", String.valueOf(this.empleado.getIdDuiempleado()));
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        } else {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Codigo ya existe", String.valueOf(this.empleado.getIdDuiempleado()));
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+
     }
 
     public void onRowCancel(RowEditEvent<Empleado> event) {
-        FacesMessage msg = new FacesMessage("Edit Cancelled", String.valueOf(event.getObject().getIdDuiempleado()));
+
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Modificación cancelada", String.valueOf(event.getObject().getIdDuiempleado()));
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     public ControladorEmpleado() {
     }
 
-    //Consulta jpql}
+    //Consulta sql}
     public List<Object[]> listaEmpleadoConUsuariosActivos() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoHDP");
         EntityManager em = emf.createEntityManager();
-        String jpql = "SELECT e.idDuiempleado, CONCAT( e.nombreempleado, ' ', e.apellidoempleado), u.usuario FROM Empleado e JOIN Usuarios u WHERE e.estado = 'true'";
-        this.query = em.createQuery(jpql);
+        String sql = "SELECT\n"
+                + "	e.id_duiempleado, CONCAT( e.nombreempleado, ' ', e.apellidoempleado), u.usuario AS nombre \n"
+                + "   FROM\n"
+                + "	empleado e\n"
+                + "	INNER JOIN usuarios u ON e.id_duiempleado = u.idempleado WHERE e.estado = 1;\n"
+                + "	";
+        this.query = em.createNativeQuery(sql);
         this.listaEmpleadoConUsuariosActivos = this.query.getResultList();
         //emf.close();
         //em.close();
         return this.listaEmpleadoConUsuariosActivos;
     }
 
-    //FIn jpql
+    //FIn sql
     //Graficos
     public List<Object[]> listarEmpleadoConContratos() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoHDP");
@@ -233,13 +271,6 @@ public class ControladorEmpleado {
     public List<Puestos> listarPuestos() {
         this.listPuesto = this.puestoFacade.findAll();
         return this.listPuesto;
-    }
-
-    public void guardarEmpleado() {
-        this.empleado.setIdNitempresa(empresa);
-        this.empleado.setPuesto(puesto);
-        this.empleadoFacade.create(this.empleado);
-
     }
 
     public void guardarActualizar() {
