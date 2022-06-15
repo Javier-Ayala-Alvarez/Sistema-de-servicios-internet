@@ -12,10 +12,19 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 @ManagedBean
 @ViewScoped
 public class ControladorPuesto {
+    
+    private String sql = "";
+    private Query query;
+    
+    
     @Inject
     private PuestosFacade puestoFacade;
     
@@ -34,6 +43,14 @@ public class ControladorPuesto {
    }
    //Nuevo puesto
    public void createPuesto(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoHDP");
+        EntityManager em = emf.createEntityManager();
+        this.sql = "select max(p.idpuesto) from Puestos p";
+        this.query = em.createQuery(sql);
+        int max = (int) this.query.getSingleResult();
+        //emf.close();
+        //em.close();
+       this.selectPuesto.setIdpuesto(max+1);
        this.puestoFacade.create(selectPuesto);
    }
    //Modificar

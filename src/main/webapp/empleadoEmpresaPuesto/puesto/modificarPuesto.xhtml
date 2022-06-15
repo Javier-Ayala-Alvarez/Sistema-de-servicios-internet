@@ -8,8 +8,7 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <h:outputStylesheet name="./../../Resources/css/default.css"/>
-        <h:outputStylesheet name="./../../Resources/css/tableLayout.css"/>
+        
         <title>Facelets Template</title>
     </h:head>
 
@@ -60,8 +59,9 @@
                                                  oncomplete="PF('dglModificar').hide()"
                                                  actionListener="#{controladorPuesto.actualizar()}"
                                                  icon="ui-icon-check"
-                                                 style="margin-right: .5rem"
+                                                 style= " margin-right: .5rem"
                                                  update="@form"
+                                                 styleClass="ui-button-success"
                                                  action="ViewPuesto.xhtml?faces-redirect=true">
                                 </p:commandButton>
                             </p:column>

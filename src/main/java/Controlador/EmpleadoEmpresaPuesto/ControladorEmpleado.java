@@ -270,8 +270,15 @@ public class ControladorEmpleado implements  Serializable{
     }
 
     public List<Puestos> listarPuestos() {
-        this.listPuesto = this.puestoFacade.findAll();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoHDP");
+        EntityManager em = emf.createEntityManager();
+        this.sql = "select p from Puestos p where p.estado = 'true'";
+        this.query = em.createQuery(sql);
+        this.listPuesto = this.query.getResultList();
+        //emf.close();
+        //em.close();
         return this.listPuesto;
+
     }
 
     public void guardarActualizar() {

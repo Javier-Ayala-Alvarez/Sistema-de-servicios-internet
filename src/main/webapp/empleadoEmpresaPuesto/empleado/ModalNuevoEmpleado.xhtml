@@ -83,15 +83,18 @@
                 </p:outputPanel>
 
                 <f:facet name="footer">
-                    <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{controladorEmpleado.guardarEmpleado()}"
-                                     update="manage-Empleado-content" process="manage-Empleado-content @this" onclick="PF('manageEmpleadotDialog').hide()" style="font-size:1.4em"/>
-                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageEmpleadotDialog').hide()"
+                    
+                    <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{controladorEmpleado.guardarEmpleado(event)}"
+                                     update="manage-Empleado-content" process="manage-Empleado-content @this" 
+                                     action="crudEmpleado.xhtml?faces-redirect=true" 
+                                     style="font-size:1.4em"/>
+                    <p:commandButton value="Cancelar" icon="pi pi-times" 
+                                     action="crudEmpleado.xhtml?faces-redirect=true"
                                      class="ui-button-secondary" style="font-size:1.4em"/>
                 </f:facet>
             </p:panelGrid>
         </p:dialog>
         <!--Fin Modal de ingrear empleados-->
-
       </h:form>
     </h:body>
 

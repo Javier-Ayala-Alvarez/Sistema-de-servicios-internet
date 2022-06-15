@@ -8,8 +8,6 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <h:outputStylesheet name="./../../Resources/css/default.css"/>
-        <h:outputStylesheet name="./../../Resources/css/tableLayout.css"/>
         <title>Facelets Template</title>
     </h:head>
 
@@ -20,7 +18,7 @@
                       modal="true"
                       widgetVar="newPuestoDialog"
                       responsive="true" style="font-size:1.5em">
-                 
+
                 <div style="font-size:1.5em"> 
                     <p:outputPanel id="manage-puesto-content" class="ui-fluid">
                         <p:outputPanel rendered="#{not empty controladorPuesto.selectPuesto}">
@@ -46,17 +44,19 @@
                         </p:outputPanel>
                     </p:outputPanel>
                     <f:facet name="footer">
-                        <p:commandButton value="Modificar" icon="pi pi-check"
+                        <p:commandButton value="Guardar" icon="pi pi-check"
                                          actionListener="#{controladorPuesto.createPuesto()}"
                                          oncomplete="PF('newPuestoDialog').show()"
                                          styleClass="ui-button-success" style="margin-right: .5rem"
                                          update="@form"
-                                         action="viewPuesto.xhtml?faces-redirect=true">
+                                         action="ViewPuesto.xhtml?faces-redirect=true"
+                                         >
                         </p:commandButton>
                         <p:commandButton id="cancelar"
                                          value="CANCELAR"
                                          icon="ui-icon-circle-close" style="margin-left: 10px"
-                                         process="@this">
+                                         process="@this" 
+                                         action="ViewPuesto.xhtml?faces-redirect=true">
 
                         </p:commandButton>
                     </f:facet>
