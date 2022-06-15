@@ -14,15 +14,11 @@
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>20</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
-    
-    
     <mime-mapping>
         <extension>ttf</extension>
         <mime-type>application/x-font-ttf</mime-type>

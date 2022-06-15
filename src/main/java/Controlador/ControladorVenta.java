@@ -4,7 +4,6 @@
  */
 package Controlador;
 
-import Entidades.Contrato;
 import Entidades.Factura;
 import Entidades.SesionBean.ContratoFacade;
 import Entidades.SesionBean.FacturaFacade;
@@ -27,20 +26,21 @@ import org.primefaces.PrimeFaces;
 public class ControladorVenta implements Serializable {
 
     //Variables.
-    int idContrato;
+    int idContrato = 0;
 
     //injeccion de dependencias 
     @Inject
-    FacturaFacade facturaFacade;
-    @Inject
-    ContratoFacade contratoFacade;
-    @Inject
-    Factura factura;
+    private FacturaFacade facturaFacade;
 
     @Inject
-    Contrato contrato;
-    
-    private Object[] listaTabla;
+    private ContratoFacade contratoFacade;
+
+    @Inject
+    private Factura factura;
+
+    private List<Object[]> facturaPendiente;
+
+   
 
     @PostConstruct
     public void init() {
@@ -49,18 +49,24 @@ public class ControladorVenta implements Serializable {
 
     public void searchByIdContrato() {
         if (this.idContrato > 0 && contratoFacade.find(this.idContrato) != null) {
-            this.listaTabla =  this.facturaFacade.getFactura(this.idContrato).get(0);
+            this.facturaPendiente = this.facturaFacade.getFactura(this.idContrato);
+
+            for (Object[] x : facturaPendiente) {
+
+                System.out.println(x[0]);
+                System.out.println(x[1]);
+                System.out.println(x[2]);
+                System.out.println(x[3]);
+            }
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-facturas");
             PrimeFaces.current().executeScript("PF('modalFactura').show()");
             System.out.println("true");
-            
-            System.out.println(listaTabla[1]);
 
         } else {
             System.out.println("error");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Id de contrato no encontrado", "Id de contrato no encontrado"));
-           
+
         }
-        
 
     }
 
@@ -68,26 +74,15 @@ public class ControladorVenta implements Serializable {
         return idContrato;
     }
 
+    public List<Object[]> getFacturaPendiente() {
+        return facturaPendiente;
+    }
+
     //setter y getter.
-
-    public Object[] getListaTabla() {
-        return listaTabla;
+    public void setFacturaPendiente(List<Object[]> facturaPendiente) {
+        this.facturaPendiente = facturaPendiente;
     }
 
-    public void setListaTabla(Object[] listaTabla) {
-        this.listaTabla = listaTabla;
-    }
-    
-
-    public FacturaFacade getFacturaFacade() {
-        return facturaFacade;
-    }
-
-    public void setFacturaFacade(FacturaFacade facturaFacade) {
-        this.facturaFacade = facturaFacade;
-    }
-    
-    
     public void setIdContrato(int idContrato) {
         this.idContrato = idContrato;
     }

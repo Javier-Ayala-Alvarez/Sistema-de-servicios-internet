@@ -11,6 +11,7 @@ import Entidades.Puestos;
 import Entidades.SesionBean.EmpleadoFacade;
 import Entidades.SesionBean.EmpresaFacade;
 import Entidades.SesionBean.PuestosFacade;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -32,7 +33,7 @@ import org.primefaces.model.chart.PieChartModel;
 
 @ManagedBean
 @RequestScoped
-public class ControladorEmpleado {
+public class ControladorEmpleado implements  Serializable{
 
     private String sql = "";
     private Query query;

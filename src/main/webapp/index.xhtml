@@ -3,55 +3,57 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:b="http://bootsfaces.net/ui"
+
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
-    <h:body style="padding-top: 50px; padding-bottom: 20px;">
-        <ui:insert name = "header" >
-            <ui:include src = "Resources/header.xhtml" />
+    <h:body>
+        <ui:insert name = "Header" >
+            <ui:include src = "Resources/Header.xhtml" />
         </ui:insert> 
-        <b:jumbotron>
-            <b:container>
-                <h1>Bienvenido</h1>
 
-                <h:form>
-                    <div class="card">
-                        <p:dataTable var="factura" value="#{controladorVenta.facturaFacade.getFactura(controladorVenta.idContrato)}">
-                            <f:facet name="header">
-                                Detalles
-                            </f:facet>
-                            <p:column headerText="Id de Contrato">
-                                <h:outputText value="#{factura[0].toString()}" />
-                            </p:column>
+        <h1>Bienvenido</h1>
 
-                            <p:column headerText="Name">
-                                <h:outputText value="#{factura[1].toString()}" />
-                            </p:column>
+        <h:form >
+            <div class="card">
+                <p:dataTable var="factura" value="#{controladorVenta.facturaPendiente}">
+                    <f:facet name="header">
+                        Detalles
+                    </f:facet>
+                    <p:column headerText="Id de Contrato">
+                        <h:outputText value="#{factura[0]}" />
+                    </p:column>
 
-                            <p:column headerText="Category">
-                                <h:outputText value="#{factura[2].toString()}" />
-                            </p:column>
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{factura[1]}" />
+                    </p:column>
 
-                            <p:column headerText="Quantity">
-                                <h:outputText value="#{factura[3].toString()}" />
-                            </p:column>
-                        </p:dataTable>
-                    </div>
-                </h:form>
+                    <p:column headerText="DUI">
+                        <h:outputText value="#{factura[2]}" />
+                    </p:column>
+
+                    <p:column headerText="Facturas pendientes">
+                        <h:outputText value="#{factura[3]}" />
+                    </p:column>
+
+                    <p:column headerText="Mora">
+                        <h:outputText value="#{factura[4]}" />
+                    </p:column>
+                    <p:column headerText="Monto">
+                        <h:outputText value="#{factura[5]}" />
+                    </p:column>
+                    <p:column headerText="Total a pagar">
+                        <h:outputText value="#{factura[6]}" />
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </h:form>
 
 
-            </b:container>
-        </b:jumbotron>
 
-        <b:container>
-            <ui:insert name = "footer" >
-                <ui:include src = "/Resources/footer.xhtml" />
-            </ui:insert> 
-
-        </b:container>
+        
 
 
     </h:body>
