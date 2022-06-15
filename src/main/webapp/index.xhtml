@@ -19,7 +19,7 @@
 
                 <h:form>
                     <div class="card">
-                        <p:dataTable var="factura" value="#{controladorVenta.facturaFacade.getFactura(controladorVenta.idContrato)}">
+                        <p:dataTable var="factura" value="#{controladorVenta.facturaFacade.getFactura(1)}">
                             <f:facet name="header">
                                 Detalles
                             </f:facet>
@@ -27,16 +27,26 @@
                                 <h:outputText value="#{factura[0].toString()}" />
                             </p:column>
 
-                            <p:column headerText="Name">
+                            <p:column headerText="Nombre">
                                 <h:outputText value="#{factura[1].toString()}" />
                             </p:column>
 
-                            <p:column headerText="Category">
+                            <p:column headerText="DUI">
                                 <h:outputText value="#{factura[2].toString()}" />
                             </p:column>
 
-                            <p:column headerText="Quantity">
+                            <p:column headerText="Facturas pendientes">
                                 <h:outputText value="#{factura[3].toString()}" />
+                            </p:column>
+
+                            <p:column headerText="Mora">
+                                <h:outputText value="#{factura[4].toString()}" />
+                            </p:column>
+                            <p:column headerText="Monto">
+                                <h:outputText value="#{factura[5].toString()}" />
+                            </p:column>
+                              <p:column headerText="Total a pagar">
+                                <h:outputText value="#{factura[6].toString()}" />
                             </p:column>
                         </p:dataTable>
                     </div>

@@ -44,30 +44,30 @@
                         <p:dialog header="Product Details" showEffect="fade" modal="true"
                                   widgetVar="modalFactura" responsive="true">
 
-                            <h:form>
-                                <div class="card">
-                                    <p:dataTable var="factura" value="#{controladorVenta.facturaFacade.getFactura(controladorVenta.idContrato)}">
-                                        <f:facet name="header">
-                                           Detalles
-                                        </f:facet>
-                                        <p:column headerText="Id de Contrato">
-                                            <h:outputText value="#{factura[0].toString()}" />
-                                        </p:column>
 
-                                        <p:column headerText="Name">
-                                            <h:outputText value="#{factura[1].toString()}" />
-                                        </p:column>
+                            <div class="card">
+                                <p:dataTable var="factura" value="#{controladorVenta.facturaPendiente}">
+                                    <f:facet name="header">
+                                        Detalles
+                                    </f:facet>
+                                    <p:column headerText="Id de Contrato">
+                                        <h:outputText value="#{factura[0]}" />
+                                    </p:column>
 
-                                        <p:column headerText="Category">
-                                            <h:outputText value="#{factura[2].toString()}" />
-                                        </p:column>
+                                    <p:column headerText="Name">
+                                        <h:outputText value="#{factura[1]}" />
+                                    </p:column>
 
-                                        <p:column headerText="Quantity">
-                                            <h:outputText value="#{factura[3].toString()}" />
-                                        </p:column>
-                                    </p:dataTable>
-                                </div>
-                            </h:form>
+                                    <p:column headerText="Category">
+                                        <h:outputText value="#{factura[2]}" />
+                                    </p:column>
+
+                                    <p:column headerText="Quantity">
+                                        <h:outputText value="#{factura[3]}" />
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+
 
 
                         </p:dialog>
