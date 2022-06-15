@@ -30,47 +30,43 @@ public class ControladorVenta implements Serializable {
 
     //injeccion de dependencias 
     @Inject
-    FacturaFacade facturaFacade;
-    
+    private FacturaFacade facturaFacade;
+
     @Inject
-    ContratoFacade contratoFacade;
-    
+    private ContratoFacade contratoFacade;
+
     @Inject
-    Factura factura;
-    
-    List<Object[]> facturaPendiente ;
-    
-    private Object[] listaTabla;
+    private Factura factura;
+
+    private List<Object[]> facturaPendiente;
+
+   
 
     @PostConstruct
     public void init() {
-        
 
     }
 
     public void searchByIdContrato() {
         if (this.idContrato > 0 && contratoFacade.find(this.idContrato) != null) {
             this.facturaPendiente = this.facturaFacade.getFactura(this.idContrato);
-            
+
             for (Object[] x : facturaPendiente) {
-                
+
                 System.out.println(x[0]);
                 System.out.println(x[1]);
                 System.out.println(x[2]);
                 System.out.println(x[3]);
             }
-          
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-facturas");
             PrimeFaces.current().executeScript("PF('modalFactura').show()");
             System.out.println("true");
-            
-           
 
         } else {
             System.out.println("error");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Id de contrato no encontrado", "Id de contrato no encontrado"));
-           
+
         }
-        
 
     }
 
@@ -87,24 +83,6 @@ public class ControladorVenta implements Serializable {
         this.facturaPendiente = facturaPendiente;
     }
 
-    public Object[] getListaTabla() {
-        return listaTabla;
-    }
-
-    public void setListaTabla(Object[] listaTabla) {
-        this.listaTabla = listaTabla;
-    }
-    
-
-    public FacturaFacade getFacturaFacade() {
-        return facturaFacade;
-    }
-
-    public void setFacturaFacade(FacturaFacade facturaFacade) {
-        this.facturaFacade = facturaFacade;
-    }
-    
-    
     public void setIdContrato(int idContrato) {
         this.idContrato = idContrato;
     }

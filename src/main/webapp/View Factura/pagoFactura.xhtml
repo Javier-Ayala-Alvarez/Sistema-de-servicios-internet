@@ -2,40 +2,40 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:b="http://bootsfaces.net/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
-    <h:body style="padding-top: 50px; padding-bottom: 20px;">
+    <h:body>
         <ui:insert name = "header" >
-            <ui:include src = "../Resources/header.xhtml" />
+            <ui:include src = "../Resources/Header.xhtml" />
         </ui:insert> 
 
-        <div class="ui-g" style="padding-top: 2em">
+        <div class="ui-g">
             <div class="ui-g-3"></div>
             <div class="ui-g-6">
 
 
                 <div class="card">
-                    <h:form>
-                        <p:panel id="pnl" header="Consulta de factura" style="font-size: 2em; text-align: center">
+                    <h:form id="form">
+                        <p:growl id="messages" showDetail="true"/>
+                        <p:panel id="pnl" header="Consulta de factura" >
 
                             <p:focus context="panel"/>
 
                             <p:messages/>
 
-                            <h:panelGrid id="panel"  style=" margin-left: 36%; margin-right: 40%">
-                                <p:outputLabel for="idContrato" value="Id del contrato" style="font-size:0.50em;" />
-                                <p:inputText id="idContrato" value="#{controladorVenta.idContrato}" required="true" style="font-size:0.50em;" >
+                            <h:panelGrid id="panel" >
+                                <p:outputLabel for="idContrato" value="Id del contrato"  />
+                                <p:inputText id="idContrato" value="#{controladorVenta.idContrato}" required="true" >
                                     <f:validateLength minimum="1"/>
                                 </p:inputText>
                                 <p:message for="idContrato"/>
                             </h:panelGrid>
 
-                            <p:commandButton id="submitButton" value="Consultar" update="@parent" action="#{controladorVenta.searchByIdContrato()}" styleClass="p-mt-3" style="font-size:0.50em;" />
+                            <p:commandButton id="submitButton" value="Consultar" update="@parent" action="#{controladorVenta.searchByIdContrato()}" styleClass="p-mt-3" />
 
 
                         </p:panel>
@@ -45,28 +45,42 @@
                                   widgetVar="modalFactura" responsive="true">
 
 
-                            <div class="card">
-                                <p:dataTable var="factura" value="#{controladorVenta.facturaPendiente}">
-                                    <f:facet name="header">
-                                        Detalles
-                                    </f:facet>
-                                    <p:column headerText="Id de Contrato">
-                                        <h:outputText value="#{factura[0]}" />
-                                    </p:column>
+                            
+                                <div class="card">
+                                    <p:dataTable var="factura" value="#{controladorVenta.facturaPendiente}"
+                                                 id="dt-facturas" widgetVar="dt-facturas"   >
+                                        <f:facet name="header">
+                                            Detalles
+                                        </f:facet>
+                                        <p:column headerText="Id de Contrato">
+                                            <h:outputText value="#{factura[0]}" />
+                                        </p:column>
 
-                                    <p:column headerText="Name">
-                                        <h:outputText value="#{factura[1]}" />
-                                    </p:column>
+                                        <p:column headerText="Nombre">
+                                            <h:outputText value="#{factura[1]}" />
+                                        </p:column>
 
-                                    <p:column headerText="Category">
-                                        <h:outputText value="#{factura[2]}" />
-                                    </p:column>
+                                        <p:column headerText="DUI">
+                                            <h:outputText value="#{factura[2]}" />
+                                        </p:column>
 
-                                    <p:column headerText="Quantity">
-                                        <h:outputText value="#{factura[3]}" />
-                                    </p:column>
-                                </p:dataTable>
-                            </div>
+                                        <p:column headerText="Facturas pendientes">
+                                            <h:outputText value="#{factura[3]}" />
+                                        </p:column>
+
+                                        <p:column headerText="Mora">
+                                            <h:outputText value="#{factura[4]}" />
+                                        </p:column>
+                                        <p:column headerText="Monto">
+                                            <h:outputText value="#{factura[5]}" />
+                                        </p:column>
+                                        <p:column headerText="Total a pagar">
+                                            <h:outputText value="#{factura[6]}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </div>
+                            
+
 
 
 
@@ -91,12 +105,7 @@
 
 
 
-        <b:container>
-            <ui:insert name = "footer" >
-                <ui:include src = "../Resources/footer.xhtml" />
-            </ui:insert> 
-
-        </b:container>
+        
     </h:body>
 
 </html>
