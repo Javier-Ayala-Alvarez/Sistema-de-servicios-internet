@@ -18,6 +18,66 @@
             <ui:include src = "../../Resources/header.xhtml" />
         </ui:insert>
         Empresa
+        
+         <h:form id="form"> 
+            <!--Cambio de Alertas-->
+            <p:growl id="msgs" showDetail="true"/>
+            <!--Fin de Alerta-->
+                <p:panelGrid columns="1" style="width: 50%; margin: auto; text-align: left">
+                    <p:outputPanel id="manage-Empleado-content" class="ui-fluid">
+                        <p:outputPanel rendered="#{not empty controladorEmpleado.empleado}">
+
+
+                            <div class="p-field">
+                                <p:outputLabel for="nit" style="font-size:1.4em">NIT</p:outputLabel >
+                                <p:inputText id="nit" value="#{controladorEmpleado.empleado.idDuiempleado}" required="true" >
+                                    <p:keyFilter mask="num" />
+                                </p:inputText>
+                            </div>
+                            <div class="p-field">
+                                <p:outputLabel for="nombre" style="font-size:1.4em">Nombre</p:outputLabel>
+                                <p:inputText id="nombre" value="#{controladorEmpleado.empleado.nombreempleado}" required="true">
+                                    <p:keyFilter regEx="/[A-Z]/i"/>
+                                </p:inputText>
+                            </div>
+                            
+                            <div class="p-field">
+                                <p:outputLabel for="telefono" style="font-size:1.4em">Telefono</p:outputLabel>
+                                <p:inputText  id="telefono" value="#{controladorEmpleado.empleado.telefonoempleado}"  style="size:1.4em" 
+                                              required="true" validatorMessage="Telefono incorrecto. Sugerido: 2222-2345"      > 
+                                    <p:keyFilter mask="num" />
+                                    <f:validateRegex pattern="^[2|7|6]{1}[0-9]{3}-[0-9]{4}"/>
+                                </p:inputText> 
+
+                            </div>
+                            <div class="p-field">
+                                <p:outputLabel for="direccion" style="font-size:1.4em">Dirección</p:outputLabel>
+                                <p:inputText  id="direccion" value="#{controladorEmpleado.empleado.direccionempleado}" 
+                                              required="true" style="size:1.4em"/>
+                            </div>
+                            <div class="p-field">
+                                <p:outputLabel for="correo" style="font-size:1.4em">Correo</p:outputLabel>
+                                <p:inputText  id="correo" value="#{controladorEmpleado.empleado.direccionempleado}" 
+                                              required="true" style="size:1.4em"/>
+                            </div>
+
+                        </p:outputPanel>
+                    </p:outputPanel>
+
+                    <f:facet name="footer">
+
+                        <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{controladorEmpleado.guardarEmpleado()}"
+                                         update="manage-Empleado-content :form:msgs" 
+                                         process="manage-Empleado-content @this" 
+                                        
+                                         style="font-size:1.4em" />
+                        <p:commandButton value="Cancelar" icon="pi pi-times" 
+                                          process="@this"
+                                          action="crudEmpleado.xhtml?faces-redirect=true"
+                                         class="ui-button-secondary" style="font-size:1.4em"/>
+                    </f:facet>
+                </p:panelGrid>
+        </h:form>
 
 
 
