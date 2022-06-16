@@ -26,27 +26,27 @@
 
 
                             <div class="p-field">
-                                <p:outputLabel for="dui" style="font-size:1.4em">Dui</p:outputLabel >
+                                <p:outputLabel for="dui" >Dui</p:outputLabel >
                                 <p:inputText id="dui" value="#{controladorEmpleado.empleado.idDuiempleado}" required="true" >
                                     <p:keyFilter mask="num" />
                                 </p:inputText>
                             </div>
                             <div class="p-field">
-                                <p:outputLabel for="nombre" style="font-size:1.4em">Nombre</p:outputLabel>
+                                <p:outputLabel for="nombre" >Nombre</p:outputLabel>
                                 <p:inputText id="nombre" value="#{controladorEmpleado.empleado.nombreempleado}" required="true">
                                     <p:keyFilter regEx="/[A-Z]/i"/>
                                 </p:inputText>
                             </div>
                             <div class="p-field">
-                                <p:outputLabel for="apellido" style="font-size:1.4em">Apellido</p:outputLabel>
+                                <p:outputLabel for="apellido" >Apellido</p:outputLabel>
                                 <p:inputText  id="apellido" value="#{controladorEmpleado.empleado.apellidoempleado}" 
-                                              required="true" style="size:1.4em">
+                                              required="true" >
                                     <p:keyFilter regEx="/[A-Z]/i"/>
                                 </p:inputText>
                             </div>
                             <div class="p-field">
-                                <p:outputLabel for="telefono" style="font-size:1.4em">Telefono</p:outputLabel>
-                                <p:inputText  id="telefono" value="#{controladorEmpleado.empleado.telefonoempleado}"  style="size:1.4em" 
+                                <p:outputLabel for="telefono" >Telefono</p:outputLabel>
+                                <p:inputText  id="telefono" value="#{controladorEmpleado.empleado.telefonoempleado}"   
                                               required="true" validatorMessage="Telefono incorrecto. Sugerido: 2222-2345"      > 
                                     <p:keyFilter mask="num" />
                                     <f:validateRegex pattern="^[2|7|6]{1}[0-9]{3}-[0-9]{4}"/>
@@ -54,15 +54,15 @@
 
                             </div>
                             <div class="p-field">
-                                <p:outputLabel for="direccion" style="font-size:1.4em">Dirección</p:outputLabel>
+                                <p:outputLabel for="direccion" >Dirección</p:outputLabel>
                                 <p:inputText  id="direccion" value="#{controladorEmpleado.empleado.direccionempleado}" 
-                                              required="true" style="size:1.4em"/>
+                                              required="true" />
                             </div>
                             <div class="p-field">
            
-                                <p:outputLabel for="puesto" style="font-size:1.4em">Puesto</p:outputLabel>
+                                <p:outputLabel for="puesto" >Puesto</p:outputLabel>
                                 <p:selectOneMenu  id="puesto" value="#{controladorEmpleado.puesto.idpuesto}" 
-                                                  required="true" style="size:1.4em">
+                                                  required="true" >
                                     <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
                                     <f:selectItems value="#{controladorEmpleado.listPuesto}" var ="p"
                                                    itemLabel="#{p.nombrepuesto}"
@@ -71,9 +71,9 @@
                                 </p:selectOneMenu>
                             </div>
                             <div class="p-field">
-                                <p:outputLabel for="empresa" style="font-size:1.4em">Empresa</p:outputLabel>
+                                <p:outputLabel for="empresa" >Empresa</p:outputLabel>
                                 <p:selectOneMenu  id="empresa" value="#{controladorEmpleado.empresa.idNitempresa}"
-                                                  required="true" style="size:1.4em">
+                                                  required="true" >
                                     <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
                                     <f:selectItems value="#{controladorEmpleado.listEmpresa}" var ="c"
                                                    itemLabel="#{c.nombreempresa}"
@@ -85,7 +85,7 @@
 
                             <div class="p-field">
                                 <div class="p-field p-col">
-                                    <p:outputLabel for="fecha" style="font-size:1.4em">Fecha</p:outputLabel>
+                                    <p:outputLabel for="fecha" >Fecha</p:outputLabel>
                                     <p:calendar id="fecha" pattern="dd-MM-yyyy"
                                                 value="#{controladorEmpleado.empleado.fechaContrato}"/>                               
                                 </div>
@@ -100,11 +100,11 @@
                                          update="manage-Empleado-content :form:msgs" 
                                          process="manage-Empleado-content @this" 
                                         
-                                         style="font-size:1.4em" />
+                                          />
                         <p:commandButton value="Cancelar" icon="pi pi-times" 
                                           process="@this"
                                           action="crudEmpleado.xhtml?faces-redirect=true"
-                                         class="ui-button-secondary" style="font-size:1.4em"/>
+                                         class="ui-button-secondary" />
                     </f:facet>
                 </p:panelGrid>
             </p:dialog>

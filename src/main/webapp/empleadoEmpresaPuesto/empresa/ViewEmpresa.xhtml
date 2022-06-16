@@ -13,9 +13,9 @@
     </h:head>
 
 
-    <h:body style="padding-top: 50px; padding-bottom: 20px;">
+    <h:body>
         <ui:insert name = "header" >
-            <ui:include src = "../../Resources/header.xhtml" />
+            <ui:include src = "../../Resources/Header.xhtml" />
         </ui:insert>
         Empresa
         
@@ -29,20 +29,20 @@
 
 
                             <div class="p-field">
-                                <p:outputLabel for="nit" style="font-size:1.4em">NIT</p:outputLabel >
+                                <p:outputLabel for="nit" >NIT</p:outputLabel >
                                 <p:inputText id="nit" value="#{controladorEmpleado.empleado.idDuiempleado}" required="true" >
                                     <p:keyFilter mask="num" />
                                 </p:inputText>
                             </div>
                             <div class="p-field">
-                                <p:outputLabel for="nombre" style="font-size:1.4em">Nombre</p:outputLabel>
+                                <p:outputLabel for="nombre">Nombre</p:outputLabel>
                                 <p:inputText id="nombre" value="#{controladorEmpleado.empleado.nombreempleado}" required="true">
                                     <p:keyFilter regEx="/[A-Z]/i"/>
                                 </p:inputText>
                             </div>
                             
                             <div class="p-field">
-                                <p:outputLabel for="telefono" style="font-size:1.4em">Telefono</p:outputLabel>
+                                <p:outputLabel for="telefono">Telefono</p:outputLabel>
                                 <p:inputText  id="telefono" value="#{controladorEmpleado.empleado.telefonoempleado}"  style="size:1.4em" 
                                               required="true" validatorMessage="Telefono incorrecto. Sugerido: 2222-2345"      > 
                                     <p:keyFilter mask="num" />
@@ -51,14 +51,14 @@
 
                             </div>
                             <div class="p-field">
-                                <p:outputLabel for="direccion" style="font-size:1.4em">Dirección</p:outputLabel>
+                                <p:outputLabel for="direccion" >Dirección</p:outputLabel>
                                 <p:inputText  id="direccion" value="#{controladorEmpleado.empleado.direccionempleado}" 
-                                              required="true" style="size:1.4em"/>
+                                              required="true" />
                             </div>
                             <div class="p-field">
-                                <p:outputLabel for="correo" style="font-size:1.4em">Correo</p:outputLabel>
+                                <p:outputLabel for="correo" >Correo</p:outputLabel>
                                 <p:inputText  id="correo" value="#{controladorEmpleado.empleado.direccionempleado}" 
-                                              required="true" style="size:1.4em"/>
+                                              required="true" />
                             </div>
 
                         </p:outputPanel>
@@ -70,11 +70,11 @@
                                          update="manage-Empleado-content :form:msgs" 
                                          process="manage-Empleado-content @this" 
                                         
-                                         style="font-size:1.4em" />
+                                          />
                         <p:commandButton value="Cancelar" icon="pi pi-times" 
                                           process="@this"
                                           action="crudEmpleado.xhtml?faces-redirect=true"
-                                         class="ui-button-secondary" style="font-size:1.4em"/>
+                                         class="ui-button-secondary" />
                     </f:facet>
                 </p:panelGrid>
         </h:form>

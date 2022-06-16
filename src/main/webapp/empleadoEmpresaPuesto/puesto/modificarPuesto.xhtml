@@ -16,8 +16,8 @@
         <h:form id="formModificar">
             <p:dialog id="dgl" widgetVar="dglModificar"
                       header="Modificacion de datos de Puesto">
-                <p:panel header="Modificar" style="font-size:1.5em">
-                    <p:panelGrid style="font-size:1.5em">
+                <p:panel header="Modificar" >
+                    <p:panelGrid>
                         <p:row>
                             <p:column>
                                 <p:outputLabel for="id" value="ID PUESTO" />
@@ -32,9 +32,10 @@
                                 <p:outputLabel for="nombre" value="NOMBRE"/>
                             </p:column>
                             <p:column>
-                                <h:inputText id="nombre" value="#{controladorPuesto.selectPuesto.nombrepuesto}"  required="true">
+                                <p:inputText id="nombre" value="#{controladorPuesto.selectPuesto.nombrepuesto}" required="true">
                                     <p:keyFilter regEx="/[A-Z]/i"/>
-                                </h:inputText>
+                                </p:inputText>
+                                
                             </p:column>
                         </p:row>
                         <p:row>
@@ -62,13 +63,13 @@
                         </p:row>
                     </p:panelGrid>
                     <f:facet name="footer">
-                        <div align="center" style="font-weight: bold; font-size:1.5em">
+                        <div align="center" style="font-weight: bold">
                             <p:column>
                                 <p:commandButton id="guardar" value="UPDATE"
                                                  oncomplete="PF('dglModificar').hide()"
                                                  actionListener="#{controladorPuesto.actualizar()}"
                                                  icon="ui-icon-check"
-                                                 style= " margin-right: .5rem"
+                                                 
                                                  update="@form"
                                                  styleClass="ui-button-success"
                                                  action="ViewPuesto.xhtml?faces-redirect=true">

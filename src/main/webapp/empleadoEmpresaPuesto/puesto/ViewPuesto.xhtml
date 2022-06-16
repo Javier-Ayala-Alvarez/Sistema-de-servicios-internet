@@ -12,15 +12,16 @@
         <title>Puestos</title>
     </h:head>
 
-    <h:body style="padding-top: 50px; padding-bottom: 20px;">
+    <h:body>
         <ui:insert name = "header" >
-            <ui:include src = "../../Resources/header.xhtml" />
+            <ui:include src = "../../Resources/Header.xhtml" />
             <ui:include src = "modificarPuesto.xhtml" />
             <ui:include src = "guardarPuesto.xhtml" />
         </ui:insert> 
-        <h:form id="form" style=" font-size:1.2em">
-            <b:container >
+         <p:panelGrid columns="1" style="width: 95%; margin: auto; text-align: left">
+        <h:form id="form" >
 
+           
                 <div class="card crud-demo">
                     <p:growl id="messages" showDetail="true"/>
                     <p:toolbar>
@@ -29,7 +30,7 @@
 
                                              oncomplete="PF('newPuestoDialog').show()"
                                              styleClass="ui-button-success"
-                                             style="font-size:1.5em">
+                                             >
 
                                 <p:resetInput target=":form:manage-puesto-content"/>
                             </p:commandButton>
@@ -52,11 +53,11 @@
                              rowSelectMode="add"
 
                              paginatorPosition="bottom"
-                             style="font-size:1em"
+
                              widgetVar="dtpuestos">
                     <f:facet name="header">
                         <div class="capa-table-header">
-                            <span style="font-weight: bold; font-size:1.5em " >PUESTO</span>
+                            <span style="font-weight: bold" >PUESTO</span>
                             <span class="filter-container ui-input-icon-left">
                                 <i class="pi pi-search"></i>
                                 <p:inputText id="globalFilter"
@@ -90,7 +91,7 @@
                         <p:panelGrid styleClass="ui-noborder" columns="1">
                             <p:column headerText="">
                                 <div align="center">
-                                  
+
                                     <p:commandButton styleClass="edit-button rounded-button ui-button-success"  icon="pi pi-pencil"
                                                      oncomplete="PF('dglModificar').show();"
                                                      ajax="true"
@@ -105,10 +106,9 @@
                     </p:column>
                 </p:dataTable>
 
-            </b:container>
 
         </h:form>
-
+        </p:panelGrid>
     </h:body>
 
 </html>
