@@ -21,13 +21,12 @@
                 <div class="card">
                     <h:form id="form">
                         <p:growl id="messages" showDetail="true"/>
-                        <p:panel id="pnl" header="Consulta de factura" >
+                        <p:panel id="pnl" header="Consulta de factura" style="text-align: center;  display:block;"  >
 
                             <p:focus context="panel"/>
 
                             <p:messages/>
-
-                            <h:panelGrid id="panel" >
+                            <h:panelGrid id="panel"   style="margin: 0 auto;">
                                 <p:outputLabel for="idContrato" value="Id del contrato"  />
                                 <p:inputText id="idContrato" value="#{controladorVenta.idContrato}" required="true" >
                                     <f:validateLength minimum="1"/>
@@ -35,51 +34,57 @@
                                 <p:message for="idContrato"/>
                             </h:panelGrid>
 
+
                             <p:commandButton id="submitButton" value="Consultar" update="@parent" action="#{controladorVenta.searchByIdContrato()}" styleClass="p-mt-3" />
 
 
                         </p:panel>
 
 
-                        <p:dialog header="Product Details" showEffect="fade" modal="true"
-                                  widgetVar="modalFactura" responsive="true">
+                        <p:dialog header="Pago de Factura" showEffect="fade" modal="true"
+                                  widgetVar="modalFactura" responsive="true" style="text-align: center;">
 
 
-                            
-                                <div class="card">
-                                    <p:dataTable var="factura" value="#{controladorVenta.facturaPendiente}"
-                                                 id="dt-facturas" widgetVar="dt-facturas"   >
-                                        <f:facet name="header">
-                                            Detalles
-                                        </f:facet>
-                                        <p:column headerText="Id de Contrato">
-                                            <h:outputText value="#{factura[0]}" />
-                                        </p:column>
 
-                                        <p:column headerText="Nombre">
-                                            <h:outputText value="#{factura[1]}" />
-                                        </p:column>
+                            <div class="card">
+                                <p:dataTable var="factura" value="#{controladorVenta.facturaPendiente}"
+                                             id="dt-facturas" widgetVar="dt-facturas"   >
+                                    <f:facet name="header">
+                                        Detalles
+                                    </f:facet>
+                                    <p:column headerText="Id de Contrato">
+                                        <h:outputText value="#{factura[0]}" />
+                                    </p:column>
 
-                                        <p:column headerText="DUI">
-                                            <h:outputText value="#{factura[2]}" />
-                                        </p:column>
+                                    <p:column headerText="Nombre">
+                                        <h:outputText value="#{factura[1]}" />
+                                    </p:column>
 
-                                        <p:column headerText="Facturas pendientes">
-                                            <h:outputText value="#{factura[3]}" />
-                                        </p:column>
+                                    <p:column headerText="DUI">
+                                        <h:outputText value="#{factura[2]}" />
+                                    </p:column>
 
-                                        <p:column headerText="Mora">
-                                            <h:outputText value="#{factura[4]}" />
-                                        </p:column>
-                                        <p:column headerText="Monto">
-                                            <h:outputText value="#{factura[5]}" />
-                                        </p:column>
-                                        <p:column headerText="Total a pagar">
-                                            <h:outputText value="#{factura[6]}" />
-                                        </p:column>
-                                    </p:dataTable>
+                                    <p:column headerText="Facturas pendientes">
+                                        <h:outputText value="#{factura[3]}" />
+                                    </p:column>
+
+                                    <p:column headerText="Mora">
+                                        <h:outputText value="#{factura[4]}" />
+                                    </p:column>
+                                    <p:column headerText="Monto">
+                                        <h:outputText value="#{factura[5]}" />
+                                    </p:column>
+                                    <p:column headerText="Total a pagar">
+                                        <h:outputText value="#{factura[6]}" />
+                                    </p:column>
+                                </p:dataTable>
+                                
+                                <div> <p:commandButton  value="Pagar"  />
                                 </div>
+                             
+                            </div>
                             
+
 
 
 
@@ -94,18 +99,13 @@
             <div class="ui-g-3"></div>
         </div>
 
-
-
-
-
-
         <div class="card ">
 
         </div>
 
 
 
-        
+
     </h:body>
 
 </html>

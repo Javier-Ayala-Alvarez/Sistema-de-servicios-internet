@@ -48,7 +48,7 @@ public class FacturaFacade extends AbstractFacade<Factura> {
                 + "  )  as facturasPendientes,\n"
                 + "  (\n"
                 + "    select\n"
-                + "      s.mora * (if (facturasPendientes > 1, facturasPendientes, 0))\n"
+                + "      s.mora * (if (facturasPendientes > 1, facturasPendientes-1, 0))\n"
                 + "    from\n"
                 + "      servicio s\n"
                 + "    where\n"
@@ -76,6 +76,11 @@ public class FacturaFacade extends AbstractFacade<Factura> {
         lista = q.getResultList();
         return lista;
 
+    }
+    
+    
+    public void ModificarFacturasPago(){
+        
     }
 
 }
