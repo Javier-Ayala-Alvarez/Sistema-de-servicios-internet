@@ -50,14 +50,6 @@ public class ControladorVenta implements Serializable {
     public void searchByIdContrato() {
         if (this.idContrato > 0 && contratoFacade.find(this.idContrato) != null) {
             this.facturaPendiente = this.facturaFacade.getFactura(this.idContrato);
-
-            for (Object[] x : facturaPendiente) {
-
-                System.out.println(x[0]);
-                System.out.println(x[1]);
-                System.out.println(x[2]);
-                System.out.println(x[3]);
-            }
             PrimeFaces.current().ajax().update("form:messages", "form:dt-facturas");
             PrimeFaces.current().executeScript("PF('modalFactura').show()");
             System.out.println("true");
@@ -68,6 +60,12 @@ public class ControladorVenta implements Serializable {
 
         }
 
+    }
+    public void cancelarFactura(){
+        if(this.idContrato > 0){
+            
+        }
+       
     }
 
     public int getIdContrato() {
