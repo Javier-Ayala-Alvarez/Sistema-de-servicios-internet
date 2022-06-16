@@ -90,30 +90,47 @@
                                 <p:column headerText="DUI" sortBy="#{empleado.idDuiempleado}"   filterBy="#{empleado.idDuiempleado}">
                                     <p:cellEditor>
                                         <f:facet name="output"><h:outputText value="#{empleado.idDuiempleado}"/></f:facet>
-                                        <f:facet name="input"><p:inputText id="modelInput" value="#{empleado.idDuiempleado}"
-                                                                           style="width:100%; font-size:1em"/></f:facet>
+                                        <f:facet name="input">
+                                            <p:inputText id="modelInput" value="#{empleado.idDuiempleado}"
+                                                         style="width:100%; font-size:1em">
+                                                <p:keyFilter mask="num" />
+                                            </p:inputText>
+                                        </f:facet>
                                     </p:cellEditor>
                                 </p:column>
                                 <p:column headerText="Nombre" sortBy="#{empleado.nombreempleado}" filterBy="#{empleado.nombreempleado}">
                                     <p:cellEditor>
                                         <f:facet name="output"><h:outputText value="#{empleado.nombreempleado}"/></f:facet>
-                                        <f:facet name="input"><p:inputText  value="#{empleado.nombreempleado}"
-                                                                            style="width:100%; font-size:1em"/></f:facet>
+                                        <f:facet name="input">
+                                            <p:inputText  value="#{empleado.nombreempleado}"
+                                                          style="width:100%; font-size:1em">
+                                                <p:keyFilter regEx="/[A-Z]/i"/>
+                                            </p:inputText>
+                                        </f:facet>
                                     </p:cellEditor>
                                 </p:column>
 
                                 <p:column headerText="Apellido" sortBy="#{empleado.apellidoempleado}" filterBy="#{empleado.apellidoempleado}">
                                     <p:cellEditor>
                                         <f:facet name="output"><h:outputText value="#{empleado.apellidoempleado}"/></f:facet>
-                                        <f:facet name="input"><p:inputText  value="#{empleado.apellidoempleado}"
-                                                                            style="width:100%; font-size:1em"/></f:facet>
+                                        <f:facet name="input">
+                                            <p:inputText  value="#{empleado.apellidoempleado}"
+                                                          style="width:100%; font-size:1em">
+                                                <p:keyFilter regEx="/[A-Z]/i"/>
+                                            </p:inputText>
+                                        </f:facet>
                                     </p:cellEditor>     
                                 </p:column>
                                 <p:column headerText="Telefono" sortBy="#{empleado.telefonoempleado}" filterBy="#{empleado.telefonoempleado}">
                                     <p:cellEditor>
                                         <f:facet name="output"><h:outputText value="#{empleado.telefonoempleado}"/></f:facet>
-                                        <f:facet name="input"><p:inputText  value="#{empleado.telefonoempleado}"
-                                                                            style="width:100%; font-size:1em"/></f:facet>
+                                        <f:facet name="input">
+                                            <p:inputText  value="#{empleado.telefonoempleado}"
+                                                          style="width:100%; font-size:1em"  required="true" validatorMessage="Telefono incorrecto. Sugerido: 2222-2345"      > 
+                                                <p:keyFilter mask="num" />
+                                                <f:validateRegex pattern="^[2|7|6]{1}[0-9]{3}-[0-9]{4}"/>
+                                            </p:inputText>
+                                        </f:facet>
                                     </p:cellEditor>
                                 </p:column>
                                 <p:column headerText="Dirección" sortBy="#{empleado.direccionempleado}" filterBy="#{empleado.direccionempleado}">
@@ -130,7 +147,9 @@
                                         <f:facet name="output"><h:outputText value="#{empleado.puesto.nombrepuesto}"/></f:facet>
                                         <f:facet name="input">
                                             <h:selectOneMenu value="#{empleado.puesto.idpuesto}" style="width:100%; font-size:1em">
+                                                <f:selectItem itemLabel="#{empleado.puesto.nombrepuesto}" itemValue="0"/>
                                                 <f:selectItems value="#{controladorEmpleado.listPuesto}" var="status"
+
                                                                itemLabel="#{status.nombrepuesto}" 
                                                                itemValue="#{status.idpuesto}"/>
                                             </h:selectOneMenu>
@@ -175,17 +194,22 @@
                                         </f:facet>
                                     </p:cellEditor>
                                 </p:column>
-                                <p:ajax event="rowEdit" listener="#{controladorEmpleado.onRowEdit}" update=":form:msgs"/>
+
+                                <p:ajax event="rowEdit" listener="#{controladorEmpleado.onRowEdit}" update=":form:msgs" />
                                 <p:ajax event="rowEditCancel" listener="#{controladorEmpleado.onRowCancel}" update=":form:msgs"/>
                                 <p:column headerText="Editar" style="width:6rem">
-                                   <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
+                                    <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
                                 </p:column>
-                    
+
                             </p:dataTable>
                         </div>
                         <!--Fin de tabla de empleados-->
                     </div>
 
+                    
+                    
+                    
+                    
                 </b:container>
             </b:jumbotron>
 

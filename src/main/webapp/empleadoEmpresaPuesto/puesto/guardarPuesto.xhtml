@@ -25,13 +25,23 @@
                             <div class="p-formgrid p-grid">
                                 <div class="p-field p-col">
                                     <p:outputLabel for="Nombre">Nombre</p:outputLabel>
-                                    <p:inputText id="Nombre" value="#{controladorPuesto.selectPuesto.nombrepuesto}" required="true" />
+                                    <p:inputText id="Nombre" value="#{controladorPuesto.selectPuesto.nombrepuesto}" required="true">
+                                        <p:keyFilter regEx="/[A-Z]/i"/>
+                                    </p:inputText>
                                 </div>
                             </div>     
                             <div class="p-formgrid p-grid">
                                 <div class="p-field p-col">
                                     <p:outputLabel for="salario">Salario $0.00</p:outputLabel>
-                                    <p:inputText id="salario" value="#{controladorPuesto.selectPuesto.salario}" required="true" />
+                                    <div class="ui-inputgroup">
+                                        <div class="ui-inputgroup-addon">$</div>
+                                        <p:inputText placeholder="Salario" id="salario"
+                                                     value="#{controladorPuesto.selectPuesto.salario}" required="true">
+                                            <p:keyFilter mask="num" />
+                                        </p:inputText>
+                                        <div class="ui-inputgroup-addon">.00</div>
+                                    </div>
+                                    
                                 </div>
                             </div> 
                             <div class="p-formgrid p-grid">

@@ -72,6 +72,7 @@ public class ControladorEmpleado implements  Serializable{
     }
 
     public void onRowEdit(RowEditEvent<Empleado> event) {
+        
         this.empleado.setIdDuiempleado(event.getObject().getIdDuiempleado());
         this.empleado.setNombreempleado(event.getObject().getNombreempleado());
         this.empleado.setApellidoempleado(event.getObject().getApellidoempleado());

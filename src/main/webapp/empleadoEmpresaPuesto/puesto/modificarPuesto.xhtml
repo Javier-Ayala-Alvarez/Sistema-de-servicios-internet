@@ -8,12 +8,12 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        
+
         <title>Facelets Template</title>
     </h:head>
 
     <h:body>
-       <h:form id="formModificar">
+        <h:form id="formModificar">
             <p:dialog id="dgl" widgetVar="dglModificar"
                       header="Modificacion de datos de Puesto">
                 <p:panel header="Modificar" style="font-size:1.5em">
@@ -32,15 +32,24 @@
                                 <p:outputLabel for="nombre" value="NOMBRE"/>
                             </p:column>
                             <p:column>
-                                <h:inputText id="nombre" value="#{controladorPuesto.selectPuesto.nombrepuesto}"/>
+                                <h:inputText id="nombre" value="#{controladorPuesto.selectPuesto.nombrepuesto}"  required="true">
+                                    <p:keyFilter regEx="/[A-Z]/i"/>
+                                </h:inputText>
                             </p:column>
                         </p:row>
                         <p:row>
                             <p:column>
-                                <p:outputLabel for="Salario" value="SALARIO $0.00"/>
+                                <p:outputLabel for="salario" value="SALARIO $0.00"/>
                             </p:column>
                             <p:column>
-                                <h:inputText id="Salario" value="#{controladorPuesto.selectPuesto.salario}"/>
+                                <div class="ui-inputgroup">
+                                    <div class="ui-inputgroup-addon">$</div>
+                                    <p:inputText placeholder="Salario" id="salario" 
+                                                 value="#{controladorPuesto.selectPuesto.salario}" required="true">
+                                        <p:keyFilter mask="num" />
+                                    </p:inputText>
+                                    <div class="ui-inputgroup-addon">.00</div>
+                                </div>
                             </p:column>
                         </p:row>
                         <p:row>
@@ -69,7 +78,8 @@
                                 <p:commandButton id="cancelar"
                                                  value="CANCELAR"
                                                  icon="ui-icon-circle-close" style="margin-left: 10px"
-                                                 process="@this">
+                                                 process="@this"
+                                                  action="ViewPuesto.xhtml?faces-redirect=true">
 
                                 </p:commandButton>
 
@@ -78,7 +88,7 @@
                     </f:facet>
                 </p:panel>
             </p:dialog>
-            </h:form>
+        </h:form>
     </h:body>
 
 </html>
