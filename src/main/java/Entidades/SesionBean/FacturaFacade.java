@@ -77,5 +77,10 @@ public class FacturaFacade extends AbstractFacade<Factura> {
         return lista;
 
     }
+    
+    
+    public void ModificarFacturasPago(){
+        
+    }
 
 }

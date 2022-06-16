@@ -56,7 +56,7 @@ public class ControladorVenta implements Serializable {
 
         } else {
             System.out.println("error");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Id de contrato no encontrado", "Id de contrato no encontrado"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Id de contrato no encontrado", ""));
 
         }
 
