@@ -14,7 +14,11 @@
         <title>Empleado</title>
     </h:head>
 
+<<<<<<< HEAD
     <h:body>
+=======
+    <h:body >
+>>>>>>> 6eea8c7865379ba33874c3afc95d439fd747c79f
 
         <ui:insert name = "header" >
             <ui:include src = "../../Resources/Header.xhtml" />
@@ -22,6 +26,7 @@
             <ui:include src = "ModalGraficasEmpleado.xhtml" />
             <ui:include src = "ModalNuevoEmpleado.xhtml" />
         </ui:insert> 
+<<<<<<< HEAD
         <p:panelGrid columns="1" style="width: 95%; margin: auto; text-align: left">
             <h:form id="form">
 
@@ -71,6 +76,194 @@
                             <f:facet name="header">
                                 <div class="empleados-table-header">
                                     <span style="font-weight: bold">EMPLEADOS</span>
+=======
+        <h:form id="form">
+
+            <!--CRUD DE EMPLEADO-->
+            <div class="card crud-demo">
+                <!--Botones de selección-->
+                <div> 
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton value="Nuevo Empleado" icon="pi pi-plus"
+                                             oncomplete="PF('manageEmpleadotDialog').show()"
+                                             styleClass="ui-button-success" style="margin-right: .5rem; font-size:1.6em">
+                                <p:resetInput target=":form:manage-Empleado-content"/>
+                            </p:commandButton>
+                            <p:commandButton value="Gráficas" 
+                                             oncomplete="PF('manageEmpleadoGraficotDialog').show()"
+                                             styleClass="ui-button-success" style="margin-right: .5rem; font-size:1.6em">
+                                <p:resetInput target=":form:manage-Empleado-content"/>
+                            </p:commandButton>
+                            <p:commandButton value="Consulta"
+                                             oncomplete="PF('manageEmpleadoConsultatDialog').show()"
+                                             styleClass="ui-button-success" style="margin-right: .5rem; font-size:1.6em">
+                                <p:resetInput target=":form:manage-Empleado-content"/>
+                            </p:commandButton>
+                        </p:toolbarGroup>
+                        <p:toolbarGroup align="right" >
+
+                            <p:commandButton value="Export"  icon="pi pi-upload" styleClass="ui-button-help" 
+                                             style="margin-right: .5rem; font-size:1.6em" ajax="false" >
+                                <p:dataExporter type="pdf" target="empleados" fileName="empleados"/>
+
+                            </p:commandButton>
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                </div>
+                <!--Fin de botones de selección-->
+
+                <!--Cambio de Alertas-->
+                <p:growl id="msgs" showDetail="true"/>
+                <!--Fin de Alerta-->
+                <!--Tabla de empleados-->
+                <div>
+                    <p:dataTable id="empleados" widgetVar="dtEmpleado" var="empleado" value="#{controladorEmpleado.empleadoList}"
+                                 reflow="true" styleClass="empleados-table"  editable="true"
+                                 selection="#{controladorEmpleado.empleado}" rowKey="#{empleado.idDuiempleado}" paginator="true"
+                                 rows="5"  paginatorPosition="bottom" style="font-size:1.1em"  >
+                        <f:facet name="header">
+                            <div class="empleados-table-header">
+                                <span style="font-weight: bold">EMPLEADOS</span>
+
+                                <span class="filter-container ui-input-icon-left">
+                                    <i class="pi pi-search" style="font-size:1.1em"></i>
+                                    <p:inputText id="globalFilter" onkeyup="PF('dtEmpleado').filter()" placeholder="Search" style="font-size:1.1em"/>
+                                </span>
+
+                            </div>
+                            <div> 
+                                <p:commandButton id="toggler" 
+                                                 type="button" value="Columnas" 
+                                                 icon="pi pi-align-justify"/> 
+                                <p:columnToggler datasource="empleados" 
+                                                 trigger="toggler"/> 
+                            </div> 
+                        </f:facet>
+                        <p:column headerText="DUI" sortBy="#{empleado.idDuiempleado}"   filterBy="#{empleado.idDuiempleado}">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{empleado.idDuiempleado}"/></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText id="modelInput" value="#{empleado.idDuiempleado}"
+                                                 style="width:100%; font-size:1em">
+                                        <p:keyFilter mask="num" />
+                                    </p:inputText>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column headerText="Nombre" sortBy="#{empleado.nombreempleado}" filterBy="#{empleado.nombreempleado}">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{empleado.nombreempleado}"/></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText  value="#{empleado.nombreempleado}"
+                                                  style="width:100%; font-size:1em">
+                                        <p:keyFilter regEx="/[A-Z]/i"/>
+                                    </p:inputText>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Apellido" sortBy="#{empleado.apellidoempleado}" filterBy="#{empleado.apellidoempleado}">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{empleado.apellidoempleado}"/></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText  value="#{empleado.apellidoempleado}"
+                                                  style="width:100%; font-size:1em">
+                                        <p:keyFilter regEx="/[A-Z]/i"/>
+                                    </p:inputText>
+                                </f:facet>
+                            </p:cellEditor>     
+                        </p:column>
+                        <p:column headerText="Telefono" sortBy="#{empleado.telefonoempleado}" filterBy="#{empleado.telefonoempleado}">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{empleado.telefonoempleado}"/></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText  value="#{empleado.telefonoempleado}"
+                                                  style="width:100%; font-size:1em"  required="true" validatorMessage="Telefono incorrecto. Sugerido: 2222-2345"      > 
+                                        <p:keyFilter mask="num" />
+                                        <f:validateRegex pattern="^[2|7|6]{1}[0-9]{3}-[0-9]{4}"/>
+                                    </p:inputText>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column headerText="Dirección" sortBy="#{empleado.direccionempleado}" filterBy="#{empleado.direccionempleado}">
+                            <p:cellEditor>
+                                <f:facet name="input"><p:inputText value="#{empleado.direccionempleado}"
+                                                                   style="width:100%; font-size:1em"/></f:facet>
+                                <f:facet name="output"><h:outputText value="#{empleado.direccionempleado}"/></f:facet>
+
+                            </p:cellEditor>
+
+                        </p:column>
+                        <p:column headerText="Puesto" sortBy="#{empleado.puesto.nombrepuesto}" filterBy="#{empleado.puesto.nombrepuesto}">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{empleado.puesto.nombrepuesto}"/></f:facet>
+                                <f:facet name="input">
+                                    <h:selectOneMenu value="#{empleado.puesto.idpuesto}" style="width:100%; font-size:1em">
+                                        <f:selectItem itemLabel="#{empleado.puesto.nombrepuesto}" itemValue="0"/>
+                                        <f:selectItems value="#{controladorEmpleado.listPuesto}" var="status"
+
+                                                       itemLabel="#{status.nombrepuesto}" 
+                                                       itemValue="#{status.idpuesto}"/>
+                                    </h:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+
+                        </p:column>
+                        <p:column headerText="Empresa" sortBy="#{empleado.idNitempresa.nombreempresa}" filterBy="#{empleado.idNitempresa.nombreempresa}">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{empleado.idNitempresa.nombreempresa}"/></f:facet>
+                                <f:facet name="input">
+                                    <h:selectOneMenu value="#{empleado.idNitempresa.idNitempresa}" style="width:100%; font-size:1em">
+                                        <f:selectItems value="#{controladorEmpleado.listEmpresa}" var="empresa"
+                                                       itemLabel="#{empresa.nombreempresa}" 
+                                                       itemValue="#{empresa.idNitempresa}"/>
+                                    </h:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+
+                        </p:column>
+
+                        <p:column headerText="Estado" sortBy="#{empleado.estado} "
+                                  filterBy="#{empleado.estado}">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText  value="#{empleado.estado}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:selectBooleanButton onLabel="True" offLabel="False" style="width:6rem; font-size:1em" value="#{empleado.estado}"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column headerText="Fecha" sortBy="#{empleado.fechaContrato}" filterBy="#{empleado.fechaContrato}">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{empleado.fechaContrato}" >
+                                        <f:convertDateTime pattern="dd/MM/yyyy" type=""/>
+                                    </h:outputText></f:facet>
+                                <f:facet name="input">
+                                    <p:calendar id="fecha" pattern="dd-MM-yyyy"  
+                                                value="#{empleado.fechaContrato}" style="width:6rem; font-size:1em"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:ajax event="rowEdit" listener="#{controladorEmpleado.onRowEdit}" update=":form:msgs" />
+                        <p:ajax event="rowEditCancel" listener="#{controladorEmpleado.onRowCancel}" update=":form:msgs"/>
+                        <p:column headerText="Editar" style="width:6rem">
+                            <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
+                        </p:column>
+
+                    </p:dataTable>
+                </div>
+                <!--Fin de tabla de empleados-->
+            </div>
+
+
+
+
+
+>>>>>>> 6eea8c7865379ba33874c3afc95d439fd747c79f
 
                                     <span class="filter-container ui-input-icon-left">
                                         <i class="pi pi-search" ></i>
