@@ -16,34 +16,33 @@
     <h:body>
         <ui:insert name = "header" >
             <ui:include src = "../../Resources/Header.xhtml" />
-        </ui:insert>
-        Empresa
-        
+        </ui:insert>        
          <h:form id="form"> 
             <!--Cambio de Alertas-->
             <p:growl id="msgs" showDetail="true"/>
             <!--Fin de Alerta-->
                 <p:panelGrid columns="1" style="width: 50%; margin: auto; text-align: left">
-                    <p:outputPanel id="manage-Empleado-content" class="ui-fluid">
-                        <p:outputPanel rendered="#{not empty controladorEmpleado.empleado}">
+                    <span style="font-weight: bold" >EMPRESA</span>
+                    <p:outputPanel id="manage-Empresa-content" class="ui-fluid">
+                        <p:outputPanel rendered="#{not empty controladorEmpresa.empresaSelect}">
 
 
                             <div class="p-field">
                                 <p:outputLabel for="nit" >NIT</p:outputLabel >
-                                <p:inputText id="nit" value="#{controladorEmpleado.empleado.idDuiempleado}" required="true" >
+                                <p:inputText id="nit" value="#{controladorEmpresa.empresaSelect.idNitempresa}" required="true" >
                                     <p:keyFilter mask="num" />
                                 </p:inputText>
                             </div>
                             <div class="p-field">
                                 <p:outputLabel for="nombre">Nombre</p:outputLabel>
-                                <p:inputText id="nombre" value="#{controladorEmpleado.empleado.nombreempleado}" required="true">
+                                <p:inputText id="nombre" value="#{controladorEmpresa.empresaSelect.nombreempresa}" required="true">
                                     <p:keyFilter regEx="/[A-Z]/i"/>
                                 </p:inputText>
                             </div>
                             
                             <div class="p-field">
                                 <p:outputLabel for="telefono">Telefono</p:outputLabel>
-                                <p:inputText  id="telefono" value="#{controladorEmpleado.empleado.telefonoempleado}"  style="size:1.4em" 
+                                <p:inputText  id="telefono" value="#{controladorEmpresa.empresaSelect.telefonoempresa}"  style="size:1.4em" 
                                               required="true" validatorMessage="Telefono incorrecto. Sugerido: 2222-2345"      > 
                                     <p:keyFilter mask="num" />
                                     <f:validateRegex pattern="^[2|7|6]{1}[0-9]{3}-[0-9]{4}"/>
@@ -52,12 +51,12 @@
                             </div>
                             <div class="p-field">
                                 <p:outputLabel for="direccion" >Dirección</p:outputLabel>
-                                <p:inputText  id="direccion" value="#{controladorEmpleado.empleado.direccionempleado}" 
+                                <p:inputText  id="direccion" value="#{controladorEmpresa.empresaSelect.direccionempresa}" 
                                               required="true" />
                             </div>
                             <div class="p-field">
                                 <p:outputLabel for="correo" >Correo</p:outputLabel>
-                                <p:inputText  id="correo" value="#{controladorEmpleado.empleado.direccionempleado}" 
+                                <p:inputText  id="correo" value="#{controladorEmpresa.empresaSelect.correo}" 
                                               required="true" />
                             </div>
 
@@ -66,15 +65,10 @@
 
                     <f:facet name="footer">
 
-                        <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{controladorEmpleado.guardarEmpleado()}"
-                                         update="manage-Empleado-content :form:msgs" 
-                                         process="manage-Empleado-content @this" 
-                                        
-                                          />
-                        <p:commandButton value="Cancelar" icon="pi pi-times" 
-                                          process="@this"
-                                          action="crudEmpleado.xhtml?faces-redirect=true"
-                                         class="ui-button-secondary" />
+                        <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{controladorEmpresa.guardarEmpresa()}"
+                                         update="manage-Empresa-content :form:msgs" 
+                                         process="manage-Empresa-content @this"/>
+                      
                     </f:facet>
                 </p:panelGrid>
         </h:form>
