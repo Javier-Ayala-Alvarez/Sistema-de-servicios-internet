@@ -33,7 +33,7 @@ import org.primefaces.model.chart.PieChartModel;
 
 @ManagedBean
 @RequestScoped
-public class ControladorEmpleado implements  Serializable{
+public class ControladorEmpleado implements Serializable {
 
     private String sql = "";
     private Query query;
@@ -72,7 +72,7 @@ public class ControladorEmpleado implements  Serializable{
     }
 
     public void onRowEdit(RowEditEvent<Empleado> event) {
-        
+
         this.empleado.setIdDuiempleado(event.getObject().getIdDuiempleado());
         this.empleado.setNombreempleado(event.getObject().getNombreempleado());
         this.empleado.setApellidoempleado(event.getObject().getApellidoempleado());
@@ -160,7 +160,7 @@ public class ControladorEmpleado implements  Serializable{
                 + "		 contrato c WHERE c.idempleado = e.id_duiempleado \n"
                 + "	) as total\n"
                 + "  FROM\n"
-                + "	empleado e GROUP BY total desc \n"
+                + "	empleado e order BY total desc \n"
                 + "	";
         this.query = em.createNativeQuery(sql);
         this.listarEmpleadoConContratos = this.query.getResultList();
