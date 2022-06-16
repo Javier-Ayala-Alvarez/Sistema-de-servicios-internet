@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controlador;
+package Controlador.EmpleadoEmpresaPuesto;
 
 import Entidades.Empleado;
 import Entidades.Empresa;
@@ -72,6 +72,7 @@ public class ControladorEmpleado implements  Serializable{
     }
 
     public void onRowEdit(RowEditEvent<Empleado> event) {
+        
         this.empleado.setIdDuiempleado(event.getObject().getIdDuiempleado());
         this.empleado.setNombreempleado(event.getObject().getNombreempleado());
         this.empleado.setApellidoempleado(event.getObject().getApellidoempleado());
@@ -270,8 +271,15 @@ public class ControladorEmpleado implements  Serializable{
     }
 
     public List<Puestos> listarPuestos() {
-        this.listPuesto = this.puestoFacade.findAll();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoHDP");
+        EntityManager em = emf.createEntityManager();
+        this.sql = "select p from Puestos p where p.estado = 'true'";
+        this.query = em.createQuery(sql);
+        this.listPuesto = this.query.getResultList();
+        //emf.close();
+        //em.close();
         return this.listPuesto;
+
     }
 
     public void guardarActualizar() {

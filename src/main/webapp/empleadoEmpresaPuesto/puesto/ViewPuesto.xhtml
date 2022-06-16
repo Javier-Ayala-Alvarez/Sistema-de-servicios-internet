@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Puestos</title>
+    </h:head>
+
+    <h:body style="padding-top: 50px; padding-bottom: 20px;">
+        <ui:insert name = "header" >
+            <ui:include src = "../../Resources/header.xhtml" />
+            <ui:include src = "modificarPuesto.xhtml" />
+            <ui:include src = "guardarPuesto.xhtml" />
+        </ui:insert> 
+        <h:form id="form" style=" font-size:1.2em">
+            <b:container >
+
+                <div class="card crud-demo">
+                    <p:growl id="messages" showDetail="true"/>
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton value="Nuevo puesto" icon="pi pi-plus"
+
+                                             oncomplete="PF('newPuestoDialog').show()"
+                                             styleClass="ui-button-success"
+                                             style="font-size:1.5em">
+
+                                <p:resetInput target=":form:manage-puesto-content"/>
+                            </p:commandButton>
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                </div>
+                <p:dataTable id="dt-puesto"
+                             value="#{controladorPuesto.puestoList}"
+                             var="capa"
+                             paginator="true"
+                             paginatorTemplate="{CurrentPageReport}
+                             {FirstPageLink}
+                             {PreviousPageLink}
+                             {PageLinks}
+                             {NextPageLink}
+                             {LastPageLink}
+                             {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15"
+                             rows="5"
+                             rowSelectMode="add"
+
+                             paginatorPosition="bottom"
+                             style="font-size:1em"
+                             widgetVar="dtpuestos">
+                    <f:facet name="header">
+                        <div class="capa-table-header">
+                            <span style="font-weight: bold; font-size:1.5em " >PUESTO</span>
+                            <span class="filter-container ui-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <p:inputText id="globalFilter"
+                                             onkeyup="PF('dtpuestos').filter()"
+                                             placeholder="Search" />
+                            </span>
+                        </div>
+                    </f:facet>
+                    <p:column headerText="Codigo"
+                              sortBy="#{capa.idpuesto}"
+                              filterBy="#{capa.idpuesto}"  >
+                        <h:outputText value="#{capa.idpuesto}" />
+                    </p:column>
+                    <p:column headerText="Nombre"
+                              sortBy="#{capa.nombrepuesto}"
+                              filterBy="#{capa.nombrepuesto}" >
+                        <h:outputText value="#{capa.nombrepuesto}"/>
+                    </p:column>
+                    <p:column headerText="Salario"
+                              sortBy="#{capa.salario}"
+                              filterBy="#{capa.salario}"  >
+                        <h:outputText value=" $#{capa.salario}"/>
+                    </p:column>
+                    <p:column headerText="Estado"
+                              sortBy="#{capa.estado}"
+                              filterBy="#{capa.estado}" >
+                        <h:outputText value="#{capa.estado}" />
+                    </p:column>  
+
+                    <p:column headerText="ACCIONES" style="width: 7%">
+                        <p:panelGrid styleClass="ui-noborder" columns="1">
+                            <p:column headerText="">
+                                <div align="center">
+                                  
+                                    <p:commandButton styleClass="edit-button rounded-button ui-button-success"  icon="pi pi-pencil"
+                                                     oncomplete="PF('dglModificar').show();"
+                                                     ajax="true"
+                                                     update="formModificar">
+                                        <f:setPropertyActionListener target="#{controladorPuesto.selectPuesto}"
+                                                                     value="#{capa}"/>
+                                    </p:commandButton>
+                                </div>
+                            </p:column>
+                        </p:panelGrid>
+
+                    </p:column>
+                </p:dataTable>
+
+            </b:container>
+
+        </h:form>
+
+    </h:body>
+
+</html>
