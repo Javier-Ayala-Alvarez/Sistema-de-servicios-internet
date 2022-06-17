@@ -16,23 +16,37 @@
 
         <h:form>
 
-            <p:dataTable id="products" var="product" value="#{dtContextMenuView.products}" rowKey="#{product.id}"
-                         selection="#{dtContextMenuView.selectedProduct}" selectionMode="single">
+            <p:dataTable id="products" var="lista" value="#{controladorMora.listaMorosos}" rowKey="#{lista[0]}">
                 <f:facet name="header">
-                    RightClick to View Options
+                    Clientes con facturas pendientes
                 </f:facet>
 
-                <p:column headerText="Code">
-                    <h:outputText value="#{product.code}" />
+                <p:column headerText="ID contrato">
+                    <h:outputText value="#{lista[0]}" />
                 </p:column>
-                <p:column headerText="Name">
-                    <h:outputText value="#{product.name}" />
+                <p:column headerText="Nombre">
+                    <h:outputText value="#{lista[1]}" />
                 </p:column>
-                <p:column headerText="Category">
-                    <h:outputText value="#{product.category}" />
+                <p:column headerText="Apellido">
+                    <h:outputText value="#{lista[2]}" />
                 </p:column>
-                <p:column headerText="Quantity">
-                    <h:outputText value="#{product.quantity}" />
+                <p:column headerText="DUI">
+                    <h:outputText value="#{lista[3]}" />
+                </p:column>
+                <p:column headerText="Facturas pendientes">
+                    <h:outputText value="#{lista[4]}" />
+                </p:column>
+                <p:column headerText="Mora">
+                    <h:outputText value="$#{lista[5]}" />
+                </p:column>
+                <p:column headerText="Deuda">
+                    <h:outputText value="$#{lista[6]}" />
+                </p:column>
+                <p:column headerText="Total">
+                    <h:outputText value="$#{lista[7]}" />
+                </p:column>
+                <p:column headerText="">
+                    <p:commandButton value="Cancelar Contrato" />
                 </p:column>
             </p:dataTable>
         </h:form>

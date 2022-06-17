@@ -4,6 +4,8 @@
  */
 package Controlador;
 
+import Entidades.Factura;
+import Entidades.SesionBean.ContratoFacade;
 import Entidades.SesionBean.FacturaFacade;
 import java.io.Serializable;
 import java.util.List;
@@ -25,9 +27,29 @@ public class ControladorMora  implements Serializable{
     
     List<Object[]> ListaMorosos ;
     
+    @Inject
+    private ContratoFacade contratoFacade;
+
+    @Inject
+    private Factura factura;
+    
     
     @PostConstruct
-    void init (){
+    public void init (){
+        
+        this.ListaMorosos = this.facturaFacade.clientesMorosos();
         
     }
+
+    
+    public void setListaMorosos(List<Object[]> ListaMorosos) {
+        this.ListaMorosos = ListaMorosos;
+    }
+    
+    
+    public List<Object[]> getListaMorosos() {
+        return ListaMorosos;
+    }
+    
+    
 }
