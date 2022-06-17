@@ -31,56 +31,124 @@ public class FacturaFacade extends AbstractFacade<Factura> {
     }
 
     public List<Object[]> getFactura(int idContrato) {
-        List<Object[]> lista;
-        Query q = em.createNativeQuery(" \n"
-                + "select\n"
-                + "  c.idcontrato,\n"
-                + "  cli.nombrecliente,\n"
-                + "  cli.id_duicliente as DUI,\n"
-                + "  (\n"
-                + "    select\n"
-                + "      count(f.idfactura) as facturasPendientes\n"
-                + "    from\n"
-                + "      factura f\n"
-                + "    where\n"
-                + "      f.idcontrato = c.idcontrato\n"
-                + "      and f.estado = 1\n"
-                + "  )  as facturasPendientes,\n"
-                + "  (\n"
-                + "    select\n"
-                + "      s.mora * (if (facturasPendientes > 1, facturasPendientes-1, 0))\n"
-                + "    from\n"
-                + "      servicio s\n"
-                + "    where\n"
-                + "      s.idservicio = c.idservicio\n"
-                + "  ) as mora,\n"
-                + "  (\n"
-                + "    select\n"
-                + "      s.precioservicio * (facturasPendientes )\n"
-                + "    from\n"
-                + "      servicio s\n"
-                + "    where\n"
-                + "      s.idservicio = c.idservicio\n"
-                + "  ) as deuda,\n"
-                + "  (\n"
-                + "    select\n"
-                + "      deuda + mora\n"
-                + "  ) as total\n"
-                + "from\n"
-                + "  contrato c\n"
-                + "  inner join cliente cli on cli.id_duicliente = c.idcliente\n"
-                + "  where c.idcontrato = #idContrato");
-        
-        q.setParameter("idContrato", idContrato);
+        List<Object[]> lista = null;
+        try {
+            Query q = em.createNativeQuery(" \n"
+                    + "select\n"
+                    + "  c.idcontrato,\n"
+                    + "  cli.nombrecliente,\n"
+                    + "  cli.id_duicliente as DUI,\n"
+                    + "  (\n"
+                    + "    select\n"
+                    + "      count(f.idfactura) as facturasPendientes\n"
+                    + "    from\n"
+                    + "      factura f\n"
+                    + "    where\n"
+                    + "      f.idcontrato = c.idcontrato\n"
+                    + "      and f.estado = 1\n"
+                    + "  )  as facturasPendientes,\n"
+                    + "  (\n"
+                    + "    select\n"
+                    + "      s.mora * (if (facturasPendientes > 1, facturasPendientes-1, 0))\n"
+                    + "    from\n"
+                    + "      servicio s\n"
+                    + "    where\n"
+                    + "      s.idservicio = c.idservicio\n"
+                    + "  ) as mora,\n"
+                    + "  (\n"
+                    + "    select\n"
+                    + "      s.precioservicio * (facturasPendientes )\n"
+                    + "    from\n"
+                    + "      servicio s\n"
+                    + "    where\n"
+                    + "      s.idservicio = c.idservicio\n"
+                    + "  ) as deuda,\n"
+                    + "  (\n"
+                    + "    select\n"
+                    + "      deuda + mora\n"
+                    + "  ) as total\n"
+                    + "from\n"
+                    + "  contrato c\n"
+                    + "  inner join cliente cli on cli.id_duicliente = c.idcliente\n"
+                    + "  where c.idcontrato = #idContrato");
 
-        lista = q.getResultList();
+            q.setParameter("idContrato", idContrato);
+
+            lista = q.getResultList();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         return lista;
 
     }
-    
-    
-    public void ModificarFacturasPago(){
-        
+
+    public List<Object[]> clientesMorosos() {
+        List<Object[]> lista = null;
+        try {
+
+            String sql = "select\n"
+                    + "  c.idcontrato,\n"
+                    + "  cli.nombrecliente,\n"
+                    + "  cli.apellidocliente,\n"
+                    + "  cli.id_duicliente as DUI,\n"
+                    + "  (\n"
+                    + "    select\n"
+                    + "      count(f.idfactura) as facturasPendientes\n"
+                    + "    from\n"
+                    + "      factura f\n"
+                    + "    where\n"
+                    + "      f.idcontrato = c.idcontrato\n"
+                    + "      and f.estado = 1\n"
+                    + "  )  as facturasPendientes,\n"
+                    + "  (\n"
+                    + "    select\n"
+                    + "      s.mora * (if (facturasPendientes > 1,facturasPendientes -1, 0))\n"
+                    + "    from\n"
+                    + "      servicio s\n"
+                    + "    where\n"
+                    + "      s.idservicio = c.idservicio\n"
+                    + "  ) as mora,\n"
+                    + "  (\n"
+                    + "    select\n"
+                    + "      s.precioservicio * (facturasPendientes )\n"
+                    + "    from\n"
+                    + "      servicio s\n"
+                    + "    where\n"
+                    + "      s.idservicio = c.idservicio\n"
+                    + "  ) as deuda,\n"
+                    + "  (\n"
+                    + "    select\n"
+                    + "      deuda + mora\n"
+                    + "  ) as total\n"
+                    + "from\n"
+                    + "  contrato c\n"
+                    + "  inner join cliente cli on cli.id_duicliente = c.idcliente\n"
+                    + "where\n"
+                    + "  (\n"
+                    + "    (\n"
+                    + "      select\n"
+                    + "        count(f.idfactura) as facturasPendientes\n"
+                    + "      from\n"
+                    + "        factura f\n"
+                    + "      where\n"
+                    + "        f.idcontrato = c.idcontrato\n"
+                    + "        and f.estado = 1\n"
+                    + "    ) \n"
+                    + "  ) >= 1";
+
+            Query q = em.createNativeQuery(sql);
+
+            lista = q.getResultList();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return lista;
+    }
+
+    public void ModificarFacturasPago() {
+
     }
 
 }
