@@ -160,7 +160,7 @@ public class ControladorEmpleado implements Serializable {
                 + "		 contrato c WHERE c.idempleado = e.id_duiempleado \n"
                 + "	) as total\n"
                 + " FROM\n"
-                + "	empleado e GROUP BY total desc ;";
+                + "	empleado e order BY total desc ;";
         this.query = em.createNativeQuery(sql);
         this.listarEmpleadoConContratos = this.query.getResultList();
         //emf.close();

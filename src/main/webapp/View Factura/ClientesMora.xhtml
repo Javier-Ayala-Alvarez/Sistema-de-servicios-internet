@@ -14,9 +14,11 @@
             <ui:include src = "../resources/Header.xhtml" />
         </ui:insert> 
 
-        <h:form>
+        <h:form id="form">
 
-            <p:dataTable id="products" var="lista" value="#{controladorMora.listaMorosos}" rowKey="#{lista[0]}">
+            <p:growl id="message" showDetail="true"/>
+
+            <p:dataTable id="cliente-Mora" var="lista" value="#{controladorMora.listaMorosos}" widgetVar="cliente-Mora" >
                 <f:facet name="header">
                     Clientes con facturas pendientes
                 </f:facet>
@@ -45,10 +47,22 @@
                 <p:column headerText="Total">
                     <h:outputText value="$#{lista[7]}" />
                 </p:column>
+                <p:column headerText="Estado de contrato">
+                    <h:outputText value="#{(lista[8] > 0) ? 'Activo':'Cancelado' }" />
+                </p:column>
                 <p:column headerText="">
-                    <p:commandButton value="Cancelar Contrato" />
+                    <p:commandButton value="Cancelar Contrato" icon="pi pi-trash"  
+                                     styleClass="ui-button-danger" disabled="#{(lista[8] > 0) ? false:true }"
+                                     action="#{controladorMora.darBajaContrato(lista[0])}">
+                        <p:confirm header="Confirmacion" message="¿Esta seguro?" icon="pi pi-exclamation-triangle"/>
+                    </p:commandButton>
                 </p:column>
             </p:dataTable>
+           
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" />
+            </p:confirmDialog>
         </h:form>
     </h:body>
 </html>

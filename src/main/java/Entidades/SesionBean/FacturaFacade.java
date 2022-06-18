@@ -17,22 +17,22 @@ import javax.persistence.Query;
  */
 @Stateless
 public class FacturaFacade extends AbstractFacade<Factura> {
-
+    
     @PersistenceContext(unitName = "ProyectoHDP")
     private EntityManager em;
-
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-
+    
     public FacturaFacade() {
         super(Factura.class);
     }
-
+    
     public List<Object[]> getFactura(int idContrato) {
         List<Object[]> lista;
-
+        
         Query q = em.createNativeQuery(" \n"
                 + "select\n"
                 + "  c.idcontrato,\n"
@@ -71,20 +71,22 @@ public class FacturaFacade extends AbstractFacade<Factura> {
                 + "  contrato c\n"
                 + "  inner join cliente cli on cli.id_duicliente = c.idcliente\n"
                 + "  where c.idcontrato = #idContrato");
-
+        
         q.setParameter("idContrato", idContrato);
-
+        
         lista = q.getResultList();
-
+        
         return lista;
-
+        
     }
-
+    
     public List<Object[]> clientesMorosos() {
         List<Object[]> lista;
-
-        String sql = "select\n"
+        
+        String sql = " \n"
+                + "select\n"
                 + "  c.idcontrato,\n"
+                + "  \n"
                 + "  cli.nombrecliente,\n"
                 + "  cli.apellidocliente,\n"
                 + "  cli.id_duicliente as DUI,\n"
@@ -116,7 +118,8 @@ public class FacturaFacade extends AbstractFacade<Factura> {
                 + "  (\n"
                 + "    select\n"
                 + "      deuda + mora\n"
-                + "  ) as total\n"
+                + "  ) as total,\n"
+                + "  c.vigente\n"
                 + "from\n"
                 + "  contrato c\n"
                 + "  inner join cliente cli on cli.id_duicliente = c.idcliente\n"
@@ -131,17 +134,43 @@ public class FacturaFacade extends AbstractFacade<Factura> {
                 + "        f.idcontrato = c.idcontrato\n"
                 + "        and f.estado = 1\n"
                 + "    ) \n"
-                + "  ) >= 1";
-
+                + "  ) >= 1 \n"
+                + "  order by c.vigente desc";
+        
         Query q = em.createNativeQuery(sql);
-
+        
         lista = q.getResultList();
-
+        
         return lista;
     }
-
+    
     public void ModificarFacturasPago() {
-
+        
     }
-
+    
+    public boolean darBajaContratoMora(int idContrato) {
+        
+        try {
+            Query q = em.createNativeQuery("update\n"
+                    + "  contrato c\n"
+                    + "set\n"
+                    + "  c.fechabaja = (DATE_ADD(NOW(), INTERVAL -6 HOUR)),\n"
+                    + "  c.vigente = 0,\n"
+                    + "  c.motivobaja = \"Mora\"\n"
+                    + "where\n"
+                    + "  c.idcontrato = #idContrato");
+            
+             q.setParameter("idContrato", idContrato);
+             
+             return (q.executeUpdate() > 0);
+             
+            
+            
+            
+        } catch (Exception e) {
+        }
+        
+        return false;
+    }
+    
 }
