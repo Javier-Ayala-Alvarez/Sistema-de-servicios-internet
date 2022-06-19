@@ -17,22 +17,22 @@ import javax.persistence.Query;
  */
 @Stateless
 public class FacturaFacade extends AbstractFacade<Factura> {
-    
+
     @PersistenceContext(unitName = "ProyectoHDP")
     private EntityManager em;
-    
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
     public FacturaFacade() {
         super(Factura.class);
     }
-    
+
     public List<Object[]> getFactura(int idContrato) {
         List<Object[]> lista;
-        
+
         Query q = em.createNativeQuery(" \n"
                 + "select\n"
                 + "  c.idcontrato,\n"
@@ -71,18 +71,18 @@ public class FacturaFacade extends AbstractFacade<Factura> {
                 + "  contrato c\n"
                 + "  inner join cliente cli on cli.id_duicliente = c.idcliente\n"
                 + "  where c.idcontrato = #idContrato");
-        
+
         q.setParameter("idContrato", idContrato);
-        
+
         lista = q.getResultList();
-        
+
         return lista;
-        
+
     }
-    
+
     public List<Object[]> clientesMorosos() {
         List<Object[]> lista;
-        
+
         String sql = " \n"
                 + "select\n"
                 + "  c.idcontrato,\n"
@@ -136,20 +136,20 @@ public class FacturaFacade extends AbstractFacade<Factura> {
                 + "    ) \n"
                 + "  ) >= 1 \n"
                 + "  order by c.vigente desc";
-        
+
         Query q = em.createNativeQuery(sql);
-        
+
         lista = q.getResultList();
-        
+
         return lista;
     }
-    
+
     public void ModificarFacturasPago() {
-        
+
     }
-    
+
     public boolean darBajaContratoMora(int idContrato) {
-        
+
         try {
             Query q = em.createNativeQuery("update\n"
                     + "  contrato c\n"
@@ -159,18 +159,30 @@ public class FacturaFacade extends AbstractFacade<Factura> {
                     + "  c.motivobaja = \"Mora\"\n"
                     + "where\n"
                     + "  c.idcontrato = #idContrato");
-            
-             q.setParameter("idContrato", idContrato);
-             
-             return (q.executeUpdate() > 0);
-             
-            
-            
-            
+
+            q.setParameter("idContrato", idContrato);
+
+            return (q.executeUpdate() > 0);
+
         } catch (Exception e) {
         }
-        
+
         return false;
     }
-    
+
+    public Object totalFacturasPagadas() {
+        try {
+            String sql = "  select count(f.idfactura) from Factura f where f.estado = \"0\"";
+
+            Query q = em.createQuery(sql);
+
+            return q.getSingleResult();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+        return -1;
+    }
+
 }

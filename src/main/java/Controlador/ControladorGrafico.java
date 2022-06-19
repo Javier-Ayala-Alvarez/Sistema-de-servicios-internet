@@ -5,6 +5,7 @@
 package Controlador;
 
 import Entidades.SesionBean.EmpleadoFacade;
+import Entidades.SesionBean.FacturaFacade;
 import Entidades.SesionBean.ServicioFacade;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -25,7 +26,7 @@ import org.primefaces.model.chart.LineChartModel;
  *
  * @author mejia
  */
-@ManagedBean
+@ManagedBean 
 @ViewScoped
 
 public class ControladorGrafico implements Serializable {
@@ -33,6 +34,8 @@ public class ControladorGrafico implements Serializable {
     private LineChartModel GraficoLinea;
     Date date = new Date();
     private List<Object[]> listaEmpleados;
+    
+    private Object totalFacturasPagadas ;
     BarChartModel modelBar;
 
     SimpleDateFormat getYearFormat = new SimpleDateFormat("yyyy");
@@ -42,11 +45,17 @@ public class ControladorGrafico implements Serializable {
     
     @Inject 
     EmpleadoFacade empleadoFacade;
+    
+    
+    @Inject 
+    FacturaFacade FacturaFacade;
 
     @PostConstruct
     public void init() {
         createLineModels();
         this.listaEmpleados = empleadoFacade.getQueryGraficosEmpleado();
+        this.totalFacturasPagadas = FacturaFacade.totalFacturasPagadas();
+        System.out.println(this.totalFacturasPagadas);
     }
 
     private void createLineModels() {
@@ -107,7 +116,7 @@ public class ControladorGrafico implements Serializable {
             xAxis.setLabel("Empleados");
 
             Axis yAxis = this.modelBar.getAxis(AxisType.Y);
-            yAxis.setLabel("Numero de Clientes");
+            yAxis.setLabel("Numero de contratos");
         }
         return this.modelBar;
     }
@@ -119,5 +128,22 @@ public class ControladorGrafico implements Serializable {
     public void setGraficoLinea(LineChartModel GraficoLinea) {
         this.GraficoLinea = GraficoLinea;
     }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Object getTotalFacturasPagadas() {
+        return totalFacturasPagadas;
+    }
+
+    public void setTotalFacturasPagadas(Object totalFacturasPagadas) {
+        this.totalFacturasPagadas = totalFacturasPagadas;
+    }
+    
 
 }
