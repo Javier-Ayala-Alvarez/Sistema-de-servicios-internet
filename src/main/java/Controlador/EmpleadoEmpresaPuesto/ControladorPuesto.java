@@ -7,6 +7,7 @@ package Controlador.EmpleadoEmpresaPuesto;
 
 import Entidades.Puestos;
 import Entidades.SesionBean.PuestosFacade;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -19,7 +20,7 @@ import javax.persistence.Query;
 
 @ManagedBean
 @ViewScoped
-public class ControladorPuesto {
+public class ControladorPuesto implements  Serializable{
     
     private String sql = "";
     private Query query;

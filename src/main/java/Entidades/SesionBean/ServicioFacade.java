@@ -5,9 +5,11 @@
 package Entidades.SesionBean;
 
 import Entidades.Servicio;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,5 +29,28 @@ public class ServicioFacade extends AbstractFacade<Servicio> {
     public ServicioFacade() {
         super(Servicio.class);
     }
-    
+
+    public List<Object[]> getQueryGraficosServicios(String Date) {
+        List<Object[]> lista;
+   
+        Query q = em.createNativeQuery("select\n"
+                + "  count(cn.idservicio),\n"
+                + "  s.servicio,\n"
+                + "  EXTRACT(MONTH FROM cn.fechainicio) AS Month\n"
+                + "from\n"
+                + "  contrato cn\n"
+                + "  inner join servicio s on (s.idservicio = cn.idservicio)\n"
+                + "where\n"
+                + " EXTRACT(YEAR FROM cn.fechainicio)  = #anio\n"
+                + "group by\n"
+                + "  cn.idservicio,\n"
+                + "  s.idservicio,\n"
+                + "  EXTRACT(MONTH FROM cn.fechainicio)");
+        q.setParameter("anio", Date);
+
+        lista = q.getResultList();
+        return lista;
+
+    }
+
 }
