@@ -58,8 +58,10 @@
                                          actionListener="#{controladorPuesto.createPuesto()}"
                                          oncomplete="PF('newPuestoDialog').show()"
                                          styleClass="ui-button-success" style="margin-right: .5rem"
-                                         update="@form"
-                                         action="ViewPuesto.xhtml?faces-redirect=true"
+                                         
+                                         update="manage-puesto-content :form:mensaje" 
+                                         process="manage-puesto-content @this"
+                                         action="ViewPuesto.xhtml?faces-redirect=true">
                                          >
                         </p:commandButton>
                         <p:commandButton id="cancelar"

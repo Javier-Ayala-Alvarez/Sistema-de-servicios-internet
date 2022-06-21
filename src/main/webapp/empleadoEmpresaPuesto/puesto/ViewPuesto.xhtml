@@ -18,12 +18,12 @@
             <ui:include src = "modificarPuesto.xhtml" />
             <ui:include src = "guardarPuesto.xhtml" />
         </ui:insert> 
-         <p:panelGrid columns="1" style="width: 95%; margin: auto; text-align: left">
-        <h:form id="form" >
+        <p:panelGrid columns="1" style="width: 95%; margin: auto; text-align: left">
+            <h:form id="form" >
 
-           
+
                 <div class="card crud-demo">
-                    <p:growl id="messages" showDetail="true"/>
+                    <p:growl id="mensaje" showDetail="true"/>
                     <p:toolbar>
                         <p:toolbarGroup>
                             <p:commandButton value="Nuevo puesto" icon="pi pi-plus"
@@ -90,24 +90,42 @@
                     <p:column headerText="ACCIONES" style="width: 7%">
                         <p:panelGrid styleClass="ui-noborder" columns="1">
                             <p:column headerText="">
-                                <div align="center">
+                                <div align="center" >
 
-                                    <p:commandButton styleClass="edit-button rounded-button ui-button-success"  icon="pi pi-pencil"
+
+                                    <p:commandButton icon="pi pi-pencil"   styleClass="edit-button rounded-button ui-button-success"
                                                      oncomplete="PF('dglModificar').show();"
                                                      ajax="true"
-                                                     update="formModificar">
+                                                     update="formModificar" style="width: 40%; height: 40%">
                                         <f:setPropertyActionListener target="#{controladorPuesto.selectPuesto}"
                                                                      value="#{capa}"/>
                                     </p:commandButton>
+
+                                    <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+                                                     oncomplete="PF('deletePuestoDialog').show()">
+                                        <f:setPropertyActionListener target="#{controladorPuesto.selectPuesto}"
+                                                                     value="#{capa}"/>
+                                    </p:commandButton>
+
                                 </div>
                             </p:column>
                         </p:panelGrid>
 
                     </p:column>
+
                 </p:dataTable>
+                <p:confirmDialog widgetVar="deletePuestoDialog" showEffect="fade" width="300"
+                                 message="¿Desea eliminar el puesto?" header="Confirmar" severity="warn">
+                    <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{controladorPuesto.deletePuesto()}"
+
+                                     process="@this" oncomplete="PF('deletePuestoDialog').hide()">
+                        </p:commandButton>
+                    <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                     onclick="PF('deletePuestoDialog').hide()"/>
+                </p:confirmDialog>
 
 
-        </h:form>
+            </h:form>
         </p:panelGrid>
     </h:body>
 

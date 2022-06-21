@@ -61,7 +61,7 @@ public class ControladorEmpresa {
         }else{
             this.empresaFacade.edit(empresaSelect);
               FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Modificación con éxito", String.valueOf(this.empresaSelect.getIdNitempresa()));
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+            FacesContext.getCurrentInstance().addMessage(null, msg);
         }
    
     }
