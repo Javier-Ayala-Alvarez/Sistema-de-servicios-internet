@@ -40,8 +40,6 @@ public class ControladorVenta implements Serializable {
 
     private List<Object[]> facturaPendiente;
 
-   
-
     @PostConstruct
     public void init() {
 
@@ -50,22 +48,25 @@ public class ControladorVenta implements Serializable {
     public void searchByIdContrato() {
         if (this.idContrato > 0 && contratoFacade.find(this.idContrato) != null) {
             this.facturaPendiente = this.facturaFacade.getFactura(this.idContrato);
-            PrimeFaces.current().ajax().update("form:messages", "form:dt-facturas");
+            PrimeFaces.current().ajax().update( "form:dt-facturas");
             PrimeFaces.current().executeScript("PF('modalFactura').show()");
             System.out.println("true");
 
         } else {
             System.out.println("error");
+          
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Id de contrato no encontrado", ""));
 
         }
+          PrimeFaces.current().ajax().update("form:messages");
 
     }
-    public void cancelarFactura(){
-        if(this.idContrato > 0){
-            
+
+    public void cancelarFactura() {
+        if (this.idContrato > 0) {
+
         }
-       
+
     }
 
     public int getIdContrato() {
