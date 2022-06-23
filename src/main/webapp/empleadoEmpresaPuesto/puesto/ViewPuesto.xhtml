@@ -96,13 +96,7 @@
                                     <p:commandButton icon="pi pi-pencil"   styleClass="edit-button rounded-button ui-button-success"
                                                      oncomplete="PF('dglModificar').show();"
                                                      ajax="true"
-                                                     update="formModificar" style="width: 40%; height: 40%">
-                                        <f:setPropertyActionListener target="#{controladorPuesto.selectPuesto}"
-                                                                     value="#{capa}"/>
-                                    </p:commandButton>
-
-                                    <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
-                                                     oncomplete="PF('deletePuestoDialog').show()">
+                                                     update="formModificar" >
                                         <f:setPropertyActionListener target="#{controladorPuesto.selectPuesto}"
                                                                      value="#{capa}"/>
                                     </p:commandButton>
@@ -114,15 +108,7 @@
                     </p:column>
 
                 </p:dataTable>
-                <p:confirmDialog widgetVar="deletePuestoDialog" showEffect="fade" width="300"
-                                 message="¿Desea eliminar el puesto?" header="Confirmar" severity="warn">
-                    <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{controladorPuesto.deletePuesto()}"
-
-                                     process="@this" oncomplete="PF('deletePuestoDialog').hide()">
-                        </p:commandButton>
-                    <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
-                                     onclick="PF('deletePuestoDialog').hide()"/>
-                </p:confirmDialog>
+     
 
 
             </h:form>

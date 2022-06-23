@@ -61,22 +61,7 @@ public class ControladorPuesto implements  Serializable{
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
-    public void deletePuesto() {
-
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoHDP");
-        EntityManager em = emf.createEntityManager();
-        this.sql = "SELECT * FROM puestos p INNER JOIN empleado e on p.idpuesto	= e.puesto WHERE p.idpuesto = '"+this.selectPuesto.getIdpuesto()+"'";
-        this.query = em.createNativeQuery(sql);
-        if (this.query.getSingleResult() == null) {
-            this.puestoFacade.remove(selectPuesto);
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminado con éxito", String.valueOf(this.selectPuesto.getIdpuesto()));
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-        }else{
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Este puesto tiene empleados", String.valueOf(this.selectPuesto.getIdpuesto()));
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-        }
-
-    }
+   
     //Modificar
 
     public void actualizar() {
