@@ -66,6 +66,7 @@ public class ControladorVenta implements Serializable {
     
 
     public void cancelarFactura() {
+        
         if (this.idContrato > 0) {
             Usuarios user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
             if (facturaFacade.ModificarFacturasPago(user.getIdempleado().getIdDuiempleado(), this.idContrato)) {
