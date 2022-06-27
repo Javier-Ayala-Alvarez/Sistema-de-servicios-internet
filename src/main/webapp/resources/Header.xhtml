@@ -46,7 +46,7 @@
                         <p:menuitem value="Quit" icon="pi pi-fw pi-power-off"/>
 
                         <f:facet name="options">
-                            <p:commandButton icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"  action="login?faces-redirect=true" actionListener="#{controladorSesion.cerrarSesion()}" value="Cerrar sesion" />
+                            <p:commandButton icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"  action="/faces/login.xhtml" actionListener="#{controladorSesion.cerrarSesion()}" value="Cerrar sesion"  />
 
                         </f:facet>
                     </p:menubar>

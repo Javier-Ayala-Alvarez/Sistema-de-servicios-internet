@@ -144,8 +144,19 @@ public class FacturaFacade extends AbstractFacade<Factura> {
         return lista;
     }
 
-    public void ModificarFacturasPago() {
+    public boolean ModificarFacturasPago(String idempleado, int idcontrato) {
 
+        try {
+            Query q = em.createNativeQuery("UPDATE factura\n"
+                    + "SET factura.fechapagofactura = (DATE_ADD(NOW(), INTERVAL -6 HOUR)), factura.idempleado = #idempleado,estado=0\n"
+                    + "WHERE factura.idcontrato = #idcontrato");
+            q.setParameter("idempleado", idempleado);
+            q.setParameter("idcontrato", idcontrato);
+            return (q.executeUpdate() > 0);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
     }
 
     public boolean darBajaContratoMora(int idContrato) {
@@ -181,7 +192,7 @@ public class FacturaFacade extends AbstractFacade<Factura> {
         } catch (Exception e) {
             System.out.println(e);
         }
-        
+
         return -1;
     }
 

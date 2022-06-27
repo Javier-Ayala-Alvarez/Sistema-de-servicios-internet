@@ -7,6 +7,7 @@ package Controlador;
 import Entidades.Factura;
 import Entidades.SesionBean.ContratoFacade;
 import Entidades.SesionBean.FacturaFacade;
+import Entidades.Usuarios;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -48,22 +49,36 @@ public class ControladorVenta implements Serializable {
     public void searchByIdContrato() {
         if (this.idContrato > 0 && contratoFacade.find(this.idContrato) != null) {
             this.facturaPendiente = this.facturaFacade.getFactura(this.idContrato);
-            PrimeFaces.current().ajax().update( "form:dt-facturas");
+            PrimeFaces.current().ajax().update("form:dt-facturas");
             PrimeFaces.current().executeScript("PF('modalFactura').show()");
             System.out.println("true");
 
         } else {
             System.out.println("error");
-          
+
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Id de contrato no encontrado", ""));
 
         }
-          PrimeFaces.current().ajax().update("form:messages");
+        PrimeFaces.current().ajax().update("form:messages");
 
     }
+    
+    
 
     public void cancelarFactura() {
         if (this.idContrato > 0) {
+            Usuarios user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+            if (facturaFacade.ModificarFacturasPago(user.getIdempleado().getIdDuiempleado(), this.idContrato)) {
+                 PrimeFaces.current().executeScript("PF('modalFactura').hide()");
+                 PrimeFaces.current().executeScript("PF('deleteProductDialog').hide()");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Factura Cancelada"));
+                this.idContrato = 0;
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "A ocurrido un error"));
+                System.out.println("error");
+            }
+
+            PrimeFaces.current().ajax().update("form:messages");
 
         }
 
