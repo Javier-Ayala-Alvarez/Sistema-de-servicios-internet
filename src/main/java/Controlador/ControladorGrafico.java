@@ -30,6 +30,7 @@ import org.primefaces.model.chart.LineChartModel;
 @ViewScoped
 
 public class ControladorGrafico implements Serializable {
+    
 
     private LineChartModel GraficoLinea;
     Date date = new Date();

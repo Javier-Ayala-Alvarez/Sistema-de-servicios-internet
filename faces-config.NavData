@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="empleadoEmpresaPuesto/empleado/ModalGraficasEmpleado.xhtml" x="108" y="464" zoom="true"/>
+        <Node id="empleadoEmpresaPuesto/puesto/ViewPuesto.xhtml" x="760" y="249" zoom="true"/>
+        <Node id="index.xhtml" x="196" y="352" zoom="true"/>
+        <Node id="newjsf.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="empleadoEmpresaPuesto/puesto/modificarPuesto.xhtml" x="1400" y="150" zoom="true"/>
+        <Node id="empleadoEmpresaPuesto/empresa/ViewEmpresa.xhtml" x="665" y="210" zoom="true"/>
+        <Node id="empleadoEmpresaPuesto/empleado/ModalUpdateEmpleado.xhtml" x="63" y="48" zoom="true"/>
+        <Node id="empleadoEmpresaPuesto/empleado/crudEmpleado.xhtml" x="98" y="206" zoom="true"/>
+        <Node id="resources/Header.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="login.xhtml" x="685" y="126" zoom="true"/>
+        <Node id="resources/footer.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="empleadoEmpresaPuesto/empleado/ModalEmpleadoConsulta.xhtml" x="677" y="34" zoom="true"/>
+        <Node id="View Factura/pagoFactura.xhtml" x="86" y="139" zoom="true"/>
+        <Node id="View Factura/ClientesMora.xhtml" x="784" y="420" zoom="true"/>
+        <Node id="empleadoEmpresaPuesto/empleado/ModalNuevoEmpleado.xhtml" x="711" y="341" zoom="true"/>
+        <Node id="empleadoEmpresaPuesto/puesto/guardarPuesto.xhtml" x="400" y="600" zoom="true"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>

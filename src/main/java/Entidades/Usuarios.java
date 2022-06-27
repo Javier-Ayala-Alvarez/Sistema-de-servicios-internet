@@ -29,7 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuarios.findAll", query = "SELECT u FROM Usuarios u"),
     @NamedQuery(name = "Usuarios.findByIdusuario", query = "SELECT u FROM Usuarios u WHERE u.idusuario = :idusuario"),
     @NamedQuery(name = "Usuarios.findByUsuario", query = "SELECT u FROM Usuarios u WHERE u.usuario = :usuario"),
-    @NamedQuery(name = "Usuarios.findByPassword", query = "SELECT u FROM Usuarios u WHERE u.password = :password")})
+    @NamedQuery(name = "Usuarios.findByPassword", query = "SELECT u FROM Usuarios u WHERE u.password = :password"),
+    @NamedQuery(name = "findByPasswordUser", query = "SELECT u FROM Usuarios u WHERE u.password = :password and u.usuario = :usuario")})
 public class Usuarios implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -111,5 +112,5 @@ public class Usuarios implements Serializable {
     public String toString() {
         return "Entidades.Usuarios[ idusuario=" + idusuario + " ]";
     }
-    
+
 }

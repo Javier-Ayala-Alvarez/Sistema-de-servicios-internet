@@ -44,6 +44,8 @@ public class ControladorMora implements Serializable {
     }
 
     public void darBajaContrato(int id) {
+        
+        
 
         if (this.facturaFacade.darBajaContratoMora(id)) {
             this.ListaMorosos = this.facturaFacade.clientesMorosos();
