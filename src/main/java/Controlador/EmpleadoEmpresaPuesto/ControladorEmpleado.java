@@ -107,8 +107,8 @@ public class ControladorEmpleado implements Serializable {
 
     public void guardarEmpleado() {
         if (validacionExistencia(this.empleado.getIdDuiempleado()) == true) {
-            this.empleado.setIdNitempresa(empresa);
-            this.empleado.setPuesto(puesto);
+            this.empleado.setIdNitempresa(this.empresa);
+            this.empleado.setPuesto(this.puesto);
             this.empleado.setEstado(true);
 
             this.empleadoFacade.create(this.empleado);

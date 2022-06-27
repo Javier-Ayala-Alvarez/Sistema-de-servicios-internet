@@ -33,10 +33,9 @@
                                 </p:inputText>
                                 <p:message for="idContrato"/>
                             </h:panelGrid>
-
-
-                            <p:commandButton id="submitButton" value="Consultar" update="@parent" action="#{controladorVenta.searchByIdContrato()}" styleClass="p-mt-3" />
-
+                            
+                            <p:commandButton id="submitButton" value="Consultar" update="@parent"
+                                             action="#{controladorVenta.searchByIdContrato()}" styleClass="p-mt-3" />
 
                         </p:panel>
 
@@ -78,12 +77,12 @@
                                         <h:outputText value="#{factura[6]}" />
                                     </p:column>
                                 </p:dataTable>
-                                
+
                                 <div> <p:commandButton  value="Pagar"  />
                                 </div>
-                             
+
                             </div>
-                            
+
 
 
 
