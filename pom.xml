@@ -15,6 +15,7 @@
     </properties>
     
     <dependencies>
+        
         <!-- https://mvnrepository.com/artifact/com.itextpdf/itext7-core -->
         <dependency>
             <groupId>com.itextpdf</groupId>
