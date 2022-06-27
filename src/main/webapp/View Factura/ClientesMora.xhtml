@@ -7,7 +7,8 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:outputStylesheet name="primeflex/primeflex.css" />
     <h:head>
-        <title>Facelet Title</title>
+        <title>Clientes con mora</title>
+        <f:event type="preRenderView" listener="#{controladorSesion.verificarAdmin()}"/>
     </h:head>
     <h:body>
         <ui:insert name = "header" >
@@ -59,7 +60,7 @@
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
-           
+
             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
                 <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
                 <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" />

@@ -6,6 +6,7 @@ package Controlador;
 
 import Entidades.Usuarios;
 import java.io.IOException;
+import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -17,7 +18,7 @@ import javax.faces.context.FacesContext;
 
 @ManagedBean
 @ViewScoped
-public class ControladorSesion {
+public class ControladorSesion implements Serializable{
     
     
     public void verificarAdmin() throws IOException{
