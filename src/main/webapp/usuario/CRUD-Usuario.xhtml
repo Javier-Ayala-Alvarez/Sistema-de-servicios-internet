@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Usuario</title>
+    </h:head>
+
+    <h:body >
+
+
+        <ui:insert name = "header" >
+            <ui:include src = "../resources/Header.xhtml" />
+        </ui:insert> 
+
+        <p:panelGrid columns="1" style="width: 95%; margin: auto; text-align: left">
+            <h:form id="form">
+
+               <div class="card crud-demo">
+                    <p:growl id="messages" showDetail="true"/>
+
+                    <div align="center">
+                        <h1>Usuarios</h1>
+                    </div>
+
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton value="New" icon="pi pi-plus" actionListener="#{ub.openNew}"
+                                             update=":form:manage-usuario-content" oncomplete="PF('manageUsuarioDialog').show()"
+                                             styleClass="ui-button-success" style="margin-right: .5rem">
+                                <p:resetInput target=":form:manage-usuario-content"/>
+                            </p:commandButton>
+                        </p:toolbarGroup>
+                        <p:toolbarGroup align="right">
+                            <p:commandButton value="Export" icon="pi pi-upload" styleClass="ui-button-help" ajax="false">
+                                <p:dataExporter type="pdf" target="dt-usuarios" fileName="usuarios"/>
+                            </p:commandButton>
+                        </p:toolbarGroup>
+                    </p:toolbar>
+
+                    <p:dataTable id="dt-usuarios" widgetVar="dtUsuarios" var="usuario" value="#{ub.usuarios}"
+                                 reflow="true" styleClass="usuarios-table"
+                                 selection="#{ub.usuarios}" rowKey="#{usuario.idusuario}" paginator="true"
+                                 rows="10" rowSelectMode="add" paginatorPosition="bottom">
+                        <f:facet name="header">
+                            <div class="usuarios-table-header">
+                                <span style="font-weight: bold">USUARIOS</span>
+
+                                <span class="filter-container ui-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <p:inputText id="globalFilter" onkeyup="PF('dtUsuarios').filter()" placeholder="Search"/>
+                                </span>
+
+                            </div>
+                        </f:facet>
+
+
+
+                        <p:column headerText="Código de Usuario" sortBy="#{usuario.idusuario}" filterBy="#{usuario.idusuario}">
+                            <h:outputText value="#{usuario.idusuario}"/>
+                        </p:column>
+                        <p:column headerText="Nombre Empleado" sortBy="#{usuario.idempleado.nombreempleado}" filterBy="#{usuario.idempleado.nombreempleado}">
+                            <h:outputText value="#{usuario.idempleado.nombreempleado}"/>
+                        </p:column>
+                        <p:column headerText="Usuario" sortBy="#{usuario.usuario}" filterBy="#{usuario.usuario}">
+                            <h:outputText value="#{usuario.usuario}"/>
+                        </p:column>
+                        <p:column headerText="Acciones" exportable="false">
+                            <p:commandButton icon="pi pi-pencil" update=":form:manage-usuario-content"
+                                             oncomplete="PF('manageUsuarioDialog').show()"
+                                             styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                <f:setPropertyActionListener value="#{usuario}" target="#{ub.selectedUsuario}"/>
+                                <p:resetInput target=":form:manage-usuario-content"/>
+                            </p:commandButton>
+                            <p:commandButton icon="pi pi-trash" update=":form:manage-usuario-content"
+                                             oncomplete="PF('deleteUsuarioDialog').show()"
+                                             class="ui-button-warning rounded-button" process="@this">
+                                <f:setPropertyActionListener value="#{usuario}" target="#{ub.selectedUsuario}"/>
+                            </p:commandButton>
+                        </p:column>
+
+                    </p:dataTable>
+
+                    <p:dialog header="Detalles del Usuario" showEffect="fade" modal="true"
+                              widgetVar="manageUsuarioDialog" responsive="true">
+                        <p:outputPanel id="manage-usuario-content" class="ui-fluid">
+                            <p:outputPanel rendered="#{not empty ub.selectedUsuario}">
+                                <div class="p-field">
+                                    <p:outputLabel for="empleado">Empleado</p:outputLabel>
+                                    <p:selectOneMenu id="empleado" style="width: 160px"
+                                                     value="#{ub.selectedEmpleado.idDuiempleado}" required="true">
+                                        <f:selectItem itemLabel="#{ub.selectedEmpleado.nombreempleado}"
+                                                      itemValue="#{ub.selectedEmpleado.idDuiempleado}"/>
+                                        <f:selectItems value="#{ub.empleados}" 
+                                                       var ="e"
+                                                       itemLabel="#{e.nombreempleado}"
+                                                       itemValue="#{e.idDuiempleado}"/>
+                                    </p:selectOneMenu>
+                                </div>      
+                                <div class="p-field">
+                                    <p:outputLabel for="name">Usuario</p:outputLabel>
+                                    <p:inputText id="name" value="#{ub.selectedUsuario.usuario}" required="true"/>
+                                </div>
+                                <div class="p-field">
+                                    <p:outputLabel for="pass">Contraseña</p:outputLabel>    
+                                    <p:password id="pass" value="#{ub.selectedUsuario.password}" required="true"/>
+                                </div>
+                            </p:outputPanel>
+                        </p:outputPanel>
+
+                        <f:facet name="footer">
+                            <p:commandButton value="Save" icon="pi pi-check" actionListener="#{ub.saveUsuario()}"
+                                             update="manage-usuario-content" process="manage-usuario-content @this"
+                                             action="CRUD-Usuario.xhtml?faces-redirect=true"/>
+                            <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageUsuarioDialog').hide()"
+                                             class="ui-button-secondary"/>
+                        </f:facet>
+                    </p:dialog> 
+
+                    <p:confirmDialog widgetVar="deleteUsuarioDialog" showEffect="fade" width="300"
+                                     message="Eliminar el usuario?" header="Confirm" severity="warn">
+                        <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{ub.deleteUsuario()}"
+                                         process="@this" oncomplete="PF('deleteUsuarioDialog').hide()"
+                                         action="CRUD-Usuario.xhtml?faces-redirect=true"/>
+                        <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                         onclick="PF('deleteUsuarioDialog').hide()"/>
+                    </p:confirmDialog>
+
+                    <p:confirmDialog global="true" showEffect="fade" width="300">
+                        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
+                                         icon="pi pi-times"/>
+                    </p:confirmDialog>
+                </div>
+                
+            </h:form>
+        </p:panelGrid>
+    </h:body>
+
+</html>

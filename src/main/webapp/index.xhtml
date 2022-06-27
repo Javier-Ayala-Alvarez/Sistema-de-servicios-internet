@@ -6,48 +6,101 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Dashboard</title>
+        <h:outputStylesheet name="primeflex/primeflex.css" />
+        <f:event type="preRenderView" listener="#{controladorSesion.verificarAdmin()}"/>
     </h:head>
     <h:body>
         <ui:insert name = "Header" >
-            <ui:include src = "Resources/Header.xhtml" />
+            <ui:include src = "resources/Header.xhtml" />
         </ui:insert> 
 
-        <h1>Bienvenido</h1>
+             <div  style="text-align: center;  display:block;">
+                <h2>Bienvenido</h2>
+            </div>
 
         <h:form >
-            <div class="card">
-                <p:dataTable var="factura" value="#{controladorVenta.facturaPendiente}">
-                    <f:facet name="header">
-                        Detalles
-                    </f:facet>
-                    <p:column headerText="Id de Contrato">
-                        <h:outputText value="#{factura[0]}" />
-                    </p:column>
-
-                    <p:column headerText="Nombre">
-                        <h:outputText value="#{factura[1]}" />
-                    </p:column>
-
-                    <p:column headerText="DUI">
-                        <h:outputText value="#{factura[2]}" />
-                    </p:column>
-
-                    <p:column headerText="Facturas pendientes">
-                        <h:outputText value="#{factura[3]}" />
-                    </p:column>
-
-                    <p:column headerText="Mora">
-                        <h:outputText value="#{factura[4]}" />
-                    </p:column>
-                    <p:column headerText="Monto">
-                        <h:outputText value="#{factura[5]}" />
-                    </p:column>
-                    <p:column headerText="Total a pagar">
-                        <h:outputText value="#{factura[6]}" />
-                    </p:column>
-                </p:dataTable>
+            <div class="grid">
+                <div class="col-12 md:col-6 lg:col-3">
+                    <div class="surface-card shadow-2 p-3 border-round">
+                        <div class="flex justify-content-between mb-3">
+                            <div>
+                                <span class="block text-500 font-medium mb-3">Total de Facturas Canceladas</span>
+                                <div class="text-900 font-medium text-xl"><h:outputText value="#{controladorGrafico.totalFacturasPagadas}" /> </div>
+                            </div>
+                            <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                                 style="width:2.5rem;height:2.5rem">
+                                <i class="pi pi-shopping-cart text-blue-500 text-xl"/>
+                            </div>
+                        </div>
+                        <span class="text-green-500 font-medium"><h:outputText value="#{controladorGrafico.totalFacturasPagadas}" /> </span>
+                        <span class="text-500">el dia de hoy</span>
+                    </div>
+                </div>
+                <div class="col-12 md:col-6 lg:col-3">
+                    <div class="surface-card shadow-2 p-3 border-round">
+                        <div class="flex justify-content-between mb-3">
+                            <div>
+                                <span class="block text-500 font-medium mb-3">Revenue</span>
+                                <div class="text-900 font-medium text-xl">$2.100</div>
+                            </div>
+                            <div class="flex align-items-center justify-content-center bg-orange-100 border-round"
+                                 style="width:2.5rem;height:2.5rem">
+                                <i class="pi pi-map-marker text-orange-500 text-xl"/>
+                            </div>
+                        </div>
+                        <span class="text-green-500 font-medium">%52+ </span>
+                        <span class="text-500">since last week</span>
+                    </div>
+                </div>
+                <div class="col-12 md:col-6 lg:col-3">
+                    <div class="surface-card shadow-2 p-3 border-round">
+                        <div class="flex justify-content-between mb-3">
+                            <div>
+                                <span class="block text-500 font-medium mb-3">Customers</span>
+                                <div class="text-900 font-medium text-xl">28441</div>
+                            </div>
+                            <div class="flex align-items-center justify-content-center bg-cyan-100 border-round"
+                                 style="width:2.5rem;height:2.5rem">
+                                <i class="pi pi-inbox text-cyan-500 text-xl"/>
+                            </div>
+                        </div>
+                        <span class="text-green-500 font-medium">520  </span>
+                        <span class="text-500">newly registered</span>
+                    </div>
+                </div>
+                <div class="col-12 md:col-6 lg:col-3">
+                    <div class="surface-card shadow-2 p-3 border-round">
+                        <div class="flex justify-content-between mb-3">
+                            <div>
+                                <span class="block text-500 font-medium mb-3">Comments</span>
+                                <div class="text-900 font-medium text-xl">152 Unread</div>
+                            </div>
+                            <div class="flex align-items-center justify-content-center bg-purple-100 border-round"
+                                 style="width:2.5rem;height:2.5rem">
+                                <i class="pi pi-comment text-purple-500 text-xl"/>
+                            </div>
+                        </div>
+                       
+                        <span class="text-green-500 font-medium">23 </span>
+                        <span class="text-500">responded</span>
+                    </div>
+                </div>
             </div>
+            <div  style="text-align: center;  display:block;">
+                <h2>Graficos</h2>
+            </div>
+            <div class="grid">
+                
+                <div class=" col-12 md:col-6 lg:col-6  ">
+                    <p:chart id="barChart" type="line" model="#{controladorGrafico.graficoLinea}" />
+                </div>
+                <div class=" col-12 md:col-6 lg:col-6  ">
+                   <p:chart type="bar" model="#{controladorGrafico.initBarCharModel()}" />
+                </div>
+              
+            </div>
+           
         </h:form>
     </h:body>
 </html>

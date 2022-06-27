@@ -71,21 +71,12 @@ public class ControladorEmpleado implements Serializable {
         listaEmpleadoConUsuariosActivos();
     }
 
-    public void onRowEdit(RowEditEvent<Empleado> event) {
-
-        this.empleado.setIdDuiempleado(event.getObject().getIdDuiempleado());
-        this.empleado.setNombreempleado(event.getObject().getNombreempleado());
-        this.empleado.setApellidoempleado(event.getObject().getApellidoempleado());
-        this.empleado.setTelefonoempleado(event.getObject().getTelefonoempleado());
-        this.empleado.setDireccionempleado(event.getObject().getDireccionempleado());
-        this.empleado.setEstado(event.getObject().getEstado());
-        this.empleado.setFechaContrato(event.getObject().getFechaContrato());
-
-        this.empleado.setIdNitempresa(event.getObject().getIdNitempresa());
-        this.empleado.setPuesto(event.getObject().getPuesto());
-        FacesMessage msg = new FacesMessage("Empleado modificado", String.valueOf(event.getObject().getIdDuiempleado()));
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+    public void onRowEdit() {
+        this.empleado.setIdNitempresa(empresa);
+        this.empleado.setPuesto(puesto);
         this.empleadoFacade.edit(this.empleado);
+        FacesMessage msg = new FacesMessage("Empleado modificado", String.valueOf(empleado.getIdDuiempleado()));
+        FacesContext.getCurrentInstance().addMessage(null, msg);
 
     }
 
@@ -160,7 +151,7 @@ public class ControladorEmpleado implements Serializable {
                 + "		 contrato c WHERE c.idempleado = e.id_duiempleado \n"
                 + "	) as total\n"
                 + " FROM\n"
-                + "	empleado e GROUP BY total desc ;";
+                + "	empleado e order BY total desc ;";
         this.query = em.createNativeQuery(sql);
         this.listarEmpleadoConContratos = this.query.getResultList();
         //emf.close();

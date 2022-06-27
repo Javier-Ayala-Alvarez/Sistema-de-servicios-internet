@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Facelets Template</title>
+    </h:head>
+
+    <h:body>
+        <h:form id="form1UpEmpleado"> 
+            <!--Cambio de Alertas-->
+            <p:growl id="msgs" showDetail="true"/>
+            <!--Fin de Alerta-->
+            <!--Modal de ingrear empleados-->
+            <p:dialog header="Modifique empleado Dui #{controladorEmpleado.empleado.idDuiempleado}" showEffect="fade" modal="true"
+                      widgetVar="manageEmpleadomodificarDialog" responsive="true" width="60%" >
+
+                <p:panelGrid columns="1" style="width: 90%; margin: auto; text-align: left" >
+                    <p:outputPanel id="manage-EmpleadoUp-content" class="ui-fluid">
+
+
+                        <p:outputPanel >
+                            <p:panelGrid columns="2" style="width: 100%; margin: auto; text-align: left" >
+                                <p:outputPanel >
+                                    <div class="p-field">
+                                        <p:outputLabel for="dui" >Dui</p:outputLabel >
+                                        <p:inputText id="dui" value="#{controladorEmpleado.empleado.idDuiempleado}" required="true" >
+                                            <p:keyFilter mask="num" />
+                                        </p:inputText>
+                                    </div>
+                                    <div class="p-field">
+                                        <p:outputLabel for="nombre" >Nombre</p:outputLabel>
+                                        <p:inputText id="nombre" value="#{controladorEmpleado.empleado.nombreempleado}" required="true">
+                                            <p:keyFilter regEx="/[A-Z]/i"/>
+                                        </p:inputText>
+                                    </div>
+                                    <div class="p-field">
+                                        <p:outputLabel for="apellido" >Apellido</p:outputLabel>
+                                        <p:inputText  id="apellido" value="#{controladorEmpleado.empleado.apellidoempleado}" 
+                                                      required="true" >
+                                            <p:keyFilter regEx="/[A-Z]/i"/>
+                                        </p:inputText>
+                                    </div>
+                                    <div class="p-field">
+                                        <p:outputLabel for="telefono" >Telefono</p:outputLabel>
+                                        <p:inputText  id="telefono" value="#{controladorEmpleado.empleado.telefonoempleado}"   
+                                                      required="true" validatorMessage="Telefono incorrecto. Sugerido: 2222-2345"      > 
+                                            <p:keyFilter mask="num" />
+                                            <f:validateRegex pattern="^[2|7|6]{1}[0-9]{3}-[0-9]{4}"/>
+                                        </p:inputText> 
+
+                                    </div>
+
+
+                                    <div class="p-field">
+                                        <p:outputLabel for="direccion" >Dirección</p:outputLabel>
+                                        <p:inputText  id="direccion" value="#{controladorEmpleado.empleado.direccionempleado}" 
+                                                      required="true" />
+                                    </div>
+                                </p:outputPanel>
+                                <p:outputPanel>
+                                    <div class="p-field">
+
+                                        <p:outputLabel for="puesto" >Puesto</p:outputLabel>
+                                        <p:selectOneMenu  id="puesto" value="#{controladorEmpleado.puesto.idpuesto}" 
+                                                          required="true" >
+                                            <f:selectItem itemLabel="#{controladorEmpleado.empleado.puesto.nombrepuesto}"
+                                                          itemValue="#{controladorEmpleado.empleado.puesto.idpuesto}"/>
+                                            <f:selectItems value="#{controladorEmpleado.listPuesto}" var ="p"
+                                                           itemLabel="#{p.nombrepuesto}"
+                                                           itemValue="#{p.idpuesto}"/>
+
+                                        </p:selectOneMenu>
+                                    </div>
+                                    <div class="p-field">
+                                        <p:outputLabel for="empresa" >Empresa</p:outputLabel>
+                                        <p:selectOneMenu  id="empresa" value="#{controladorEmpleado.empresa.idNitempresa}"
+                                                          required="true" >
+                                            <f:selectItem itemLabel="#{controladorEmpleado.empleado.idNitempresa.nombreempresa}"
+                                                          itemValue="#{controladorEmpleado.empleado.idNitempresa.idNitempresa}"/>
+                                            <f:selectItems value="#{controladorEmpleado.listEmpresa}" var ="c"
+                                                           itemLabel="#{c.nombreempresa}"
+                                                           itemValue="#{c.idNitempresa}"/>
+
+                                        </p:selectOneMenu>
+                                    </div>
+                                    <div class="p-field">
+                                        <p:outputLabel  >Estado</p:outputLabel>
+
+                                        <p:selectBooleanButton onLabel="True" offLabel="False" value="#{controladorEmpleado.empleado.estado}"/>
+
+                                    </div>
+                                    <div class="p-field">
+                                        <div class="p-field p-col">
+                                            <p:outputLabel for="fecha" >Fecha</p:outputLabel>
+                                            <p:calendar id="fecha" pattern="dd-MM-yyyy"
+                                                        value="#{controladorEmpleado.empleado.fechaContrato}"/>                               
+                                        </div>
+                                    </div>
+
+
+                                </p:outputPanel>
+                            </p:panelGrid>
+                        </p:outputPanel>
+
+                    </p:outputPanel>
+
+                    <f:facet name="footer">
+
+                        <p:commandButton value="Modificar" icon="pi pi-check" actionListener="#{controladorEmpleado.onRowEdit()}"
+                                         update="manage-EmpleadoUp-content :form:msgs" 
+                                         process="manage-EmpleadoUp-content @this" 
+                                         action="crudEmpleado.xhtml?faces-redirect=true"
+                                         />
+                        <p:commandButton value="Cancelar" icon="pi pi-times" 
+                                         process="@this"
+                                         action="crudEmpleado.xhtml?faces-redirect=true"
+                                         class="ui-button-secondary" />
+                    </f:facet>
+                </p:panelGrid>
+            </p:dialog>
+            <!--Fin Modal de ingrear empleados-->
+        </h:form>
+    </h:body>
+
+</html>

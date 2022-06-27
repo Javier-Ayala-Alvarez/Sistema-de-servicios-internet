@@ -10,7 +10,7 @@
     </h:head>
     <h:body>
         <ui:insert name = "header" >
-            <ui:include src = "../Resources/Header.xhtml" />
+            <ui:include src = "../resources/Header.xhtml" />
         </ui:insert> 
 
         <div class="ui-g">
@@ -76,10 +76,18 @@
                                     <p:column headerText="Total a pagar">
                                         <h:outputText value="#{factura[6]}" />
                                     </p:column>
-                                </p:dataTable>
+                                    <p:column headerText="">
+                                        <h:form>
+                           
+                                           
+                                            <p:commandButton  value="Pagar" class="ui-button-info " icon="pi pi-check" process="@this"
+                                                             oncomplete="PF('deleteProductDialog').show()" disabled="#{(factura[3] > 0) ? false:true }" >
 
-                                <div> <p:commandButton  value="Pagar"  />
-                                </div>
+                                            </p:commandButton>
+                                        </h:form>
+
+                                    </p:column>
+                                </p:dataTable>
 
                             </div>
 
@@ -89,6 +97,19 @@
 
 
                         </p:dialog>
+
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" />
+                        </p:confirmDialog>
+
+                        <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
+                                         message="¿Desea pagar?" header="Confirm" severity="warn">
+                            <p:commandButton  value="Si"  action="#{controladorVenta.cancelarFactura()}" />
+                          
+                            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                             onclick="PF('deleteProductDialog').hide()"/>
+                        </p:confirmDialog>
 
                     </h:form>
                 </div>

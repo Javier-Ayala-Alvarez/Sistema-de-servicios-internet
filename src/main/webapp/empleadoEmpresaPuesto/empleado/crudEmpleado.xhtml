@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:b="http://bootsfaces.net/ui"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
@@ -12,16 +11,18 @@
 
 
         <title>Empleado</title>
+        <f:event type="preRenderView" listener="#{controladorSesion.verificarAdmin()}"/>
     </h:head>
 
-   <h:body >
+    <h:body >
 
 
         <ui:insert name = "header" >
-            <ui:include src = "../../Resources/Header.xhtml" />
+            <ui:include src = "../../resources/Header.xhtml" />
             <ui:include src = "ModalEmpleadoConsulta.xhtml" />
             <ui:include src = "ModalGraficasEmpleado.xhtml" />
             <ui:include src = "ModalNuevoEmpleado.xhtml" />
+            <ui:include src = "ModalUpdateEmpleado.xhtml" />
         </ui:insert> 
 
         <p:panelGrid columns="1" style="width: 95%; margin: auto; text-align: left">
@@ -66,10 +67,11 @@
                     <!--Fin de Alerta-->
                     <!--Tabla de empleados-->
                     <div>
-                        <p:dataTable id="empleados" widgetVar="dtEmpleado" var="empleado" value="#{controladorEmpleado.empleadoList}"
-                                     reflow="true" styleClass="empleados-table"  editable="true"
-                                     selection="#{controladorEmpleado.empleado}" rowKey="#{empleado.idDuiempleado}" paginator="true"
+                        <p:dataTable id="empleados" widgetVar="dtEmpleado" var="empleado1" value="#{controladorEmpleado.empleadoList}"
+                                     reflow="true" styleClass="empleados-table"  
+                                      rowKey="#{empleado1.idDuiempleado}" paginator="true"
                                      rows="5"  paginatorPosition="bottom"   >
+                            
                             <f:facet name="header">
                                 <div class="empleados-table-header">
                                     <span style="font-weight: bold">EMPLEADOS</span>
@@ -82,133 +84,70 @@
                                 </div>
                                 <div> 
                                     <p:commandButton id="toggler" 
-                                                     type="button" value="Columnas" 
+                                                     type="button" value="Columna" 
                                                      icon="pi pi-align-justify"/> 
                                     <p:columnToggler datasource="empleados" 
                                                      trigger="toggler"/> 
                                 </div> 
                             </f:facet>
-                            <p:column headerText="DUI" sortBy="#{empleado.idDuiempleado}"   filterBy="#{empleado.idDuiempleado}">
-                                <p:cellEditor>
-                                    <f:facet name="output"><h:outputText value="#{empleado.idDuiempleado}"/></f:facet>
-                                    <f:facet name="input">
-                                        <p:inputText id="modelInput" value="#{empleado.idDuiempleado}"
-                                                     style="width:100%">
-                                            <p:keyFilter mask="num" />
-                                        </p:inputText>
-                                    </f:facet>
-                                </p:cellEditor>
+
+                            <p:column headerText="DUI" sortBy="#{empleado1.idDuiempleado}"   filterBy="#{empleado1.idDuiempleado}">
+                              
+                                  <h:outputText value="#{empleado1.idDuiempleado}"/>
+                           
                             </p:column>
-                            <p:column headerText="Nombre" sortBy="#{empleado.nombreempleado}" filterBy="#{empleado.nombreempleado}">
-                                <p:cellEditor>
-                                    <f:facet name="output"><h:outputText value="#{empleado.nombreempleado}"/></f:facet>
-                                    <f:facet name="input">
-                                        <p:inputText  value="#{empleado.nombreempleado}"
-                                                      style="width:100%">
-                                            <p:keyFilter regEx="/[A-Z]/i"/>
-                                        </p:inputText>
-                                    </f:facet>
-                                </p:cellEditor>
+                            <p:column headerText="Nombre" sortBy="#{empleado1.nombreempleado}" filterBy="#{empleado1.nombreempleado}">
+                             <h:outputText value="#{empleado1.nombreempleado}"/>    
                             </p:column>
 
-                            <p:column headerText="Apellido" sortBy="#{empleado.apellidoempleado}" filterBy="#{empleado.apellidoempleado}">
-                                <p:cellEditor>
-                                    <f:facet name="output"><h:outputText value="#{empleado.apellidoempleado}"/></f:facet>
-                                    <f:facet name="input">
-                                        <p:inputText  value="#{empleado.apellidoempleado}"
-                                                      style="width:100%">
-                                            <p:keyFilter regEx="/[A-Z]/i"/>
-                                        </p:inputText>
-                                    </f:facet>
-                                </p:cellEditor>     
+                            <p:column headerText="Apellido" sortBy="#{empleado1.apellidoempleado}" filterBy="#{empleado1.apellidoempleado}">
+                              <h:outputText value="#{empleado1.apellidoempleado}"/>
+                                     
                             </p:column>
-                            <p:column headerText="Telefono" sortBy="#{empleado.telefonoempleado}" filterBy="#{empleado.telefonoempleado}">
-                                <p:cellEditor>
-                                    <f:facet name="output"><h:outputText value="#{empleado.telefonoempleado}"/></f:facet>
-                                    <f:facet name="input">
-                                        <p:inputText  value="#{empleado.telefonoempleado}"
-                                                      style="width:100%"  required="true" validatorMessage="Telefono incorrecto. Sugerido: 2222-2345"      > 
-                                            <p:keyFilter mask="num" />
-                                            <f:validateRegex pattern="^[2|7|6]{1}[0-9]{3}-[0-9]{4}"/>
-                                        </p:inputText>
-                                    </f:facet>
-                                </p:cellEditor>
+                            <p:column headerText="Telefono" sortBy="#{empleado1.telefonoempleado}" filterBy="#{empleado1.telefonoempleado}">
+                                <h:outputText value="#{empleado1.telefonoempleado}"/>
+                                    
                             </p:column>
-                            <p:column headerText="Dirección" sortBy="#{empleado.direccionempleado}" filterBy="#{empleado.direccionempleado}">
-                                <p:cellEditor>
-                                    <f:facet name="input"><p:inputText value="#{empleado.direccionempleado}"
-                                                                       style="width:100%"/></f:facet>
-                                    <f:facet name="output"><h:outputText value="#{empleado.direccionempleado}"/></f:facet>
-
-                                </p:cellEditor>
+                            <p:column headerText="Dirección" sortBy="#{empleado1.direccionempleado}" filterBy="#{empleado1.direccionempleado}">
+                                <h:outputText value="#{empleado1.direccionempleado}"/>
+                                  
 
                             </p:column>
-                            <p:column headerText="Puesto" sortBy="#{empleado.puesto.nombrepuesto}" filterBy="#{empleado.puesto.nombrepuesto}">
-                                <p:cellEditor>
-                                    <f:facet name="output"><h:outputText value="#{empleado.puesto.nombrepuesto}"/></f:facet>
-                                    <f:facet name="input">
-                                        <p:selectOneMenu  id="puesto" value="#{empleado.puesto.idpuesto}" 
-                                                          required="true" >
-
-                                            <f:selectItems value="#{controladorEmpleado.listPuesto}" var ="p"
-                                                           itemLabel="#{p.nombrepuesto}"
-                                                           itemValue="#{p.idpuesto}"/>
-
-                                        </p:selectOneMenu>
-
-
-                                    </f:facet>
-                                </p:cellEditor>
+                            <p:column headerText="Puesto" sortBy="#{empleado1.puesto.nombrepuesto}" filterBy="#{empleado1.puesto.nombrepuesto}">
+                                <h:outputText value="#{empleado1.puesto.nombrepuesto}"/>
+                                   
+                              
 
                             </p:column>
-                            <p:column headerText="Empresa" sortBy="#{empleado.idNitempresa.nombreempresa}" filterBy="#{empleado.idNitempresa.nombreempresa}">
-                                <p:cellEditor>
-                                    <f:facet name="output"><h:outputText value="#{empleado.idNitempresa.nombreempresa}"/></f:facet>
-                                    <f:facet name="input">
-                                        <p:selectOneMenu  id="empresa" value="#{empleado.idNitempresa.idNitempresa}" 
-                                                          required="true" >
-
-                                            <f:selectItems value="#{controladorEmpleado.listEmpresa}"  var="empresa"
-                                                           itemLabel="#{empresa.nombreempresa}" 
-                                                           itemValue="#{empresa.idNitempresa}"/>
-
-                                        </p:selectOneMenu>
-                                       
-                                    </f:facet>
-                                </p:cellEditor>
-
+                            <p:column headerText="Empresa" sortBy="#{empleado1.idNitempresa.nombreempresa}" filterBy="#{empleado1.idNitempresa.nombreempresa}">
+                              <h:outputText value="#{empleado1.idNitempresa.nombreempresa}"/>
+                                
                             </p:column>
 
-                            <p:column headerText="Estado" sortBy="#{empleado.estado} "
-                                      filterBy="#{empleado.estado}">
-                                <p:cellEditor>
-                                    <f:facet name="output">
-                                        <h:outputText  value="#{empleado.estado}"/>
-                                    </f:facet>
-                                    <f:facet name="input">
-                                        <p:selectBooleanButton onLabel="True" offLabel="False" value="#{empleado.estado}"/>
-                                    </f:facet>
-                                </p:cellEditor>
+                            <p:column headerText="Estado" sortBy="#{empleado1.estado} "
+                                      filterBy="#{empleado1.estado}">
+                                
+                                        <h:outputText  value="#{empleado1.estado}"/>
+                                    
                             </p:column>
-                            <p:column headerText="Fecha" sortBy="#{empleado.fechaContrato}" filterBy="#{empleado.fechaContrato}">
-                                <p:cellEditor>
-                                    <f:facet name="output">
-                                        <h:outputText value="#{empleado.fechaContrato}" >
+                            <p:column headerText="Fecha" sortBy="#{empleado1.fechaContrato}" filterBy="#{empleado1.fechaContrato}">
+                             
+                                        <h:outputText value="#{empleado1.fechaContrato}" >
                                             <f:convertDateTime pattern="dd/MM/yyyy" type=""/>
-                                        </h:outputText></f:facet>
-                                    <f:facet name="input">
-                                        <p:calendar id="fecha" pattern="dd-MM-yyyy"  
-                                                    value="#{empleado.fechaContrato}"/>
-                                    </f:facet>
-                                </p:cellEditor>
+                                        </h:outputText>
                             </p:column>
 
-                            <p:ajax event="rowEdit" listener="#{controladorEmpleado.onRowEdit}" update=":form:msgs" />
-                            <p:ajax event="rowEditCancel" listener="#{controladorEmpleado.onRowCancel}" update=":form:msgs"/>
+
                             <p:column headerText="Editar" >
-                                <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
+                            
+                                <p:commandButton icon="pi pi-pencil"   styleClass="edit-button rounded-button ui-button-success"
+                                                 oncomplete="PF('manageEmpleadomodificarDialog').show();"
+                                                 ajax="true"
+                                                 update="form1UpEmpleado form1UpEmpleado" style="width: 40%; height: 40%">
+                                    <f:setPropertyActionListener target="#{controladorEmpleado.empleado}"
+                                                                 value="#{empleado1}"/>
+                                </p:commandButton>
                             </p:column>
-
                         </p:dataTable>
                     </div>
                     <!--Fin de tabla de empleados-->
