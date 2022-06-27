@@ -43,7 +43,6 @@ public class ControladorVenta implements Serializable {
 
     @PostConstruct
     public void init() {
-
     }
 
     public void searchByIdContrato() {
