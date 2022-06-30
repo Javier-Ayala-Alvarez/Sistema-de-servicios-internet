@@ -56,13 +56,13 @@
 
                            
 
-                            <p:column headerText="Código de Usuario" sortBy="#{usuario.idusuario}" filterBy="#{usuario.idusuario}">
+                            <p:column headerText="Código de Usuario" sortBy="#{usuario.idusuario}">
                                 <h:outputText value="#{usuario.idusuario}"/>
                             </p:column>
-                            <p:column headerText="Nombre Empleado" sortBy="#{usuario.idempleado.nombreempleado}" filterBy="#{usuario.idempleado.nombreempleado}">
+                            <p:column headerText="Nombre Empleado" sortBy="#{usuario.idempleado.nombreempleado}" >
                                 <h:outputText value="#{usuario.idempleado.nombreempleado.concat(' ').concat(usuario.idempleado.apellidoempleado)}"/>
                             </p:column>
-                            <p:column headerText="Usuario" sortBy="#{usuario.usuario}" filterBy="#{usuario.usuario}">
+                            <p:column headerText="Usuario" sortBy="#{usuario.usuario}" >
                                 <h:outputText value="#{usuario.usuario}"/>
                             </p:column>
                             <p:column headerText="Acciones" exportable="false">
@@ -92,7 +92,7 @@
                                                          value="#{ub.selectedEmpleado.idDuiempleado}">
                                             <f:selectItem itemLabel="#{ub.selectedUsuario.idempleado.nombreempleado}" itemValue="0"/>
                                             <f:selectItems value="#{ub.empleados2}" var ="e"
-                                                           itemLabel="#{e.nombreempleado}"
+                                                           itemLabel="#{e.nombreempleado.concat(' ').concat(e.apellidoempleado)}"
                                                           itemValue="#{e.idDuiempleado}"/>
                                        </p:selectOneMenu>
                                     </div>      

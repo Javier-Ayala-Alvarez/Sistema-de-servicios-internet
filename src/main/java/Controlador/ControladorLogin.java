@@ -61,6 +61,10 @@ public class ControladorLogin implements Serializable {
                     case "Cobrador":
                          redireccioString = "/Sistema-de-servicios-internet/faces/View Factura/pagoFactura.xhtml";
                         break;
+                        
+                        case "Contratista":
+                         redireccioString = "/Sistema-de-servicios-internet/faces/ViewContrato/viewContratoActProb.xhtml";
+                        break;
                     default:
                         throw new AssertionError();
 
