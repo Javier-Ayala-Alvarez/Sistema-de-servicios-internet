@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-    
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
@@ -16,14 +15,14 @@
 
     <h:body style="padding-top: 50px; padding-bottom: 20px;">
 
-        <ui:insert name = "header" >
-            <ui:include src = "./resources/Header.xhtml" />
+        <ui:insert name = "" >
+            <ui:include src = "resources/Header.xhtml" />
         </ui:insert> 
         <h:form id="form">
-          
+
                     <p:toolbar>
                         <p:toolbarGroup>
-                            <p:commandButton value="Agregar Cliente" icon="pi pi-plus"
+                            <p:commandButton value="Agregar Cliente" icon="pi pi-user"
                                              update=":form:manage-cliente-content"
                                              oncomplete="PF('newClienteDialog').show()"
                                              styleClass="ui-button-success" style="margin-right: .5rem; font-size:1.6em" >
@@ -31,14 +30,14 @@
                             </p:commandButton>
 
                         </p:toolbarGroup>
-                        <p:toolbarGroup align="right" >
+                        <!-- <p:toolbarGroup align="right" >
 
-                            <p:commandButton value="Grafico"
-                                              update=":form:manage-cliente-content"
-                                             oncomplete="PF('newclienteGraficotDialog').show()"
-                                             styleClass="ui-button-success" style="margin-right: .5rem; font-size:1.6em" >
+                            <p:commandButton value="Export"  icon="pi pi-upload" styleClass="ui-button-help" 
+                                             style="margin-right: .5rem; font-size:1.6em" ajax="false" >
+                                <p:dataExporter type="pdf" target="clientes" fileName="cliente"/>
+
                             </p:commandButton>
-                            </p:toolbarGroup>
+                            </p:toolbarGroup>-->
                     </p:toolbar>
 
                     <p:dataTable id="cliente" widgetVar="dtCliente" var="client" value="#{clientess.clienteList}"
@@ -47,7 +46,7 @@
                                  rows="10" rowSelectMode="add" paginatorPosition="bottom" style="font-size:1.1em">
                         <f:facet name="header">
                             <div class="puestos-table-header">
-                                <span style="font-weight: bold">Clientes</span>
+                                <span style="font-weight: bold">Clientes:</span>
 
                                 <span class="filter-container ui-input-icon-left">
                                     <i class="pi pi-search"></i>
@@ -56,7 +55,7 @@
                             </div>
                         </f:facet>
                         <p:column headerText="Dui" sortBy="#{client.idDuicliente}" filterBy="#{client.idDuicliente}">
-                            <h:outputText value="#{client.idDuicliente}"/>
+                            <h:outputText value="#{client.idDuicliente}" />
                         </p:column>
                         <p:column headerText="Nombre" sortBy="#{client.nombrecliente}" filterBy="#{client.nombrecliente}">
                             <h:outputText value="#{client.nombrecliente}"/>
@@ -114,13 +113,14 @@
                                     <div class="p-field">
                                         <p:outputLabel for="id_duicliente">DUI</p:outputLabel>
                                         <p:inputText id="id_duicliente"
-                                                     value="#{clientess.cliente.idDuicliente}"/>
+                                                     value="#{clientess.cliente.idDuicliente}" />
                                     </div>
 
                                     <div class="p-field">
                                         <p:outputLabel for="nombrecliente">Nombre</p:outputLabel>
                                         <p:inputText id="nombrecliente"
                                                      value="#{clientess.cliente.nombrecliente}"/>
+                                      
                                     </div>
 
 
@@ -142,7 +142,7 @@
                                 </p:outputPanel>
                             </p:outputPanel>
                             <f:facet name="footer">
-                                <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{clientess.guardarCliente()}"
+                                <p:commandButton value="Guardar" icon="pi pi-save" actionListener="#{clientess.guardarCliente()}"
                                                  update="manage-cliente-content" process="manage-cliente-content @this" onclick="PF('newClienteDialog').hide()" style="font-size:1.4em"
                                                  action="cli.xhtml?faces-redirect=true"></p:commandButton>
                                 <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('newClienteDialog').hide()"
@@ -161,7 +161,8 @@
                             
                         </p:panelGrid>
                     </p:dialog>
-           
+
+
         </h:form>
 
         <h:form id="formModificar">
@@ -232,10 +233,10 @@
                         <div align="center" style="font-weight:bold">
 
                             <p:column>
-                                <p:commandButton id="guardar" value="UPDATE"
+                                <p:commandButton id="guardar" value="UPDATE" 
                                                  oncomplete="PF('dglModificar').hide()"
                                                  actionListener="#{clientess.actualizar()}"
-                                                 icon="ui-icon-check"
+                                                 icon="pi pi-user"
                                                  style="margin-right: .5rem"
                                                  update="@form"
                                                  action="cli.xhtml?faces-redirect=true">
