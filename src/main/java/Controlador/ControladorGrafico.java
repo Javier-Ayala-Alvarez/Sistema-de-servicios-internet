@@ -37,6 +37,7 @@ public class ControladorGrafico implements Serializable {
     private List<Object[]> listaEmpleados;
     
     private Object totalFacturasPagadas ;
+    private Object totalFacturasPagadashoy ;
     BarChartModel modelBar;
 
     SimpleDateFormat getYearFormat = new SimpleDateFormat("yyyy");
@@ -56,6 +57,7 @@ public class ControladorGrafico implements Serializable {
         createLineModels();
         this.listaEmpleados = empleadoFacade.getQueryGraficosEmpleado();
         this.totalFacturasPagadas = FacturaFacade.totalFacturasPagadas();
+           this.totalFacturasPagadashoy = FacturaFacade.totalFacturasPagadasAhora();
         System.out.println(this.totalFacturasPagadas);
     }
 
@@ -144,6 +146,14 @@ public class ControladorGrafico implements Serializable {
 
     public void setTotalFacturasPagadas(Object totalFacturasPagadas) {
         this.totalFacturasPagadas = totalFacturasPagadas;
+    }
+
+    public Object getTotalFacturasPagadashoy() {
+        return totalFacturasPagadashoy;
+    }
+
+    public void setTotalFacturasPagadashoy(Object totalFacturasPagadashoy) {
+        this.totalFacturasPagadashoy = totalFacturasPagadashoy;
     }
     
 

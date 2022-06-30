@@ -29,8 +29,7 @@ public class EmpleadoFacade extends AbstractFacade<Empleado> {
     public EmpleadoFacade() {
         super(Empleado.class);
     }
-    
-    
+
     public List<Object[]> getQueryGraficosEmpleado() {
         List<Object[]> lista;
         Query q = em.createNativeQuery("select\n"
@@ -41,16 +40,16 @@ public class EmpleadoFacade extends AbstractFacade<Empleado> {
                 + "  contrato cn\n"
                 + "  inner join cliente c on (c.id_duicliente = cn.idcliente)\n"
                 + "  inner join empleado em on (em.id_duiempleado = cn.idempleado)\n"
-                + "  where EXTRACT(MONTH FROM cn.fechainicio)= 5 and EXTRACT(YEAR FROM cn.fechainicio)= 2022\n"
+                + "  where EXTRACT(MONTH FROM cn.fechainicio)= EXTRACT(MONTH from ( DATE_ADD(NOW(), INTERVAL -6 HOUR))) and EXTRACT(YEAR FROM cn.fechainicio)= EXTRACT(YEAR from ( DATE_ADD(NOW(), INTERVAL -6 HOUR))) \n"
                 + "\n"
                 + "group by\n"
                 + "  em.nombreempleado,\n"
                 + "  em.apellidoempleado,EXTRACT(MONTH FROM cn.fechainicio)\n"
-                + "  ");
+                + "   ");
 
         lista = q.getResultList();
         return lista;
 
     }
-    
+
 }
