@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ControladorUsuario;
+package Controlador;
 
 import Entidades.Empleado;
 import Entidades.SesionBean.EmpleadoFacade;
@@ -90,9 +90,13 @@ public class ControlerUsuario implements Serializable{
     }
     
     public void deleteUsuario(){
-        if (this.selectedUsuario != null) {
+        if (this.selectedUsuario != null && this.usuarios.size() > 1) {
             this.usuariosFacade.remove(this.selectedUsuario);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario eliminado"));
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-usuarios");
+        }
+        else if ("Gerente".equals(this.selectedUsuario.getUsuario())) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Imposible eliminar el usuario"));
             PrimeFaces.current().ajax().update("form:messages", "form:dt-usuarios");
         }
     }

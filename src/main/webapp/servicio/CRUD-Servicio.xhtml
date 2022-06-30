@@ -1,0 +1,176 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Usuario</title>
+        <f:event type="preRenderView" listener="#{controladorSesion.verificarAdmin()}"/>
+    </h:head>
+
+    <h:body >
+
+
+        <ui:insert name = "header" >
+            <ui:include src = "../resources/Header.xhtml" />
+        </ui:insert> 
+
+        <p:panelGrid columns="1" style="width: 95%; margin: auto; text-align: left">
+            <h:form id="form">  
+                    <div class="card crud-demo">
+                        <p:growl id="messages" showDetail="true"/>
+                        
+                        <div align="center">
+                            <h1>SERVICIOS</h1>
+                        </div>
+                        
+                        <p:toolbar>
+                            <p:toolbarGroup>
+                                <p:commandButton value="New" icon="pi pi-plus" actionListener="#{sb.openNew}"
+                                                 update=":form:manage-servicio-content" oncomplete="PF('manageServicioDialog').show()"
+                                                 styleClass="ui-button-success" style="margin-right: .5rem">
+                                    <p:resetInput target=":form:manage-servicio-content"/>
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                            <p:toolbarGroup align="right">
+                                <p:commandButton value="Export" icon="pi pi-upload" styleClass="ui-button-help" ajax="false">
+                                    <p:dataExporter type="pdf" target="dt-usuarios" fileName="usuarios"/>
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+
+                        <p:dataTable id="dt-servicios" widgetVar="dtServicios" var="servicio" value="#{sb.servicios}"
+                                     reflow="true" styleClass="servicios-table"
+                                     selection="#{sb.servicios}" rowKey="#{servicio.idservicio}" paginator="true"
+                                     rows="10" rowSelectMode="add" paginatorPosition="bottom">
+                            <f:facet name="header">
+                                <div class="servicios-table-header">
+                                    <span style="font-weight: bold">USUARIOS</span>
+
+                                    <span class="filter-container ui-input-icon-left">
+                                        <i class="pi pi-search"></i>
+                                        <p:inputText id="globalFilter" onkeyup="PF('dtServicios').filter()" placeholder="Search"/>
+                                    </span>
+
+                                </div>
+                            </f:facet>
+
+                           
+
+                            <p:column headerText="Código de Servicio" sortBy="#{servicio.idservicio}">
+                                <h:outputText value="#{servicio.idservicio}"/>
+                            </p:column>
+                            <p:column headerText="Nombre Servicio" sortBy="#{servicio.servicio}">
+                                <h:outputText value="#{servicio.servicio}"/>
+                            </p:column>
+                            <p:column headerText="Precio" sortBy="#{servicio.precioservicio}">
+                                <h:outputText value="#{servicio.precioservicio}" style="font-weight: 700">
+                                    <f:convertNumber currencySymbol="$" type="currency"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Periodo (meses)" sortBy="#{servicio.periodoMes}">
+                                <h:outputText value="#{servicio.periodoMes} meses"/>
+                            </p:column>
+                            <p:column headerText="Mora" sortBy="#{servicio.mora}">
+                                <h:outputText value="#{servicio.mora}" style="font-weight: 700">
+                                    <f:convertNumber currencySymbol="$" type="currency"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Sancion" sortBy="#{servicio.sancion}">
+                                <h:outputText value="#{servicio.sancion}" style="font-weight: 700">
+                                    <f:convertNumber currencySymbol="$" type="currency"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Estado" sortBy="#{servicio.estado}" >
+                                <h:outputText value="#{servicio.estado}"/>
+                            </p:column>
+                            <p:column headerText="Acciones" exportable="false">
+                                <p:commandButton icon="pi pi-pencil" update=":form:manage-servicio-content"
+                                                 oncomplete="PF('manageServicioDialog').show()"
+                                                 ajax="true"
+                                                 styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                    <f:setPropertyActionListener value="#{servicio}" target="#{sb.selectedServicio}"/>
+                                    <p:resetInput target=":form:manage-servicio-content"/>
+                                </p:commandButton>
+                                <p:commandButton icon="pi pi-replay" update=":form:manage-servicio-content"
+                                                 oncomplete="PF('updateServicioDialog').show()"
+                                                 class="ui-button-warning rounded-button" process="@this">
+                                    <f:setPropertyActionListener value="#{servicio}" target="#{sb.selectedServicio}"/>
+                                </p:commandButton>
+                            </p:column>
+
+                        </p:dataTable>
+
+                        <p:dialog header="Detalles del Servicio" showEffect="fade" modal="true"
+                                  widgetVar="manageServicioDialog" responsive="true">
+                            <p:outputPanel id="manage-servicio-content" class="ui-fluid">
+                                <p:outputPanel rendered="#{not empty sb.selectedServicio}">
+                                    <div class="p-field">
+                                        <p:outputLabel for="servicio">Servicio</p:outputLabel>
+                                        <p:inputText id="servicio" value="#{sb.selectedServicio.servicio}" required="true"/>
+                                    </div>
+                                    <div class="p-field">
+                                        <p:outputLabel for="precio">Precio</p:outputLabel>
+                                        <p:inputNumber id="precio" value="#{sb.selectedServicio.precioservicio}"
+                                           symbol=" USD" symbolPosition="s"
+                                           decimalSeparator="." thousandSeparator=","/>
+                                    </div>
+                                    <div class="p-field">
+                                        <p:outputLabel for="periodo">Período (meses)</p:outputLabel>
+                                        <p:spinner id="periodo" min="0" value="#{sb.selectedServicio.periodoMes}"/>
+                                    </div>
+                                    <div class="p-field">
+                                        <p:outputLabel for="mora">Mora</p:outputLabel>
+                                        <p:inputNumber id="mora" value="#{sb.selectedServicio.mora}"
+                                           symbol=" USD" symbolPosition="s"
+                                           decimalSeparator="." thousandSeparator=","/>
+                                    </div>
+                                    <div class="p-field">
+                                        <p:outputLabel for="sancion">Sanción</p:outputLabel>
+                                        <p:inputNumber id="sancion" value="#{sb.selectedServicio.sancion}"
+                                           symbol=" USD" symbolPosition="s"
+                                           decimalSeparator="." thousandSeparator=","/>
+                                    </div>
+                                    <div class="p-field">
+                                        <p:outputLabel for="estado">Estado</p:outputLabel>
+                                        <p:selectOneMenu id="estado" value="#{sb.selectedServicio.estado}">
+                                            <f:selectItem itemLabel="true" itemValue="true"/>
+                                            <f:selectItem itemLabel="false" itemValue="false"/>
+                                        </p:selectOneMenu>
+                                    </div>      
+                                </p:outputPanel>
+                            </p:outputPanel>
+
+                            <f:facet name="footer">
+                                <p:commandButton value="Save" icon="pi pi-check" actionListener="#{sb.saveServicio()}"
+                                                 update="manage-servicio-content" process="manage-servicio-content @this"
+                                                 action="CRUD-Servicio.xhtml?faces-redirect=true"/>
+                                <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageServicioDialog').hide()"
+                                                 class="ui-button-secondary"/>
+                            </f:facet>
+                        </p:dialog> 
+
+                        <p:confirmDialog widgetVar="updateServicioDialog" showEffect="fade" width="300"
+                                         message="Actualizar el servicio?" header="Confirm" severity="warn">
+                            <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{sb.updateServicio()}"
+                                             process="@this" oncomplete="PF('updateServicioDialog').hide()"
+                                             action="CRUD-Servicio.xhtml?faces-redirect=true"/>
+                            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                             onclick="PF('updateServicioDialog').hide()"/>
+                        </p:confirmDialog>
+
+                        <p:confirmDialog global="true" showEffect="fade" width="300">
+                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
+                                             icon="pi pi-times"/>
+                        </p:confirmDialog>
+                    </div>
+                </h:form>
+        </p:panelGrid>
+    </h:body>
+
+</html>
