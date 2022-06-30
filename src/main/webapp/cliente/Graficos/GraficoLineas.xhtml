@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h3 class="firts">Grafico de Ventas</h3>
+    <h:body>
+        <ui:composition template="../PlantillaPrincipal/PlantillaPrincipal.xhtml">
+            <ui:define name="content">
+                <h:panelGrid columns="1" style="width: 100%">
+                    
+                    <p:chart type="line" model="#{vbgr.initLineModel()}"
+                             style="width: 500px; height: 400px;margin: 0 auto"
+                             widgetVar="chart"/>
+                    
+                    <p:commandButton type="button" value="Export" icon="ui-icon-ectLink"
+                                     onclick="exportChart()"/>
+                    <p:dialog widgetVar="dlg" showEffect="fade" modal="true" header="chart as an Image">
+                        <p:outputPanel id="output" layout="block" style="width: 300px;height: 400px"/>
+                    </p:dialog>
+                    <script type="text/javascript">
+                        function exportChart(){
+                            //export image
+                            $('#output').empty().append(PF('chart').exportAsImage());
+                            //show the dialog
+                            PF('dlg').show();
+                        }
+                    </script>
+                </h:panelGrid>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
