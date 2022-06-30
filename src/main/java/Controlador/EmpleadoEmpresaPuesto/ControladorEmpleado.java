@@ -96,6 +96,29 @@ public class ControladorEmpleado implements Serializable {
 
     }
 
+    public long NumerosEmpleado() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoHDP");
+        EntityManager em = emf.createEntityManager();
+        String sql = "SELECT COUNT(id_duiempleado) FROM empleado";
+        this.query = em.createNativeQuery(sql);
+
+        long empleadoTotal =  (long) this.query.getSingleResult();
+
+        return empleadoTotal;
+
+    }
+    public long NumerosEmpleadoCobrador() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoHDP");
+        EntityManager em = emf.createEntityManager();
+        String sql = "SELECT COUNT(id_duiempleado) FROM empleado INNER JOIN puestos ON empleado.puesto = puestos.idpuesto WHERE puestos.nombrepuesto = 'cobrador'";
+        this.query = em.createNativeQuery(sql);
+
+        long empleadoTotalCobrardor =  (long) this.query.getSingleResult();
+
+        return empleadoTotalCobrardor;
+
+    }
+
     public void guardarEmpleado() {
         if (validacionExistencia(this.empleado.getIdDuiempleado()) == true) {
             this.empleado.setIdNitempresa(this.empresa);
