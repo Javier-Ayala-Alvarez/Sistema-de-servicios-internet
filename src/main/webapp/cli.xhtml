@@ -11,9 +11,10 @@
 
 
         <title>Clientes</title>
+        <f:event type="preRenderView" listener="#{controladorSesion.verificarAdmin()}"/>
     </h:head>
 
-    <h:body >
+    <h:body>
 
         <ui:insert name = "" >
             <ui:include src = "resources/Header.xhtml" />
