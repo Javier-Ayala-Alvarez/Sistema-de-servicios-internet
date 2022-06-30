@@ -29,6 +29,7 @@ public class ContratoFacade extends AbstractFacade<Contrato> {
     public ContratoFacade() {
         super(Contrato.class);
     }
+   
 
 //    public List<Object[]> sqlContratoListTrue() {
 //        List<Object[]> listaC;
@@ -54,7 +55,9 @@ public class ContratoFacade extends AbstractFacade<Contrato> {
 //        return listaC;
 //    }
     
-    public Object sqlIdForContrato(){
+  
+    
+     public Object sqlIdForContrato(){
         Object a=0;
         Query q = em.createNativeQuery("SELECT MAX(idcontrato)+1 FROM contrato");
         a = q.getSingleResult();
