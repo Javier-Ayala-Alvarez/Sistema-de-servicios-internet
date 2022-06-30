@@ -6,9 +6,8 @@
       xmlns:p="http://primefaces.org/ui">
     <h3 class="firts">Grafico de Pastel</h3>
     <h:body>
-         <ui:insert name = "header" >
-            <ui:include src = "http://localhost:8080/Sistema-de-servicios-internet/faces/cliente/Graficos/GraficoPie.xhtml" />
-        </ui:insert> 
+        <ui:composition template="../PlantillaPrincipal/PlantillaPrincipal.xhtml">
+
             <ui:define name="content">
                 <p:chart type="pie" model="#{vbgra.initPieModel()}"
                          style="width: 500px;height: 300px; margin: 0 auto"
@@ -27,6 +26,6 @@
                     }
                 </script>
             </ui:define>
+            </ui:composition>
     </h:body>
 </html>
-
