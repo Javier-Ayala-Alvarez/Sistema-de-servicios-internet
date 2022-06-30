@@ -1,0 +1,237 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>CONTRATOS ACTIVOS</title>
+    </h:head>
+
+    <h:body>
+        <ui:insert name="Header">
+            <ui:include src="/Resources/Header.xhtml" />
+        </ui:insert>
+
+        <h:form>
+            <div class="card crud-demo">
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:commandButton value="Nuevo" icon="pi pi-plus"
+                                         styleClass="ui-button-success"
+                                         oncomplete="PF('nuevoContratoDialog').show()"
+                                         style="margin-right: .5rem">
+                            <p:resetInput target=":form:manage-contrato-content"/>
+                        </p:commandButton>
+                    </p:toolbarGroup>
+                </p:toolbar>
+            </div>
+                    <!--Cambio de Alertas-->
+                    <p:growl id="msgs" showDetail="true"/>
+                    <!--Fin de Alerta-->
+
+            <p:dataTable value="#{controladorContrato.contratosActivosFindAll}" var="contrato" 
+                         
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport}
+                         {FirstPageLink}
+                         {PreviousPageLink}
+                         {PageLinks}
+                         {NextPageLink}
+                         {LastPageLink}
+                         {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15"
+                         rows="10"
+                         rowSelectMode="add"
+                         paginatorPosition="bottom"
+                         
+                         widgetVar="tablacontratosactivos" id="tablacontratosactivos">
+                
+                <p:column headerText="ID" visible="true">
+                    <h:outputText value="#{contrato.idcontrato}" />
+                </p:column>
+
+                <p:column headerText="DUI (CLIENTE)" >
+                    <h:outputText value="#{contrato.idcliente.idDuicliente}" />
+                </p:column>
+
+                <p:column headerText="CLIENTE">
+                    <h:outputText value="#{contrato.idcliente.nombrecliente}" />
+                </p:column>
+
+                <p:column headerText="SERVICIO">
+                    <h:outputText value="#{contrato.idservicio.servicio}" />
+                </p:column>
+
+                <p:column headerText="DIRECCION DEL SERVICIO">
+                    <h:outputText value="#{contrato.direccioncontrato}" />
+                </p:column>
+
+                <p:column headerText="F. INICIO">
+                    <h:outputText value="#{contrato.fechainicio}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" type=""/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="ASIGNADO">
+                    <h:outputText value="#{contrato.idempleado.nombreempleado}" />
+                </p:column>
+
+                <p:column headerText="" style="width: 7%">
+                    <p:panelGrid styleClass="ui-noborder" columns="1">
+                            <p:column headerText="">
+                                <div align="center">
+
+                                    <p:commandButton styleClass="edit-button rounded-button ui-button-success"  icon="pi pi-pencil"
+                                                     oncomplete="PF('dglModificar').show();"
+                                                     ajax="true"
+                                                     update=":formModificar">
+                                        <f:setPropertyActionListener target="#{controladorContrato.contratoObjFA}"
+                                                                     value="#{contrato}"/>
+                                    </p:commandButton>
+                                </div>
+                            </p:column>
+                        </p:panelGrid>
+                </p:column>
+                
+            </p:dataTable>
+
+            <p:dialog header="NUEVO CONTRATO" showEffect="fade" modal="true"
+                      widgetVar="nuevoContratoDialog" responsive="true">                
+                <p:outputPanel id="manage-contrato-content" class="ui-fluid">
+                    <p:outputPanel rendered="#{not empty controladorContrato.contratoObjFA}">
+
+                        <div class="p-field p-col">
+                            <p:outputLabel for="cliente">Cliente</p:outputLabel>
+                            <p:selectOneMenu id="cliente" value="#{controladorContrato.cliente.idDuicliente}" required="true">
+                                <f:selectItem itemLabel="-Seleccione-" itemValue="0"/>
+                                <f:selectItems value="#{controladorContrato.clienteList}" var="cliente"
+                                               itemLabel="#{cliente.nombrecliente.concat(' ').concat(cliente.apellidocliente)}"
+                                               itemValue="#{cliente.idDuicliente}"/>
+                            </p:selectOneMenu>
+                        </div>
+
+                        <div class="p-field p-col">
+                            <p:outputLabel for="servicio">Servicio</p:outputLabel>
+                            <p:selectOneMenu id="servicio" value="#{controladorContrato.servicio.idservicio}" required="true">
+                                <f:selectItem itemLabel="-Seleccione-" itemValue="0"/>
+                                <f:selectItems value="#{controladorContrato.servicioList}" var="servicio"
+                                               itemLabel="#{servicio.servicio}"
+                                               itemValue="#{servicio.idservicio}"/>
+                            </p:selectOneMenu>
+                        </div>
+
+                        <div class="p-field">
+                            <p:outputLabel for="direccion">Dirección (Inst. de Servicio)</p:outputLabel>
+                            <p:inputText id="direccion" value="#{controladorContrato.contratoObjFA.direccioncontrato}" required="true"/>
+                        </div>
+
+                        <div class="p-formgrid p-grid">
+                            <div class="p-field p-col">
+                                <p:outputLabel for="fecha">Fecha de Inicio</p:outputLabel>
+                                <p:calendar id="fecha" pattern="dd-MM-yyyy" value="#{controladorContrato.contratoObjFA.fechainicio}" required="true" />                               
+                            </div>
+                        </div>
+
+                        <div class="p-field p-col">
+                            <p:outputLabel for="asignado">Asignado</p:outputLabel>
+                            <p:selectOneMenu id="asignado" value="#{controladorContrato.empleado.idDuiempleado}" required="true">
+                                <f:selectItem itemLabel="-Seleccione-" itemValue="0"/>
+                                <f:selectItems value="#{controladorContrato.empleadoList}" var="empleado"
+                                               itemLabel="#{empleado.nombreempleado.concat(' ').concat(empleado.apellidoempleado)}"
+                                               itemValue="#{empleado.idDuiempleado}"/>
+                            </p:selectOneMenu>
+                        </div>
+
+                    </p:outputPanel>
+                </p:outputPanel>
+                <f:facet name="footer">
+                    <p:commandButton value="Crear" icon="pi pi-check"
+                                     actionListener="#{controladorContrato.createContratoWithFindAll()}"
+                                     oncomplete="PF('nuevoContratoDialog').hide()"
+                                     styleClass="ui-button-success" style="margin-right: .5rem"
+                                     update="@form"
+                                     action="viewContratoActProb.xhtml?faces-redirect=true">
+                    </p:commandButton>
+                    <p:commandButton id="cancelar"
+                                     value="Cancelar"
+                                     icon="ui-icon-circle-close" style="margin-left: 10px"
+                                     process="@this"
+                                     oncomplete="PF('nuevoContratoDialog').hide()">
+                    </p:commandButton>
+                </f:facet>
+            </p:dialog>
+        </h:form>  
+
+
+
+
+
+
+
+
+
+
+        <h:form id="formModificar">
+            <p:dialog id="dgl" widgetVar="dglModificar"
+                      header="Modificacion de Contrato">
+                <p:panel header="Modificación">
+                    <p:panelGrid>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="id" value="ID CONTRATO"/>
+                            </p:column>
+
+                            <p:column>
+                                <h:outputText id="id" value="#{controladorContrato.contratoObjFA.idcontrato}"/>
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="direccion" value="DIRECCION"/>
+                            </p:column>
+                            <p:column>
+                                <h:inputText id="direccion" value="#{controladorContrato.contratoObjFA.direccioncontrato}" required="true"/>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                    <f:facet name="footer">
+                        <div align="center" style="font-weight: bold">
+                            <p:column>
+                                <p:commandButton id="guardar" value="GUARDAR"
+                                                 oncomplete="PF('dglModificar').hide();"
+                                                 actionListener="#{controladorContrato.guardarActualizar()}"
+                                                 icon="ui-icon-check"
+                                                 style="margin-right: .5rem"
+                                                 update="@form"
+                                                 action="viewContratoActProb.xhtml?faces-redirect=true">
+                                </p:commandButton>
+                            </p:column>
+                            <p:column>
+                                <p:commandButton id="cancelar"
+                                                 value="CANCELAR"
+                                                 icon="ui-icon-circle-close" style="margin-left: 10px"
+                                                 process="@this"
+                                                 oncomplete="PF('dglModificar').hide();">
+                                </p:commandButton>
+                            </p:column>
+                        </div>
+                    </f:facet>
+                </p:panel>
+            </p:dialog>
+        </h:form>
+
+
+
+
+
+
+
+
+
+
+    </h:body>
+</html>

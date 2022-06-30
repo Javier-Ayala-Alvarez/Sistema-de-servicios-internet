@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>HISTORIAL DE CONTRATOS</title>
+    </h:head>
+
+    <h:body>
+        <ui:insert name="Header">
+            <ui:include src="/Resources/Header.xhtml" />
+        </ui:insert>
+
+        <h:form>
+            <h1 align="center">HISTORIAL DE CONTRATOS</h1>
+            <p:dataTable var="contratoF" value="#{controladorContrato.contratosInactivosFindAll}" widgetVar="dtprincipal" id="dt-principal">
+
+                <p:column headerText="ID" visible="false">
+                    <h:outputText value="#{contratoF.idcontrato}" />
+                </p:column>
+
+                <p:column headerText="DUI (CLIENTE)" sortBy="#{contratoF.idcliente.idDuicliente}" filterBy="#{contratoF.idcliente.idDuicliente}">
+                    <h:outputText value="#{contratoF.idcliente.idDuicliente}" />
+                </p:column>
+
+                <p:column headerText="CLIENTE" sortBy="#{contratoF.idcliente.nombrecliente}" filterBy="#{contratoF.idcliente.nombrecliente}">
+                    <h:outputText value="#{contratoF.idcliente.nombrecliente}" />
+                </p:column>
+
+                <p:column headerText="SERVICIO" sortBy="#{contratoF.idservicio.servicio}" filterBy="#{contratoF.idservicio.servicio}">
+                    <h:outputText value="#{contratoF.idservicio.servicio}" />
+                </p:column>
+
+                <p:column headerText="DIRECCION DEL SERVICIO" sortBy="#{contratoF.direccioncontrato}" filterBy="#{contratoF.direccioncontrato}">
+                    <h:outputText value="#{contratoF.direccioncontrato}" />
+                </p:column>
+
+                <p:column headerText="F. INICIO" sortBy="#{contratoF.fechainicio}" filterBy="#{contratoF.fechainicio}">
+                    <h:outputText value="#{contratoF.fechainicio}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" type=""/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="F. EXPIRACIÓN" sortBy="#{contratoF.fechabaja}" filterBy="#{contratoF.fechabaja}">
+                    <h:outputText value="#{contratoF.fechabaja}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" type=""/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="MOTIVO DE BAJA" sortBy="#{contratoF.motivobaja}" filterBy="#{contratoF.motivobaja}">
+                    <h:outputText value="#{contratoF.motivobaja}" />
+                </p:column>
+
+                <p:column headerText="ASIGNADO" sortBy="#{contratoF.idempleado.nombreempleado}" filterBy="#{contratoF.idempleado.nombreempleado}">
+                    <h:outputText value="#{contratoF.idempleado.nombreempleado}" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>

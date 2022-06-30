@@ -17,6 +17,7 @@
                     <p:menubar>
 
                         <p:menuitem value="Inicio" icon="pi pi-fw pi-home" styleClass="ui-button-info" outcome="/faces/index.xhtml" />
+
                         <p:submenu label="Factura" icon="pi pi-fw pi-file" >
                             <p:submenu label="New" icon="pi pi-fw pi-plus">
                                 <p:menuitem value="Bookmark" icon="pi pi-fw pi-bookmark"/>
@@ -25,25 +26,17 @@
                             <p:menuitem value="Pago de factura" icon="pi pi-fw pi-money-bill" outcome="/faces/View Factura/pagoFactura.xhtml"/>
                             <p:menuitem value="Clientes con mora" icon="pi pi-fw pi-dollar" outcome="/faces/View Factura/ClientesMora.xhtml"/>
                             <p:divider />
-                            <p:menuitem value="Export" icon="pi pi-fw pi-external-link" />
+                            <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
                         </p:submenu>
 
                         <p:submenu label="Administración" icon="pi pi-fw pi-users">
                             <p:menuitem value="Empleados" icon="pi pi-fw pi-id-card" outcome="/faces/empleadoEmpresaPuesto/empleado/crudEmpleado.xhtml"/>
                             <p:menuitem value="Puestos" icon="pi pi-fw pi-briefcase" outcome="/faces/empleadoEmpresaPuesto/puesto/ViewPuesto.xhtml"/>
                             <p:menuitem value="Empresa" icon="pi pi-fw pi-building" outcome="/faces/empleadoEmpresaPuesto/empresa/ViewEmpresa.xhtml"/>
-
                         </p:submenu>
 
                         <p:submenu label="Users" icon="pi pi-fw pi-user">
-                            <p:menuitem value="New" icon="pi pi-fw pi-user-plus"/>
-                            <p:menuitem value="Delete" icon="pi pi-fw pi-user-minus"/>
-                            <p:submenu label="Search" icon="pi pi-fw pi-users">
-                                <p:submenu label="Filter" icon="pi pi-fw pi-filter">
-                                    <p:menuitem value="Print" icon="pi pi-fw pi-print"/>
-                                </p:submenu>
-                                <p:menuitem value="List" icon="pi pi-fw pi-bars"/>
-                            </p:submenu>
+                            <p:menuitem value="New" icon="pi pi-fw pi-user-plus" outcome="/faces/usuario/CRUD-Usuario.xhtml"/>
                         </p:submenu>
 
 
@@ -53,7 +46,7 @@
                         <p:menuitem value="Quit" icon="pi pi-fw pi-power-off"/>
 
                         <f:facet name="options">
-                            <p:commandButton icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"  action="login?faces-redirect=true" actionListener="#{controladorSesion.cerrarSesion()}" value="Cerrar sesion" />
+                            <p:commandButton icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"  action="/faces/login.xhtml" actionListener="#{controladorSesion.cerrarSesion()}" value="Cerrar sesion"  />
 
                         </f:facet>
                     </p:menubar>
