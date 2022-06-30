@@ -196,4 +196,20 @@ public class FacturaFacade extends AbstractFacade<Factura> {
         return -1;
     }
 
+    public Object totalFacturasPagadasAhora() {
+        try {
+            String sql = "select count(f.idfactura) from factura f where f.estado = 0 \n"
+                    + "and  DATEDIFF( f.fechafactura, DATE_ADD(NOW(), INTERVAL -6 HOUR)) = 0";
+
+            Query q = em.createNativeQuery(sql);
+
+            return q.getSingleResult();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return -1;
+    }
+
 }
