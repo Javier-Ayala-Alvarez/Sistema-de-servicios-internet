@@ -41,11 +41,21 @@
                         <p:submenu label="Usuarios" icon="pi pi-fw pi-user">
                             <p:menuitem value="Usuario" icon="pi pi-fw pi-user-plus" outcome="/faces/usuario/CRUD-Usuario.xhtml"/>
                         </p:submenu>
-
+                        <p:submenu label="Clientes" icon="pi pi-fw pi-users">
+                            <p:menuitem value="Cliente" icon="pi pi-fw pi-users" outcome="/faces/cli.xhtml"/>
+                            <p:menuitem value="Gráfico Barra" icon="pi pi-fw pi-chart-bar" outcome="/faces/cliente/Graficos/GraficoBarras.xhtml"/>
+                            <p:menuitem value="Gráfico Linea" icon="pi pi-fw pi-chart-line" outcome="/faces/cliente/Graficos/GraficoLineas.xhtml"/>
+                            <p:menuitem value="Gráfico Circular" icon="pi pi-fw pi-chart-pie" outcome="/faces/cliente/Graficos/GraficoPie.xhtml"/>
+                        </p:submenu>
+                        <p:submenu label="Contratos" icon="pi pi-fw pi-file-pdf">
+                            <p:menuitem value="Contratos Activos" icon="pi pi-fw pi-file-pdf" outcome="/faces/ViewContrato/viewContratoActProb.xhtml"/>
+                            <p:menuitem value="Contrato Inactivo" icon="pi pi-fw pi-file-pdf" outcome="/faces/ViewContrato/viewContratoInactProb.xhtml"/>
+                            
+                        </p:submenu>
 
                         <p:divider layout="vertical"/>
 
-                        <p:menuitem value="Quit" icon="pi pi-fw pi-power-off"/>
+
 
                         <f:facet name="options">
                             <p:commandButton icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"  action="/faces/login.xhtml" actionListener="#{controladorSesion.cerrarSesion()}" value="Cerrar sesion"  />

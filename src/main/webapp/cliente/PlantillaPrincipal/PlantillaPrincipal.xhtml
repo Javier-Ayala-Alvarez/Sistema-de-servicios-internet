@@ -11,29 +11,14 @@
         <title>Sistema de Contratos</title>
     </h:head>
     <h:body>
-        <div id="top">
-            <h:form>
-                <center>
-                    <h2> Sistema de Contratos</h2>
-                </center>
-                <p:menubar>
-                    <p:menuitem value="Home" url="http://localhost:8080/Sistema-de-servicios-internet/faces/cliente/PlantillaPrincipal/PlantillaPrincipal.xhtml"> </p:menuitem>
-                    <p:submenu label="Consultas" icon="ui-icon-document">                  
-                        <p:menuitem value="Grafico Barras" url="http://localhost:8080/Sistema-de-servicios-internet/faces/cliente/Graficos/GraficoBarras.xhtml" icon="fa fa-fw fa-book"/>
-                        <p:menuitem value="Grafico Pastel" url="http://localhost:8080/Sistema-de-servicios-internet/faces/cliente/Graficos/GraficoPie.xhtml" icon="fa fa-fw fa-book"/>
-                        <p:menuitem value="Grafico Linea" url="http://localhost:8080/Sistema-de-servicios-internet/faces/cliente/Graficos/GraficoLineas.xhtml" icon="fa fa-fw fa-book"/>
-                    </p:submenu>                    
-                </p:menubar>
-            </h:form>
-            <ui:insert name="top"></ui:insert>
-        </div>
+       <ui:insert name = "header" >
+            <ui:include src = "../../resources/Header.xhtml" />
+        </ui:insert> 
         <div id="content" class="center_content">
             <ui:insert name="content"></ui:insert>
         </div>
         <div id="bottom" style="text-align-last: center">
-            <ui:insert name="bottom" >
-                Sistema Ventas, UES-PARACENTRAL,Todos los derechos reservados 2022
-            </ui:insert>
+     
         </div>
     </h:body>
 </html>
