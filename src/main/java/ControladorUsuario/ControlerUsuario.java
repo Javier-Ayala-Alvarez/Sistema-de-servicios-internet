@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Controlador;
+package ControladorUsuario;
 
 import Entidades.Empleado;
 import Entidades.SesionBean.EmpleadoFacade;
@@ -35,6 +35,7 @@ public class ControlerUsuario implements Serializable{
     private Usuarios selectedUsuario;
     
     private List<Empleado> empleados;
+    private List<Empleado> empleados2;
     
     private Empleado selectedEmpleado;
     
@@ -51,13 +52,42 @@ public class ControlerUsuario implements Serializable{
     public void init(){
         this.selectedEmpleado = new Empleado();
         this.selectedUsuario = new Usuarios();
-        listarEmpleados();
+        listaprueba();
         listarUsuarios();
     }
     
     public List<Empleado> listarEmpleados(){
         this.empleados = this.empleadoFacade.findAll();
         return this.empleados;
+    }
+    
+    public List<Empleado> listaprueba() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoHDP");
+        EntityManager em = emf.createEntityManager();
+        String sql = "SELECT *\n"
+                + "FROM empleado e WHERE NOT EXISTS\n"
+                + "(SELECT u.idempleado FROM usuarios u\n"
+                + "WHERE e.id_duiempleado = u.idempleado OR e.estado = FALSE)";
+        Query q = em.createNativeQuery(sql,Empleado.class);
+        this.empleados2 = q.getResultList();
+        return this.empleados2;
+    }
+    
+    public List<Empleado> listarEmpleadosActivos(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoHDP");
+
+        EntityManager em = emf.createEntityManager();
+
+        String sql = "SELECT e.id_duiempleado, CONCAT(e.nombreempleado,\" \", e.apellidoempleado) AS nombre, e.estado\n" +
+"                FROM empleado e\n" +
+"                WHERE NOT EXISTS\n" +
+"                (SELECT * FROM usuarios u\n" +
+"                WHERE e.id_duiempleado = u.idempleado OR e.estado = FALSE)";
+        
+        Query q = em.createNativeQuery(sql, Empleado.class  );
+        this.empleados2 = q.getResultList();
+        
+        return this.empleados2; 
     }
     
     public List<Usuarios> listarUsuarios(){
@@ -76,7 +106,7 @@ public class ControlerUsuario implements Serializable{
             this.usuariosFacade.create(this.selectedUsuario);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario Agregado"));
         }else{
-            this.selectedUsuario.setIdempleado(this.selectedEmpleado);
+           //this.selectedUsuario.setIdempleado(this.selectedEmpleado);
             this.usuariosFacade.edit(this.selectedUsuario);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario Actualizado"));
         }
@@ -146,6 +176,14 @@ public class ControlerUsuario implements Serializable{
 
     public void setSelectedEmpleado(Empleado selectedEmpleado) {
         this.selectedEmpleado = selectedEmpleado;
+    }
+
+    public List<Empleado> getEmpleados2() {
+        return empleados2;
+    }
+
+    public void setEmpleados2(List<Empleado> empleados2) {
+        this.empleados2 = empleados2;
     }
     
     
